@@ -41,5 +41,10 @@ public class HomeController {
 		return "product";
 		
 	}
+	@RequestMapping("main.do")
+	public String main() {
+		return "main";
+		
+	}
 	
 }

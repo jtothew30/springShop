@@ -7,36 +7,7 @@
 <link rel="stylesheet" href="resources/css/foundation.css">
 </head>
 <body>
-	<!-- Start Top Bar -->
-	<div class="top-bar">
-		<div class="top-bar-left">
-			<ul class="dropdown menu" data-dropdown-menu="" role="menubar"
-				data-e="n2avhw-e">
-				<li class="menu-text" role="menuitem">Yeti Store</li>
-				<li class="has-submenu is-dropdown-submenu-parent opens-right"
-					role="menuitem" aria-haspopup="true" aria-label="One"><a
-					href="#">One</a>
-					<ul class="submenu menu vertical is-dropdown-submenu first-sub"
-						data-submenu="" role="menu">
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">One</a></li>
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">Two</a></li>
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">Three</a></li>
-					</ul></li>
-				<li role="menuitem"><a href="#">Two</a></li>
-				<li role="menuitem"><a href="#">Three</a></li>
-			</ul>
-		</div>
-		<div class="top-bar-right">
-			<ul class="menu">
-				<li><input type="search" placeholder="Search"></li>
-				<li><button type="button" class="button">Search</button></li>
-			</ul>
-		</div>
-	</div>
-	<!-- End Top Bar -->
+	<c:import url="header.jsp"/>
 	<br>
 	<!-- You can now combine a row and column if you just need a 12 column row -->
 	<article class="grid-container">
@@ -92,8 +63,7 @@
 		</div>
 		<div class="">
 			<hr>
-			<ul class="tabs" data-tabs="" id="example-tabs" role="tablist"
-				data-e="af0r5m-e">
+			<ul class="tabs" data-tabs="" id="example-tabs" role="tablist" data-e="af0r5m-e">
 				<li class="tabs-title is-active" role="presentation">
 				<a href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" id="panel1-label" tabindex="0">상품리뷰</a></li>
 				<li class="tabs-title" role="presentation">
