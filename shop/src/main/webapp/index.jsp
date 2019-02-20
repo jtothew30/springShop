@@ -14,5 +14,9 @@
 	<h1>
 		<a href="admin.do">admin페이지</a>
 	</h1>
+	
+	<h1>
+		<a href="signUp/signUp.do">회원가입 테스트</a>
+	</h1>
 </body>
 </html>
