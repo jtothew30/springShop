@@ -36,10 +36,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping("product.do")
-	public String product() {
-		return "product";
-		
-	}
+	
 	
 }

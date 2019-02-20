@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>
-		<a href="/">home.do</a> <a href="product.do">product.do</a>
+		<a href="/">home.do</a> <a href="proboard/product.do?pbno=1">product.do</a>
 	</h1>
 	
 	<h1>
