@@ -14,13 +14,13 @@ public class AjaxUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(AjaxUploadController.class);
 	
 	//servlet-context.xml에 선언	
-	@Resource(name="uploadPath")
-	String uploadPath;
+	//@Resource(name="uploadPath")
+	//String uploadPath;
 	
-	@RequestMapping(value="/upload/uploadAjax", method=RequestMethod.GET)
-	public void uploadAjax() {
+	//@RequestMapping(value="/upload/uploadAjax", method=RequestMethod.GET)
+	//public void uploadAjax() {
 		// view/upload/uploadAjax.jsp로 이동
-	}
+	//}
 	
 	
 }

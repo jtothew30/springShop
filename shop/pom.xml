@@ -118,7 +118,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- user setiing -->
+		<!-- user setting -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
@@ -182,7 +182,7 @@
 		</dependency>
 
 	</dependencies>
-		<repositories>
+	<repositories>
 	<!-- 	<repository>
 			<id>oracle</id>
 			<name>ORACLE JDBC Repository</name>
