@@ -91,7 +91,7 @@
           <p>카테고리3:<input name="category3" type="text"> </p>
            </div>
           <div class="row column">
-          <p>옵션:<input name="option" type="text"> </p>
+          <p>옵션:<input name="options" type="text"> </p>
            </div>
           <div class="row column">
           <p>부가설명:<textarea name="script" rows="3"></textarea> </p>

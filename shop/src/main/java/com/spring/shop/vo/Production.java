@@ -1,6 +1,7 @@
 package com.spring.shop.vo;
 
-public class Product {
+public class Production {	
+	private int pno;
 	private String pname;
 	private String brand;
 	private int inprice;
@@ -8,10 +9,23 @@ public class Product {
 	private String category1;
 	private String category2;
 	private String category3;
-	private String option;
+	private String options;
 	private String script;
 	private int sales;
+	private int count; //재고 -> procontain TABLE
 	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getPno() {
+		return pno;
+	}
+	public void setPno(int pno) {
+		this.pno = pno;
+	}
 	public String getPname() {
 		return pname;
 	}
@@ -54,11 +68,11 @@ public class Product {
 	public void setCategory3(String category3) {
 		this.category3 = category3;
 	}
-	public String getOption() {
-		return option;
+	public String getOptions() {
+		return options;
 	}
-	public void setOption(String option) {
-		this.option = option;
+	public void setOptions(String options) {
+		this.options = options;
 	}
 	public String getScript() {
 		return script;
@@ -74,6 +88,12 @@ public class Product {
 	}
 	@Override
 	public String toString() {
-		return pname +"\n"+ brand;
+		return "Production [pno=" + pno + ", pname=" + pname + ", brand=" + brand + ", inprice=" + inprice
+				+ ", outprice=" + outprice + ", category1=" + category1 + ", category2=" + category2 + ", category3="
+				+ category3 + ", options=" + options + ", script=" + script + ", sales=" + sales + ", count=" + count
+				+ "]";
 	}
+	
+	
+	
 }

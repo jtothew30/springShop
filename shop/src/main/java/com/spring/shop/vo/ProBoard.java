@@ -1,6 +1,6 @@
 package com.spring.shop.vo;
 
-public class Board {
+public class ProBoard {
 	private int rn;
 	private int pbno;
 	private String title;

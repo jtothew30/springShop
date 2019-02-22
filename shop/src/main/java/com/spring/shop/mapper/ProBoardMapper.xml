@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.shop.mapper.ProBoardMapper">
+	
+	
+	<select id="selectProductions" resultType="com.spring.shop.vo.Production" parameterType="int">
+	     select * from production 
+		 where pname = (select pname from procontain 
+		 				where pbno=#{pbno}
+		 				)
+	</select>
+	
+	<select id="selectListAll" resultType="com.spring.shop.vo.ProBoard">
+		select * from proboard
+	</select>
+	
+	<insert id="insertProBoard" parameterType="com.spring.shop.vo.ProBoard">
+		insert into proboard values(
+			seqboard.nextval,
+			#{title},
+			sysdate,
+			#{price},
+			#{event},
+			#{totalsales}			
+		)	
+	</insert>
+</mapper>

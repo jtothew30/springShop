@@ -8,12 +8,12 @@
 </head>
 <body>
 	<h1>
-		<a href="/">home.do</a> <a href="product.do">product.do</a>
-	</h1>
-	
+		<a href="/">home.do</a><p>
+		<a href="product.do">product.do</a>
+	</h1>	
 	<h1>
-		<a href="admin/main.do">admin페이지</a>	
-		<a href="main.do">main페이지</a>	
+		<a href="admin/main.do">admin페이지</a>	<p>
+		<a href="main.do">main페이지</a>			
 	</h1>
 </body>
 </html>
