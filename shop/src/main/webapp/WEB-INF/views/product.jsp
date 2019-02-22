@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Product page</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<style type="text/css">
+	.jbFiexd{
+		position: fixed;
+		top: 0px;
+	}
+</style>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	var prolist; 
@@ -89,16 +95,54 @@
 	}
 	
 	function addCart(pbno) {
+		if(!seloplist.length){
+			swal("상품을 먼저 선택해주세요!");
+			return;
+		}
+		
+		
+		
 		$.ajax({
 			type: "POST",
 			url: "../cart/addCart.do",
 			data : {'list' : JSON.stringify(seloplist), 'pbno' : pbno},
-			success : function(data){
-				alert(data);
+			success : function(){
+				swal("상품을 장바구니에 담았습니다.","장바구니로 이동하시겠습니까?", "success", {
+					  buttons: {				    
+					    catch: {
+					      text: "장바구니로 가기",
+					      value: "catch",
+					    },
+					    cancel: "취소",
+					  },
+					})
+					.then((value) => {
+					  switch (value) {					 
+					    case "catch":
+					      location.href="../cart/cart.do";
+					      break;					 
+					    default:
+					    	break;
+					  }
+					});
 			}
 		})
 	}
 	
+	
+	
+	
+	$(document).ready(function() {
+		var jbOffset = $('.tabs').offset();
+		$(window).scroll(function() {
+			if($(document).scrollTop() > jbOffset.top){
+				$('.tabs').addClass('jbFixed');
+			}
+			else{
+				$('.tabs').removeClass('jbFixed');
+			}
+		});		
+	});
 	
 </script>
 
@@ -396,5 +440,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

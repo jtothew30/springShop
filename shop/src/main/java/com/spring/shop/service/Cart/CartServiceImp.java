@@ -18,4 +18,9 @@ public class CartServiceImp implements CartService{
 	public void addCart(List<Cart> cartlist) throws Exception{
 		cartDao.addCart(cartlist);
 	}
+	
+	@Override
+	public List<Cart> getCartList(String customer) throws Exception{
+		return cartDao.getCartList(customer);
+	}
 }

@@ -92,12 +92,11 @@ commit;
 
 --상품 재고
 drop table prostock;
-create table prostock(  
+create table prostock(
 	pno number(7) not null,
 	count number(7) not null
 );
 commit;
-
 
 
 

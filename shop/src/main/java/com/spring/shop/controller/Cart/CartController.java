@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,17 @@ public class CartController {
 	private CartService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
+	
+	
+	@RequestMapping(value="cart.do")
+	public String cart(Model model) throws Exception{
+		String customer = "testID"; // need to edit for getting login user's id from session later~
+		
+		List<Cart> cartlist = service.getCartList(customer);
+		model.addAttribute("cartlist", cartlist);
+		return "Cart/cart";
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="addCart.do", method=RequestMethod.POST)

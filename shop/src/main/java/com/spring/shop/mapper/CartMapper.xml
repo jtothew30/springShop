@@ -7,4 +7,15 @@
 	<insert id="insert" parameterType="com.spring.shop.vo.Cart">
 		insert into cart values(#{pno}, #{pbno}, #{customer}, #{count}, #{price}, '결제준비', sysdate)
 	</insert>
+	
+	<select id="getCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">
+		<!-- select * from cart where customer = #{customer} order by cartdate desc -->
+		select c.*, p.pname, p.options from (select c.*, pb.title from cart c 
+									left outer join proboard pb 
+									on c.pbno = pb.pbno
+									) c 
+		left outer join production p 
+		on c.pno = p.pno 
+		order by cartdate desc
+	</select>
 </mapper>

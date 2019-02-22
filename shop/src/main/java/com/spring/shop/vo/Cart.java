@@ -8,6 +8,9 @@ public class Cart {
 	private int price;
 	private String status;
 	private String cartdate;
+	private String pname;
+	private String title;
+	private String options;
 	
 	
 	
@@ -52,6 +55,25 @@ public class Cart {
 	}
 	public void setCartdate(String cartdate) {
 		this.cartdate = cartdate;
+	}
+	
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getOptions() {
+		return options;
+	}
+	public void setOptions(String options) {
+		this.options = options;
 	}
 	
 	
