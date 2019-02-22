@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.shop.vo.Account;
 
 @Repository
-public class AccountDaolmp implements AccountDao{
+public class AccountDaoImp implements AccountDao{
 	@Inject
 	SqlSession sqlSession;
 	

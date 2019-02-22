@@ -37,6 +37,7 @@ public class ProBoardController {
 		}	
 		model.addAttribute("prolist", prolist);
 		model.addAttribute("path", path);
+		model.addAttribute("pbno", pbno);
 		return "product";		
 	}	
 	

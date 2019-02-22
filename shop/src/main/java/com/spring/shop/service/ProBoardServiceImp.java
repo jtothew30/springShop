@@ -10,7 +10,7 @@ import com.spring.shop.dao.ProBoardDao;
 import com.spring.shop.vo.Production;
 
 @Service("ProBoardService")
-public class ProBoardServicelmp implements ProBoardService{
+public class ProBoardServiceImp implements ProBoardService{
 	@Inject
 	ProBoardDao proboardDao;
 	

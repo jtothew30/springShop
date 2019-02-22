@@ -8,7 +8,7 @@ import com.spring.shop.dao.AccountDao;
 import com.spring.shop.vo.Account;
 
 @Service("AccountService")
-public class AccountServicelmp implements AccountService{
+public class AccountServiceImp implements AccountService{
 	
 	@Inject
 	AccountDao accountDao;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.shop.vo.Production;
 
 @Repository
-public class ProBoardDaolmp implements ProBoardDao{
+public class ProBoardDaoImp implements ProBoardDao{
 	@Inject
 	SqlSession sqlSession;
 	
