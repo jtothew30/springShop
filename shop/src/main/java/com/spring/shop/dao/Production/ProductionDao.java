@@ -9,4 +9,5 @@ public interface ProductionDao {
 	void insertProduction(Production production);
 	void resetProductionCount(Production production);
 	void updateProductionCount(Production production);
+	Production selectProductionOne(Production production);
 }

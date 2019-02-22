@@ -39,4 +39,9 @@ public class ProductionDaoImp implements ProductionDao {
 		sqlSession.update(ProductionMapper+".updateProductCount", production);
 	}
 
+	@Override
+	public Production selectProductionOne(Production production) {
+		return sqlSession.selectOne(ProductionMapper + ".selectProductForCount", production);
+	}
+
 }

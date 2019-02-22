@@ -9,4 +9,5 @@ public interface ProductionService {
 	void insertProductionService(Production production);
 	void resetProductionCount(Production production);
 	void updateProductionCount(Production production);
+	Production selectProductionOne(Production production);
 }

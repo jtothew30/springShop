@@ -35,4 +35,9 @@ public class ProductionServiceImp implements ProductionService {
 		productionDao.updateProductionCount(production);		
 	}
 
+	@Override
+	public Production selectProductionOne(Production production) {
+		return productionDao.selectProductionOne(production);
+	}
+
 }

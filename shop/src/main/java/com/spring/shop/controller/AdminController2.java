@@ -1,21 +1,14 @@
 package com.spring.shop.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.shop.service.ProBoard.ProBoardService;
@@ -23,20 +16,16 @@ import com.spring.shop.service.Production.ProductionService;
 import com.spring.shop.vo.ProBoard;
 import com.spring.shop.vo.Production;
 
-@Controller
-@RequestMapping("/admin/*")
-public class AdminController {
 
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+public class AdminController2 {
+
+	private static final Logger logger = LoggerFactory.getLogger(AdminController2.class);
 
 	@Inject
 	ProBoardService proBoardService;
 
 	@Inject
 	ProductionService productionService;
-
-	@Autowired
-	private ServletContext application;
 
 	@RequestMapping("main.do")
 	public String adminMainpage() {
@@ -82,34 +71,54 @@ public class AdminController {
 		return mav;
 	}
 	
-	//------------------------------------------------------------------------
-	
 	// 게시글관리 - 게시글 등록 페이지 이동
 	@RequestMapping(value = "boardInsert.do")
-	public ModelAndView boardInsertPage() {
-		ModelAndView mav = new ModelAndView("admin/boardInsert");
-		// production 에서 목록을 받아옴
-		List<Production> plist = productionService.productionSelectAllService();
-		mav.addObject("plist",plist);
-		
-		HashSet<String> list = new HashSet();
-		for (Production p  : plist) {
-			list.add(String.valueOf(p.getPname()));
-		}	
-		mav.addObject("list",list);
-		return mav;
+	public String boardInsertPage() {
+		return "admin/boardInsert";
 	}
-
+	
 	// 게시글관리 - 게시글 등록
 	@RequestMapping(value = "boardInsert.do", method = RequestMethod.POST)
 	public String boardInsert(ProBoard proBoard) throws Exception {
-		logger.info(proBoard.toString());
-		//proBoardService.insertProBoardService(proBoard);
+		proBoardService.insertProBoardService(proBoard);
 		return "redirect:boardList.do";
 	}
 	
+		
+		@Autowired
+		private ServletContext  application;
+		
+		@RequestMapping("upload.do")
+		public void upload(MultipartHttpServletRequest request) {
+			System.out.println("upload 접근");
+			List<MultipartFile> filelist = request.getFiles("file");
+			String category1 = request.getParameter("category1");
+			String category2 = request.getParameter("category2");
+			String category3 = request.getParameter("category3");
+			String pname = request.getParameter("pname");
+			
+			String path=application.getRealPath("/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname);
+			//String path = uploadpath;
+			System.out.println(path);
+			
+			File dir = new File(path); if (!dir.isDirectory()) { dir.mkdirs(); }
+				
+			for(MultipartFile file : filelist) {
+				String originFileName = file.getOriginalFilename(); // 원본 파일 명
+		        long fileSize = file.getSize(); // 파일 사이즈
+		        System.out.println("originFileName : " + originFileName);
+		        System.out.println("fileSize : " + fileSize);
+		        
+		        try {
+		        	file.transferTo(new File(path, originFileName));
+		        }catch(IllegalStateException e) {
+		        	e.printStackTrace();
+		        }catch(IOException e) {
+		        	e.printStackTrace();
+		        }
+			}
+		}
 	
-
 	// 게시글관리 - 리스트 출력
 	@RequestMapping("boardList.do")
 	public ModelAndView boardList() throws Exception {

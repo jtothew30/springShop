@@ -13,6 +13,10 @@
 	<!-- TODO -->
 	<!-- 초기등록시 리셋을 위한 detail이 필요한데 pno값을 모름 -->
 	<!-- pname, options 받아서 검색 return detail 필요 -->
+	<select id="selectProductForCount" parameterType="com.spring.shop.vo.Production" resultType="com.spring.shop.vo.Production">
+		select * from production where pname=#{pname} and options=#{options}
+	</select>
+	
 	
 	<!-- 제품리스트 출력 +count(prostock 테이블 참조) -->
 	<select id="selectProductAll" resultType="com.spring.shop.vo.Production" >
@@ -46,5 +50,7 @@
 	<update id="updateProductCount" parameterType="com.spring.shop.vo.Production">
 		update prostock set count=#{count} where #{pno} = pno
 	</update>
+	
+	<!-- pname기준으로 한묶음으로 검색 -->
 	
 </mapper>

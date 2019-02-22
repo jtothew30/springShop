@@ -8,6 +8,19 @@ public class ProBoard {
 	private int price;
 	private int event;
 	private int totalsales;
+	private String options; 
+	
+	public String getOptions() {
+		return options;
+	}
+	public void setOptions(String options) {
+		this.options = options;
+	}
+	@Override
+	public String toString() {
+		return "ProBoard [rn=" + rn + ", pbno=" + pbno + ", title=" + title + ", pbdate=" + pbdate + ", price=" + price
+				+ ", event=" + event + ", totalsales=" + totalsales + ", options=" + options + "]";
+	}
 	public int getRn() {
 		return rn;
 	}

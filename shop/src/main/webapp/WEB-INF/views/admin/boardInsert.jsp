@@ -77,7 +77,7 @@
 
 <body>
 	<c:import url="adminNav.jsp" />
-	
+
 	<div class="off-canvas-content" data-off-canvas-content>
 		<div class="title-bar hide-for-large">
 			<div class="title-bar-left">
@@ -114,12 +114,25 @@
 							판매량:<input name="totalsales" type="text">
 						</p>
 					</div>
+					<div class="row column">
+						<p>
+							<label>제품선택:</label> <select id="pnameSelect" onchange="change1();">
+								<c:forEach items="${list}" var="i">
+									<option value="${i}">${i}</option>
+								</c:forEach>
+							</select>
+						</p>
+					</div>
+					<div class="row column">
+						<p>
+							<label>옵션선택:</label> 
+							<div id="optionSelect"></div>						
+						</p>
+					</div>
 			</div>
 			<div class="row column">
-				<input class="alert button large-down-expanded" type="reset"
-					value="취소"> <input
-					class="sucssess button large-down-expanded" type="submit"
-					value="등록">
+				<input class="alert button large-down-expanded" type="reset" value="취소"> 
+				<input class="sucssess button large-down-expanded" type="submit"value="등록">
 			</div>
 			</form>
 			<hr>
@@ -128,6 +141,19 @@
 	<script src="../resources/js/vendor/jquery.js"></script>
 	<script src="../resources/js/vendor/foundation.js"></script>
 	<script src="../resources/js/app.js"></script>
+	<script type="text/javascript">
+		function change1() {
+			var selected = $("#pnameSelect option:selected").val();
+			$("#optionSelect > *").remove();
+			var str = "";
+			<c:forEach var="pl" items="${plist}">
+				if('${pl.pname}' == selected){
+					str += ("<input type='checkbox' name='options' value="+"${pl.options}"+">"+"${pl.options}"+"&nbsp;");
+				}					
+			</c:forEach>
+			$("#optionSelect").html(str);
+		}
+	</script>
 </body>
 
 </html>
