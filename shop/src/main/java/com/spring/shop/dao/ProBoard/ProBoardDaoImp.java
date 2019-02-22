@@ -1,4 +1,4 @@
-package com.spring.shop.dao;
+package com.spring.shop.dao.ProBoard;
 
 import java.util.List;
 

@@ -19,6 +19,7 @@
 			json.pno = "${pro.pno}";
 			json.options = "${pro.options}";
 			json.outprice = "${pro.outprice}"; 
+			json.count = 1;
 			prolist.push(json);
 		</c:forEach>	
 	})
@@ -48,13 +49,18 @@
 	function changeCount(pno, price) {		
 		var count = $("#count"+pno).val();
 		$("#price"+pno).html(count*price);
+		for(var i=0; i<seloplist.length; i++){
+			if(seloplist[i].pno == pno)
+				seloplist[i].count = count;
+		}
 		showTotal();
 	}
 	
 	function opCancel(pno) {
 		for(var i=0; i<seloplist.length; i++){
-			if(seloplist[i].pno == pno)
-				seloplist.splice(i,1);
+			if(seloplist[i].pno == pno){
+				seloplist.splice(i,1);				
+			}
 		}
 		showOpMenu();
 		showTotal();
@@ -86,7 +92,7 @@
 		$.ajax({
 			type: "POST",
 			url: "../cart/addCart.do",
-			data : {'list' : JSON.stringify(seloplist)},
+			data : {'list' : JSON.stringify(seloplist), 'pbno' : pbno},
 			success : function(data){
 				alert(data);
 			}

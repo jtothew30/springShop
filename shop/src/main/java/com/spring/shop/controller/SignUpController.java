@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.spring.shop.service.AccountService;
+import com.spring.shop.service.Account.AccountService;
 import com.spring.shop.vo.Account;
 
 @Controller

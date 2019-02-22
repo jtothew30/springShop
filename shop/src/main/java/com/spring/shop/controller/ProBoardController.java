@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spring.shop.service.ProBoardService;
+import com.spring.shop.service.ProBoard.ProBoardService;
 import com.spring.shop.vo.Production;
 
 @Controller

@@ -1,10 +1,10 @@
-package com.spring.shop.service;
+package com.spring.shop.service.Account;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.spring.shop.dao.AccountDao;
+import com.spring.shop.dao.Account.AccountDao;
 import com.spring.shop.vo.Account;
 
 @Service("AccountService")

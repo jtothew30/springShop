@@ -111,7 +111,10 @@ create table cart(
 	price number(7) not null,         --낱개 가격
 	status varchar2(100) not null,    --결제 상태
 	cartdate date not null	          --장바구니 등록 날짜
-)
+);
+commit;
+
+
 
 
 
@@ -215,6 +218,11 @@ col event for 999999
 col totalsales for 99999
 
 
+col customer for a15
+col count for 999
+col status for a10
+col cartdate for a15
+
 
 --dummy production
 insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(그레이)', 'none', 0);
@@ -224,6 +232,5 @@ commit;
 insert into proboard values(seqboard.nextval, '특가 할인! 칼리베이직가방3종 세트!', sysdate, 50000, 50000, 0);
 commit;
 
-insert into procontain values(1, 10001);
-insert into procontain values(1, 10002);
+insert into procontain values(1, '칼리베이직가방3종');
 commit;

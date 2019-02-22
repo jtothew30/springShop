@@ -1,4 +1,4 @@
-package com.spring.shop.dao;
+package com.spring.shop.dao.Account;
 
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;

@@ -1,4 +1,4 @@
-package com.spring.shop.service;
+package com.spring.shop.service.ProBoard;
 
 import java.util.List;
 

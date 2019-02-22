@@ -12,6 +12,9 @@ public class Production {
 	private String options;
 	private String script;
 	private int sales;
+	private int count;	// production count for payment or adding in cart
+	
+	
 	public int getPno() {
 		return pno;
 	}
@@ -77,6 +80,12 @@ public class Production {
 	}
 	public void setSales(int sales) {
 		this.sales = sales;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 	

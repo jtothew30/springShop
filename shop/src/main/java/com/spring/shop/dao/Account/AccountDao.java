@@ -1,11 +1,8 @@
-package com.spring.shop.service;
-
-import org.springframework.transaction.annotation.Transactional;
+package com.spring.shop.dao.Account;
 
 import com.spring.shop.vo.Account;
 
-
-public interface AccountService {
+public interface AccountDao {
 	public String dbCheck(String id) throws Exception;
 	public void dbInsert(Account account) throws Exception;
 }
