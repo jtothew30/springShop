@@ -18,4 +18,10 @@
 		on c.pno = p.pno 
 		order by cartdate desc
 	</select>
+	
+	
+	<delete id="deleteCart" parameterType="com.spring.shop.vo.Cart">
+		delete from cart where pno = #{pno} and customer = #{customer}
+	</delete>
+	
 </mapper>

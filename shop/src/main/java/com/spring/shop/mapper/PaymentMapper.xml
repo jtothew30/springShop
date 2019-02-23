@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.shop.mapper.PaymentMapper">
+	<insert id="createPayment" parameterType="string">
+		insert into payment values(seqpay.nextval, #{customer}, 'addr1', 'addr2', 'memo', sysdate, '결제진행', 0)
+	</insert>
+	
+	<select id="getPayno" parameterType="string" resultType="int">
+		select payno from payment where customer = #{customer} and status = '결제진행'
+	</select>
+	
+	<insert id="createPayrequest" parameterType="com.spring.shop.vo.Payrequest">
+		insert into payrequest values(seqreq.nextval, #{customer}, #{pno}, #{pbno}, #{count}, #{price}, '결제진행', #{payno})
+	</insert>
+	
+</mapper>

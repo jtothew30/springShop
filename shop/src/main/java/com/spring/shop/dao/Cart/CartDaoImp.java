@@ -32,4 +32,10 @@ public class CartDaoImp implements CartDao {
 		System.out.println("daoimp getCartList check : " + cartlist.size());
 		return cartlist;
 	}
+	
+	@Override
+	public void deleteCart(Cart cart) {
+		sqlSession.delete(CartMapper+".deleteCart", cart);
+		System.out.println("cart delete success");
+	}
 }

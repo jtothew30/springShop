@@ -23,4 +23,9 @@ public class CartServiceImp implements CartService{
 	public List<Cart> getCartList(String customer) throws Exception{
 		return cartDao.getCartList(customer);
 	}
+	
+	@Override
+	public void deleteCart(Cart cart) throws Exception{
+		cartDao.deleteCart(cart);
+	}
 }

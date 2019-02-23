@@ -106,25 +106,48 @@
 			type: "POST",
 			url: "../cart/addCart.do",
 			data : {'list' : JSON.stringify(seloplist), 'pbno' : pbno},
-			success : function(){
-				swal("상품을 장바구니에 담았습니다.","장바구니로 이동하시겠습니까?", "success", {
-					  buttons: {				    
-					    catch: {
-					      text: "장바구니로 가기",
-					      value: "catch",
-					    },
-					    cancel: "취소",
-					  },
-					})
-					.then((value) => {
-					  switch (value) {					 
-					    case "catch":
-					      location.href="../cart/cart.do";
-					      break;					 
-					    default:
-					    	break;
-					  }
-					});
+			success : function(data){
+				if(data == 'false'){
+					swal("");
+					swal("이미 장바구니에 있는 옵션을 선택하셨습니다! 장바구니 상품들을 확인하시겠습니까?", "", "warning", {
+						  buttons: {				    
+						    catch: {
+						      text: "장바구니 보러가기",
+						      value: "catch",
+						    },
+						    cancel: "취소",
+						  },
+						})
+						.then((value) => {
+						  switch (value) {					 
+						    case "catch":
+						    	location.href="../cart/cart.do";	    	
+						      break;					 
+						    default:
+						    	break;
+						  }
+						});
+				}
+				else{
+					swal("상품을 장바구니에 담았습니다.","장바구니로 이동하시겠습니까?", "success", {
+						  buttons: {				    
+						    catch: {
+						      text: "장바구니 보러가기",
+						      value: "catch",
+						    },
+						    cancel: "취소",
+						  },
+						})
+						.then((value) => {
+						  switch (value) {					 
+						    case "catch":
+						      location.href="../cart/cart.do";
+						      break;					 
+						    default:
+						    	break;
+						  }
+						});
+				}
 			}
 		})
 	}

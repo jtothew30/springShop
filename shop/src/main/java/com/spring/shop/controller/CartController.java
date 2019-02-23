@@ -1,4 +1,4 @@
-package com.spring.shop.controller.Cart;
+package com.spring.shop.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,20 +45,30 @@ public class CartController {
 	public String addCart(HttpServletRequest request) throws Exception{		
 		int pbno = Integer.parseInt(request.getParameter("pbno"));
 		String list = request.getParameter("list");
-		String customer = "testID";
-		
 		System.out.println("addCart 집입 체크, pbno : " + pbno);
+		
+		
+		String customer = "testID";
+		List<Cart> mycart = service.getCartList(customer); // for duplicate check
+		
 		
 		Gson gson = new Gson();		
 		Production[] proarray = gson.fromJson(list, Production[].class);
 		List<Production> prolist = Arrays.asList(proarray);
-		List<Cart> cartlist = new ArrayList<Cart>();
-		
+		List<Cart> cartlist = new ArrayList<Cart>();		
+	
 		  for(Production pro : prolist) {
 			  System.out.println("addCart pno:"+pro.getPno());
 			  System.out.println("addCart options:"+pro.getOptions());
 			  System.out.println("addCart outpirce:"+pro.getOutprice()); 
 			  System.out.println("addCart count:"+pro.getCount());
+			  
+			  for(Cart c :mycart) {
+				  if(c.getPno() == pro.getPno()) {
+					  System.out.println("장바구니 상품과 중복");
+					  return "false"; 
+				  }
+			  }
 			  
 			  Cart cart = new Cart();
 			  cart.setPno(pro.getPno());
@@ -72,8 +82,19 @@ public class CartController {
 		  service.addCart(cartlist);	
 		  System.out.println("장바구니에 담음");
 		  
-		return "ddd";
+		return "true";
 	}	
 	
-	
+	@ResponseBody
+	@RequestMapping(value="deleteCart.do", method=RequestMethod.POST)
+	public void deleteCart(HttpServletRequest request) throws Exception{		
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		String customer = "testID";
+		
+		Cart cart = new Cart();
+		cart.setPno(pno);
+		cart.setCustomer(customer);
+		
+		service.deleteCart(cart);	
+	}
 }
