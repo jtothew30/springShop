@@ -4,6 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.spring.shop.mapper.PaymentMapper">
+	<select id="getPayrequestList" resultType="com.spring.shop.vo.Payrequest" parameterType="string">
+		select pr.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select pr.*, pb.title from payrequest pr 
+									left outer join proboard pb 
+									on pr.pbno = pb.pbno 
+									where pr.customer = #{customer} and pr.status = '결제진행' 
+									) pr 
+		left outer join production p 
+		on pr.pno = p.pno 
+		order by p.pno
+	</select>
+
+
 	<insert id="createPayment" parameterType="string">
 		insert into payment values(seqpay.nextval, #{customer}, 'addr1', 'addr2', 'memo', sysdate, '결제진행', 0)
 	</insert>

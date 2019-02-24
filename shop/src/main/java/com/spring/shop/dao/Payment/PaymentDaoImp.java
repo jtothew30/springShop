@@ -38,4 +38,11 @@ public class PaymentDaoImp implements PaymentDao {
 		System.out.println("create new pay requests");
 	}
 	
+	
+	@Override
+	public List<Payrequest> getPayrequestList(String customer){
+		List<Payrequest> preqlist = sqlSession.selectList(PaymentMapper+".getPayrequestList", customer);
+		System.out.println("PaymentDaoImp check : getPayrequestList");
+		return preqlist;
+	}
 }

@@ -9,6 +9,16 @@ public class Payrequest {
 	private int price;
 	private String status;
 	private int payno;
+	
+	private String title;
+	private String options;
+	
+	private String pname;		//for getting img path
+	private String category1;
+	private String category2;
+	private String category3;
+	
+	
 	public int getReqno() {
 		return reqno;
 	}
@@ -57,5 +67,43 @@ public class Payrequest {
 	public void setPayno(int payno) {
 		this.payno = payno;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getOptions() {
+		return options;
+	}
+	public void setOptions(String options) {
+		this.options = options;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getCategory1() {
+		return category1;
+	}
+	public void setCategory1(String category1) {
+		this.category1 = category1;
+	}
+	public String getCategory2() {
+		return category2;
+	}
+	public void setCategory2(String category2) {
+		this.category2 = category2;
+	}
+	public String getCategory3() {
+		return category3;
+	}
+	public void setCategory3(String category3) {
+		this.category3 = category3;
+	}
+	
+	
 	
 }

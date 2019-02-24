@@ -28,4 +28,9 @@ public class PaymentServiceImp implements PaymentService {
 	public void createPayrequest(List<Payrequest> preqlist) throws Exception {
 		paymentDao.createPayrequest(preqlist);
 	}
+	
+	@Override
+	public List<Payrequest> getPayrequestList(String customer) throws Exception{
+		return paymentDao.getPayrequestList(customer);
+	}
 }

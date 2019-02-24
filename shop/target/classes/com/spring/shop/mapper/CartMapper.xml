@@ -10,9 +10,10 @@
 	
 	<select id="getCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">
 		<!-- select * from cart where customer = #{customer} order by cartdate desc -->
-		select c.*, p.pname, p.options from (select c.*, pb.title from cart c 
+		select c.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select c.*, pb.title from cart c 
 									left outer join proboard pb 
-									on c.pbno = pb.pbno
+									on c.pbno = pb.pbno 
+									where customer = #{customer} 
 									) c 
 		left outer join production p 
 		on c.pno = p.pno 

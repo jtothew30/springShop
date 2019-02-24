@@ -15,19 +15,30 @@ commit;
 
 
 
+drop sequence seqaddr;
+create sequence seqaddr
+ start with 1
+ increment by 1;
+commit;
+
 
 --배송지 테이블
 drop table address; 
-create table address(    		
-	senderid varchar2(100) not null,   --주문자 id
+create table address(  
+	addrno number(7) not null, 	   --배송지 번호  		
+	customer varchar2(100) not null,   --주문자 id
+	addrname varchar2(100) not null,   --배송지 이름
 	recipient varchar2(100) not null,  --받는 사람 이름
-	base varchar2(50) not null,	   --기본 배송지 플래그
+	base varchar2(50) not null,	   --기본 배송지 플래그 true/false
 	addr1 varchar2(200) not null,	   --주소1
 	addr2 varchar2(200) not null,	   --주소2
 	phone varchar2(100) not null,	   --연락처
-	memo varchar2(300) not null	   --남길 말 or 요청
+	memo varchar2(300) not null,	   --남길 말 or 요청
+	usedate date not null,		   --최근 사용 날짜
+	primary key(addrno)	
 );
 commit;
+
 
 
 
@@ -108,13 +119,10 @@ create table cart(
 	customer varchar2(100) not null,  --이용자 id
 	count number(7) not null,         --수량
 	price number(7) not null,         --낱개 가격
-	status varchar2(100) not null,    --결제 상태
+	status varchar2(100) not null,    --상태(결제준비,결제진행,결제완료)
 	cartdate date not null	          --장바구니 등록 날짜
 );
 commit;
-
-
-
 
 
 
@@ -141,12 +149,15 @@ commit;
 
 
 
+
+
+
+
 drop sequence seqreq;
 create sequence seqreq
  start with 1
  increment by 1;
 commit;
-
 
 --결제요청(상품별)
 drop table payrequest;
@@ -162,6 +173,8 @@ create table payrequest(
 	primary key(reqno)
 );
 commit;
+
+	
 
 
 drop sequence seqrev;
@@ -223,6 +236,26 @@ col status for a10
 col cartdate for a15
 
 
+col payno for 9999
+col address1 for a15
+col address2 for a15
+col memo for a30
+col paydate for a15
+col status for a10
+col total for 999999
+
+col addrno for 9999
+col addrname for a15
+col recipient for a15
+col base for a10
+col addr1 for a20
+col addr2 for a20
+col phone for a13
+col memo for a20
+
+
+
+
 --dummy production
 insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(그레이)', 'none', 0);
 insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(네이비)', 'none', 0);
@@ -233,3 +266,10 @@ commit;
 
 insert into procontain values(1, '칼리베이직가방3종');
 commit;
+
+
+--dummy address
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이', 'true', '주우우우우우우소오오오오오오1', '주우우우우우소소오오오2', '010-1234-4567', '현관에 놔주세요', sysdate);
+
+commit;
+
