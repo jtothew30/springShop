@@ -6,8 +6,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Home</title>
-<link rel="stylesheet" href="resources/css/foundation.css">
-<link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css">
 <style type="text/css">
 
 .fullscreen-image-slider .orbit-image {
@@ -29,7 +27,7 @@
 </head>
 	<c:import url="header.jsp" />
 <body>
-	<div class="main" style="margin: 10% 10%;">
+	<div style="margin: 10% 10%;">
 	<div class="row">
 		<div class="large-12 columns">
 			<!-- 카로셀 들어갈 자리 -->

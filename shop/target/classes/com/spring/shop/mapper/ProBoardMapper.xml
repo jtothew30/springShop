@@ -37,14 +37,21 @@
 	</select>
 	
 	<select id="selectForSearch" parameterType="String" resultType="com.spring.shop.vo.ProBoard">
-		select rownum rn, b.*, p.category1, p.category2, p.category3 
+		select rownum rn, s.*
 		from (
-			select pb.*, pname
-			from proboard pb left outer join procontain	b
-            on pb.pbno = b.pbno
-            where pb.title like '%'||#{kwd}||'%'           
-		) b
-		left outer join production p
-		on p.pname = b.pname		
+	        	select DISTINCT b.*, p.category1, p.category2, p.category3 
+				from (
+					select pb.*, pname
+					from (
+		                select distinct * from proboard
+		            ) pb 
+		            left outer join procontain b
+		            on pb.pbno = b.pbno
+		            where pb.title like '%'||#{kwd}||'%'           
+				) b
+				left outer join production p
+				on p.pname = b.pname
+		    ) s
+		order by rn	
 	</select>	
 </mapper>

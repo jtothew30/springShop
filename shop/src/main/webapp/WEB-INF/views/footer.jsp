@@ -227,6 +227,7 @@
 </head>
 
 <body>
+<div style="margin: 0% 0%;">
 <div class="three-column-footer-contact-form-container">
   <footer class="three-column-footer-contact-form" data-equalizer data-equalize-by-row="true">
     <div class="footer-left" data-equalizer-watch>
@@ -239,7 +240,7 @@
         </div>
         <div class="newsletter">
           <div class="input-group">
-            <h6>Sign up for our newsletter</h6>
+            <h6>Sign up for our newsletter</h6><p>
             <input class="input-group-field" type="email" placeholder="Email address">
           </div>
           <a class="button expanded" href="#">Submit</a>
@@ -251,9 +252,9 @@
         <div class="newsletter">
           <h6>Contact form</h6>
           <div class="input-group">
-            <input class="input-group-field" type="text" placeholder="Name">
-            <input class="input-group-field" type="email" placeholder="Email address">
-            <textarea placeholder="Message"></textarea>
+            <p><input class="input-group-field" type="text" placeholder="Name"><p>
+            <input class="input-group-field" type="email" placeholder="Email address"><p>
+            <textarea placeholder="Message"></textarea><p>
           </div>
           <a class="button expanded" href="#">Submit</a>
         </div>
@@ -276,7 +277,7 @@
     </div>
   </footer>
 </div>
-
+</div>
 </body>
 
 </html>
