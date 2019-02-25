@@ -35,7 +35,7 @@
 						<c:forEach items="${list}" var="list">					
 						<tr>
 							<td>${list.pbno}</td>
-							<td>${list.title}</td>
+							<td><a href="../proboard/product.do?pbno=${list.pbno}">${list.title}</a></td>
 							<td>${list.pbdate}</td>
 							<td>${list.price}</td>
 							<td>${list.event}</td>

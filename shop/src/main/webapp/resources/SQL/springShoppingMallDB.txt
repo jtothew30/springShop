@@ -1,0 +1,235 @@
+--계정
+drop table account; 
+create table account(
+	id varchar2(100) not null,
+	pw varchar2(100) not null,
+	name varchar2(100) not null,
+	age number(7) not null,
+	gender varchar2(50) not null,
+	email varchar2(100) not null,
+	phone varchar2(100) not null,
+	adate date not null,	
+	primary key(id)
+);
+commit;
+
+
+
+
+--배송지 테이블
+drop table address; 
+create table address(    		
+	senderid varchar2(100) not null,   --주문자 id
+	recipient varchar2(100) not null,  --받는 사람 이름
+	base varchar2(50) not null,	   --기본 배송지 플래그
+	addr1 varchar2(200) not null,	   --주소1
+	addr2 varchar2(200) not null,	   --주소2
+	phone varchar2(100) not null,	   --연락처
+	memo varchar2(300) not null	   --남길 말 or 요청
+);
+commit;
+
+
+
+drop sequence seqpro;
+create sequence seqpro
+ start with 10000
+ increment by 1;
+commit;
+
+--상품
+drop table production; 
+create table production(
+	pno number(7) not null,		 --상품번호
+	pname varchar2(150) not null,    --상품명
+	brand varchar2(150) not null,    --제조사명
+	inprice number(7) not null,      --입고가격
+	outprice number(7) not null,     --현재가격
+	category1 varchar2(100) not null, --큰 카테고리(ex.의류/잡화...)
+	category2 varchar2(100) not null, --중간 카테고리(ex.여자의류/남자의류...)
+	category3 varchar2(100) not null, --세부 카테고리(ex.티셔츠/블라우스...)
+	options varchar2(100) not null,	  --옵션	
+	script varchar2(300) not null,    --부가설명
+	sales number(7) not null,          --판매량
+	primary key(pno)
+);
+commit;
+
+drop sequence seqboard;
+create sequence seqboard
+ start with 1
+ increment by 1;
+commit;
+
+--상품 게시판
+drop table proboard;   
+create table proboard(
+	pbno number(7) not null,
+	title varchar2(150) not null,
+	pbdate date not null,
+	price number(7) not null,      --원가격
+	event number(7) not null,      --할인가격(if.입고가격 != 현재가격 )
+	totalsales number(7) not null, --총 판매량(상품 판매량들의 총합)
+	primary key(pbno)
+);
+commit;
+
+--각 상품,상품판매글 관계 테이블
+drop table procontain;
+create table procontain(
+	pbno number(7) not null,	--상품 게시글 번호 참조
+	pname varchar2(150) not null	--해당 상품에 속한 상품의 이름
+);
+commit;
+
+alter table procontain drop constraint contain_fk; 
+alter table procontain add constraint contain_fk 
+        foreign key(pbno) references  proboard(pbno) on delete cascade;
+commit;
+
+
+
+
+--상품 재고
+drop table prostock;
+create table prostock(
+	pno number(7) not null,
+	count number(7) not null
+);
+commit;
+
+
+
+--장바구니
+drop table cart;  
+create table cart( 
+	pno number(7) not null,		  --장바구니에 담긴 상품 참조
+	pbno number(7) not null, 	  --상품 게시글 참조
+	customer varchar2(100) not null,  --이용자 id
+	count number(7) not null,         --수량
+	price number(7) not null,         --낱개 가격
+	status varchar2(100) not null,    --결제 상태
+	cartdate date not null	          --장바구니 등록 날짜
+);
+commit;
+
+
+
+
+
+
+drop sequence seqpay;
+create sequence seqpay
+ start with 1 
+ increment by 1;
+commit;
+
+--최종결제(종합)
+drop table payment;
+create table payment(
+	payno number(7) not null,	  --결제번호
+	customer varchar2(100) not null,  --구매자 id
+	address1 varchar2(200) not null,  --배송지 주소1
+	address2 varchar2(200) not null,  --배송지 주소2
+	memo varchar2(300) not null,	  --남길 말 or 요청
+	paydate date not null,            --결제 날짜
+	status varchar2(100) not null,    --결제 상태
+	total number(7) not null,         --총 가격
+	primary key(payno)
+);
+commit;
+
+
+
+drop sequence seqreq;
+create sequence seqreq
+ start with 1
+ increment by 1;
+commit;
+
+
+--결제요청(상품별)
+drop table payrequest;
+create table payrequest(
+	reqno number(7) not null,	  --결제요청번호	
+	customer varchar2(100) not null,  --구매자 id
+	pno number(7) not null,		  --상품 정보 참조
+	pbno number(7) not null, 	  --상품 게시글 참조
+	count number(7) not null,	  --수량
+	price number(7) not null,	  --낱개 가격	
+	status varchar2(100) not null,    --결제 상태
+	payno number(7) not null,	  --최종결제 건으로 참조
+	primary key(reqno)
+);
+commit;
+
+
+drop sequence seqrev;
+create sequence seqrev
+ start with 1
+ increment by 1;
+commit;
+
+
+--상품 리뷰
+drop table review;
+create table review(
+	rno  number(7) not null,	--리뷰번호
+	writer varchar2(100) not null,  --댓글작성자 id
+	content varchar2(500) not null, --댓글내용
+	img varchar2(300),		--첨부이미지
+	stars number(7),		--별점
+	qna varchar2(50) not null,	--QnA 플래그
+	pbno number(7) not null		--상품 게시판 참조
+	primary key(rno)
+);
+commit;
+
+
+
+set linesize 15000
+col id for a10
+col pw for a10
+col name for a10
+col age for 999
+col gender for a10
+col phone for a15
+col email for a20
+col adate for a10
+
+col pno for 99999
+col pname for a20
+col brand for a10
+col inprice for 999999
+col outprice for 999999
+col category1 for a10
+col category2 for a10
+col category3 for a10
+col options for a25
+col script for a15
+col sales for 99999
+
+col pbno for 99999
+col title for a50
+col pbdate for a15
+col price for 999999
+col event for 999999
+col totalsales for 99999
+
+
+col customer for a15
+col count for 999
+col status for a10
+col cartdate for a15
+
+
+--dummy production
+insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(그레이)', 'none', 0);
+insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(네이비)', 'none', 0);
+commit;
+
+insert into proboard values(seqboard.nextval, '특가 할인! 칼리베이직가방3종 세트!', sysdate, 50000, 50000, 0);
+commit;
+
+insert into procontain values(1, '칼리베이직가방3종');
+commit;

@@ -1,10 +1,12 @@
 package com.spring.shop.dao.ProBoard;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.ProBoard;
@@ -32,6 +34,20 @@ public class ProBoardDaoImp implements ProBoardDao{
 	public void insertProBoard(ProBoard preBoard) throws Exception {
 		sqlSession.insert(ProBoardMapper+".insertProBoard", preBoard);
 	}
-	
+
+	@Override
+	public void insertPnameContain(HashMap<String, Object> pbnopname){	
+		sqlSession.insert(ProBoardMapper+".insertPnameContain", pbnopname);
+	}
+
+	@Override
+	public ProBoard selectBoardForContain(ProBoard proBoard) {		
+		return sqlSession.selectOne(ProBoardMapper+".selectBoardForContain", proBoard);
+	}
+
+	@Override
+	public List<ProBoard> getpbList(String kwd) {		
+		return sqlSession.selectList(ProBoardMapper+".selectForSearch", kwd);
+	}
 
 }

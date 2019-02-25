@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.shop.mapper.CartMapper">
+	<insert id="insert" parameterType="com.spring.shop.vo.Cart">
+		insert into cart values(#{pno}, #{pbno}, #{customer}, #{count}, #{price}, '결제준비', sysdate)
+	</insert>
+	
+	<select id="getCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">
+		<!-- select * from cart where customer = #{customer} order by cartdate desc -->
+		select c.*, p.pname, p.options from (select c.*, pb.title from cart c 
+									left outer join proboard pb 
+									on c.pbno = pb.pbno
+									) c 
+		left outer join production p 
+		on c.pno = p.pno 
+		order by cartdate desc
+	</select>
+	
+	
+	<delete id="deleteCart" parameterType="com.spring.shop.vo.Cart">
+		delete from cart where pno = #{pno} and customer = #{customer}
+	</delete>
+	
+</mapper>

@@ -7,13 +7,13 @@
 <title>테스팅 interPage</title>
 </head>
 <body>
-	<h1>
-		<a href="/">home.do</a><p>
-		<a href="product.do">product.do</a>
+	<h1>		
+		<a href="proboard/product.do?pbno=1">product.do</a>
 	</h1>	
 	<h1>
 		<a href="admin/main.do">admin페이지</a>	<p>
-		<a href="main.do">main페이지</a>			
+		<a href="main.do">main페이지</a><p>
+		<a href="signUp/signUp.do">회원가입 테스트</a>			
 	</h1>
 </body>
 </html>

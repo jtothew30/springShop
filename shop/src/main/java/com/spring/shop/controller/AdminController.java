@@ -2,6 +2,7 @@ package com.spring.shop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class AdminController {
 		List<Production> plist = productionService.productionSelectAllService();
 		mav.addObject("plist",plist);
 		
-		HashSet<String> list = new HashSet();
+		HashSet<String> list = new HashSet<String>();
 		for (Production p  : plist) {
 			list.add(String.valueOf(p.getPname()));
 		}	
@@ -102,13 +103,46 @@ public class AdminController {
 
 	// 게시글관리 - 게시글 등록
 	@RequestMapping(value = "boardInsert.do", method = RequestMethod.POST)
-	public String boardInsert(ProBoard proBoard) throws Exception {
+	public String boardInsert(ProBoard proBoard, MultipartHttpServletRequest request) throws Exception {
 		logger.info(proBoard.toString());
-		//proBoardService.insertProBoardService(proBoard);
-		return "redirect:boardList.do";
-	}
-	
-	
+		List<MultipartFile> filelist = request.getFiles("file");
+		String pname = request.getParameter("pname");
+		String category1 = request.getParameter("category1");
+		String category2 = request.getParameter("category2");
+		String category3 = request.getParameter("category3");
+		proBoardService.insertProBoardService(proBoard);
+		// query input 타이밍에 pbno, pbdate ==> null 상태		
+		ProBoard pb = proBoardService.selectBoardForContain(proBoard);		
+		
+		//procontain 연동 등록 필요 ==> [pbno, pname]
+		int pbno = pb.getPbno();
+		HashMap<String, Object> pbnopname = new HashMap<String, Object>();
+		pbnopname.put("pbno", pbno); // int --> Auto Boxing --> Integer
+		pbnopname.put("pname", pname);
+		proBoardService.insertPnameContain(pbnopname);		
+		
+		String[] options = proBoard.getOptions().split(",");	//proBoard.options -> parsing 필요 "," 구문	
+		
+		String path=application.getRealPath("/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname);
+		File dir = new File(path);
+		if (!dir.isDirectory()) { dir.mkdirs(); }
+		for(MultipartFile file : filelist) {
+			String originFileName = file.getOriginalFilename(); // 원본 파일 명
+	        long fileSize = file.getSize(); // 파일 사이즈
+	        logger.info("originFileName : " + originFileName);
+	        logger.info("fileSize : " + fileSize);
+	        
+	        try {
+	        	file.transferTo(new File(path, originFileName));
+	        }catch(IllegalStateException e) {
+	        	e.printStackTrace();
+	        }catch(IOException e) {
+	        	e.printStackTrace();
+	        }
+		}
+		
+		return "redirect:boardList.do";				
+	}	
 
 	// 게시글관리 - 리스트 출력
 	@RequestMapping("boardList.do")

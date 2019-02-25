@@ -1,5 +1,6 @@
 package com.spring.shop.service.ProBoard;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,5 +29,20 @@ public class ProBoardServiceImp implements ProBoardService{
 	@Override
 	public void insertProBoardService(ProBoard proBoard) throws Exception {
 		proboardDao.insertProBoard(proBoard);
+	}
+
+	@Override
+	public void insertPnameContain(HashMap<String, Object> pbnopname) {
+		proboardDao.insertPnameContain(pbnopname);
+	}
+
+	@Override
+	public ProBoard selectBoardForContain(ProBoard proBoard) {
+		return proboardDao.selectBoardForContain(proBoard);
+	}
+
+	@Override
+	public List<ProBoard> getpbList(String kwd) {		
+		return proboardDao.getpbList(kwd);
 	}
 }

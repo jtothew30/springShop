@@ -93,7 +93,7 @@
 		</div>
 		<div class="callout primary">
 			<div class="row column">
-				<form name="boardInsertForm" action="boardInsert.do" method="post">
+				<form name="boardInsertForm" action="boardInsert.do" method="post" enctype="multipart/form-data">
 					<div class="row column">
 						<p>
 							글 제목:<input name="title" type="text">
@@ -116,7 +116,8 @@
 					</div>
 					<div class="row column">
 						<p>
-							<label>제품선택:</label> <select id="pnameSelect" onchange="change1();">
+							<label>제품선택:</label> 
+							<select name="pname" id="pnameSelect" onchange="change1();">
 								<c:forEach items="${list}" var="i">
 									<option value="${i}">${i}</option>
 								</c:forEach>
@@ -125,14 +126,20 @@
 					</div>
 					<div class="row column">
 						<p>
-							<label>옵션선택:</label> 
-							<div id="optionSelect"></div>						
+							<label>옵션선택:</label>
+						<div id="optionSelect"></div>
 						</p>
 					</div>
+					<div class="row column">
+						<p>
+							<label>상품이미지 등록:</label> 
+							<input multiple="multiple" type="file" name="file" />
+						</p>
+					</div>							
 			</div>
 			<div class="row column">
-				<input class="alert button large-down-expanded" type="reset" value="취소"> 
-				<input class="sucssess button large-down-expanded" type="submit"value="등록">
+				<input class="alert button large-down-expanded" type="reset" value="취소">
+				 <input	class="sucssess button large-down-expanded" type="submit" value="등록">
 			</div>
 			</form>
 			<hr>
@@ -147,9 +154,13 @@
 			$("#optionSelect > *").remove();
 			var str = "";
 			<c:forEach var="pl" items="${plist}">
-				if('${pl.pname}' == selected){
-					str += ("<input type='checkbox' name='options' value="+"${pl.options}"+">"+"${pl.options}"+"&nbsp;");
-				}					
+			if ('${pl.pname}' == selected) {
+				str += ("<input type='checkbox' name='options' value="+"${pl.options}"+">"
+						+ "${pl.options}" + "&nbsp;");
+				str += ("<input type='hidden' name='category1' value="+"${pl.category1}"+">");
+				str += ("<input type='hidden' name='category2' value="+"${pl.category2}"+">");
+				str += ("<input type='hidden' name='category3' value="+"${pl.category3}"+">");
+			}
 			</c:forEach>
 			$("#optionSelect").html(str);
 		}

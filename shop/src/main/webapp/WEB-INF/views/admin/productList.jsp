@@ -117,11 +117,11 @@ to {
 								<td>${list.sales}</td>
 								<c:choose>
 									<c:when test="${list.count eq 0}">
-										<td bgcolor="orange">${list.count}<span
+										<td bgcolor="orange"><font color="white">${list.count}</font><span
 											class="expand-icon"></span></td>
 									</c:when>
 									<c:otherwise>
-										<td bgcolor="gray">${list.count}<span class="expand-icon"></span></td>
+										<td bgcolor="gray"><font color="white">${list.count}</font><span class="expand-icon"></span></td>
 									</c:otherwise>
 								</c:choose>
 							</tr>

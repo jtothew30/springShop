@@ -81,10 +81,10 @@
       </div>
       <div class="ecommerce-header-top-links">
         <ul align="right">
-          <li><a href="#">Help</a></li>
-          <li><a href="#">Order Status</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">My Account</a></li>
+          <li><a href="#">로그인</a></li>
+          <li><a href="#">회원가입</a></li>
+          <li><a href="#">장바구니</a></li>
+          <li><a href="#">마이페이지</a></li>
           <li><a href="#" target="_blank"><i class="fa fa-shopping-cart"></i></a></li>
         </ul>
       </div>
@@ -104,22 +104,19 @@
           <li class="has-form" style="margin-top: 10px;">
 			  <div class="row collapse">
 			    <div class="large-8 small-9 columns">
-			      <input type="text" placeholder="Find Stuff">
+			      <form action="search.do" name="searchProduct">
+			        <input type="text" name="kwd" placeholder="Find Stuff">			      
 			    </div>
 			  </div>
 		  </li>
 		  <li>
-			  <div class="large-4 small-3 columns">
-			      <a href="#" class="alert button expand">Search</a>
+			  <div class="large-4 small-3 columns" style="padding: 8px">
+			      <input type="submit" class="alert button expand" value="검색">
+			      </form>
 			  </div>
-		  </li>
-        </ul>
-        <ul class="menu">
-        </ul>
-      </div>
-      <div class="shrink column">
-
-      </div>
+		  </li>		  
+        </ul>        
+      </div>      
     </div>
   </div>
 
