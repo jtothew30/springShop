@@ -6,7 +6,6 @@ public class Cart {
 	private String customer;
 	private int count;
 	private int price;
-	private String status;
 	private String cartdate;
 	
 	private String title;
@@ -48,12 +47,6 @@ public class Cart {
 	}
 	public void setPrice(int price) {
 		this.price = price;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	public String getCartdate() {
 		return cartdate;

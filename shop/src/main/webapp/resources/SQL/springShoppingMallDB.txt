@@ -33,7 +33,6 @@ create table address(
 	addr1 varchar2(200) not null,	   --주소1
 	addr2 varchar2(200) not null,	   --주소2
 	phone varchar2(100) not null,	   --연락처
-	memo varchar2(300) not null,	   --남길 말 or 요청
 	usedate date not null,		   --최근 사용 날짜
 	primary key(addrno)	
 );
@@ -89,7 +88,8 @@ commit;
 drop table procontain;
 create table procontain(
 	pbno number(7) not null,	--상품 게시글 번호 참조
-	pname varchar2(150) not null	--해당 상품에 속한 상품의 이름
+	pname varchar2(150) not null,	--해당 상품에 속한 상품의 이름
+	path varchar2(200) not null	--이미지 경로
 );
 commit;
 
@@ -119,7 +119,6 @@ create table cart(
 	customer varchar2(100) not null,  --이용자 id
 	count number(7) not null,         --수량
 	price number(7) not null,         --낱개 가격
-	status varchar2(100) not null,    --상태(결제준비,결제진행,결제완료)
 	cartdate date not null	          --장바구니 등록 날짜
 );
 commit;
@@ -137,19 +136,17 @@ drop table payment;
 create table payment(
 	payno number(7) not null,	  --결제번호
 	customer varchar2(100) not null,  --구매자 id
+	recipient varchar2(100) not null,  --받는 사람 이름
+	payname varchar2(100) not null,   --결제된 상품이름
 	address1 varchar2(200) not null,  --배송지 주소1
 	address2 varchar2(200) not null,  --배송지 주소2
 	memo varchar2(300) not null,	  --남길 말 or 요청
 	paydate date not null,            --결제 날짜
-	status varchar2(100) not null,    --결제 상태
+	status varchar2(100) not null,    --결제 상태(결제진행,결제완료,결제환불)
 	total number(7) not null,         --총 가격
 	primary key(payno)
 );
 commit;
-
-
-
-
 
 
 
@@ -168,7 +165,7 @@ create table payrequest(
 	pbno number(7) not null, 	  --상품 게시글 참조
 	count number(7) not null,	  --수량
 	price number(7) not null,	  --낱개 가격	
-	status varchar2(100) not null,    --결제 상태
+	status varchar2(100) not null,    --결제 상태(결제진행,결제완료,결제환불)
 	payno number(7) not null,	  --최종결제 건으로 참조
 	primary key(reqno)
 );
@@ -269,7 +266,9 @@ commit;
 
 
 --dummy address
-insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이', 'true', '주우우우우우우소오오오오오오1', '주우우우우우소소오오오2', '010-1234-4567', '현관에 놔주세요', sysdate);
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이1', 'true', '주우우우우우우소오오오오오오1', '주우우우우우소소오오오2', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이2', 'false', 'juso111111111111', 'juso222222222222222', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이3', 'false', '주소3333333333333333', '주소4444444444444444444', '010-1234-4567', sysdate);
 
 commit;
 

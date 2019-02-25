@@ -153,6 +153,36 @@
 	}
 	
 	
+	function payreq(pbno) {
+		if(!seloplist.length){
+			swal("상품을 먼저 선택해주세요!");
+			return;
+		}
+		
+		var templist = new Array();
+		for(var i=0; i<seloplist.length; i++){
+			var json = new Object();
+			json.pno = seloplist[i].pno;
+			json.pbno = pbno;
+			json.count =  seloplist[i].count;
+			json.price = seloplist[i].outprice;
+			templist.push(json);
+		}
+	
+		$.ajax({
+			type: "POST",
+			url: "../payment/payrequest.do",
+			data : {'list' : JSON.stringify(templist), 'pbno' : pbno},
+			success : function(){
+				swal("결제페이지로 이동합니다.","", "success")
+				.then((value) => {
+			      location.href="../payment/paymentPage.do";
+				});			
+			}
+		})	
+	}
+	
+	
 	
 	
 	$(document).ready(function() {
@@ -248,7 +278,7 @@
 				<hr>		
 				<div class="button-group expanded">
 					<a href="#" class="button large" onclick="addCart(${pbno})">장바구니 담기</a> 
-					<a href="#" class="button large">바로 구매하기</a>
+					<a href="#" class="button large" onclick="payreq(${pbno})">바로 구매하기</a>
 				</div>
 			</div>
 		</div>

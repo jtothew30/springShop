@@ -20,7 +20,9 @@ import com.spring.shop.service.Address.AddressService;
 import com.spring.shop.service.Payment.PaymentService;
 import com.spring.shop.vo.Address;
 import com.spring.shop.vo.Cart;
+import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
+import com.spring.shop.vo.Production;
 
 @Controller
 @RequestMapping("/payment/*")
@@ -35,8 +37,14 @@ public class PaymentController {
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
 	@RequestMapping(value="paymentPage.do")
-	public String cart(Model model) throws Exception{
-		String customer = "testID"; 
+	public String paymentPage(Model model) throws Exception{
+		
+		//get datas from session
+		String customer = "testID";
+		String email = "asd@asd.asd";
+		
+		
+		
 		List<Payrequest> preqlist = service.getPayrequestList(customer);
 		
 		int total = 0;
@@ -70,9 +78,24 @@ public class PaymentController {
 		model.addAttribute("addrlist", addrlist);
 		model.addAttribute("total", total);
 		model.addAttribute("customer", customer);
+		model.addAttribute("email", email);
 		return "Payment/payment";
 	}
 	
+	
+	
+	@RequestMapping(value="paymentResult.do")
+	public String paymentResultPage(Model model, HttpServletRequest request) throws Exception{
+		
+		//get datas from session
+		String customer = "testID";
+		
+		int payno = Integer.parseInt(request.getParameter("payno"));		
+		Payment payment = service.getPaymentResult(payno);
+		
+		model.addAttribute("payment", payment);
+		return "Payment/paymentResult";
+	}
 	
 	
 	
@@ -107,7 +130,33 @@ public class PaymentController {
 			preq.setPayno(payno);
 			preqlist.add(preq);
 		}		
-		service.createPayrequest(preqlist); // create new payrequest datas
+		service.createPayrequest(preqlist); // create new payrequest datas		
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/payment.do", method=RequestMethod.POST)
+	public int payment(HttpServletRequest request) throws Exception{
+		String customer = "testID"; 
+		String getpayment = request.getParameter("payment");
+
+		Gson gson = new Gson();
+		Payment payment = gson.fromJson(getpayment, Payment.class);
+		payment.setCustomer(customer);
 		
+		System.out.println("payment.do getPayno : " + payment.getPayno());
+		System.out.println("payment.do getCustomer : " + payment.getCustomer());
+		System.out.println("payment.do getRecipient : " + payment.getRecipient());
+		System.out.println("payment.do getPayname : " + payment.getPayname());
+		System.out.println("payment.do getAddress1 : " + payment.getAddress1());
+		System.out.println("payment.do getAddress2 : " + payment.getAddress2());
+		System.out.println("payment.do getMemo : " + payment.getMemo());
+		System.out.println("payment.do getPaydate : " + payment.getPaydate());
+		System.out.println("payment.do getStatus : " + payment.getStatus());
+		System.out.println("payment.do getTotal : " + payment.getTotal());
+		
+		service.payment(payment);
+		
+		return payment.getPayno();
 	}
 }

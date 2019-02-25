@@ -9,7 +9,6 @@ public class Address {
 	private String addr1;
 	private String addr2;
 	private String phone;
-	private String memo;
 	private String usedate;
 	
 	
@@ -61,12 +60,6 @@ public class Address {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	public String getMemo() {
-		return memo;
-	}
-	public void setMemo(String memo) {
-		this.memo = memo;
 	}
 	public String getUsedate() {
 		return usedate;

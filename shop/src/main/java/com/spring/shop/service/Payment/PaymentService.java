@@ -2,6 +2,7 @@ package com.spring.shop.service.Payment;
 
 import java.util.List;
 
+import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
 
 public interface PaymentService {
@@ -9,4 +10,6 @@ public interface PaymentService {
 	public int getPayno(String customer) throws Exception;
 	public void createPayrequest(List<Payrequest> preqlist) throws Exception;
 	public List<Payrequest> getPayrequestList(String customer) throws Exception;
+	public void payment(Payment payment) throws Exception;
+	public Payment getPaymentResult(int payno) throws Exception;
 }

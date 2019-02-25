@@ -14,10 +14,15 @@
 		on pr.pno = p.pno 
 		order by p.pno
 	</select>
+	
+	
+	<select id="getPaymentResult" resultType="com.spring.shop.vo.Payment" parameterType="int">
+		select * from payment where payno = #{payno}
+	</select>
 
 
 	<insert id="createPayment" parameterType="string">
-		insert into payment values(seqpay.nextval, #{customer}, 'addr1', 'addr2', 'memo', sysdate, '결제진행', 0)
+		insert into payment values(seqpay.nextval, #{customer}, 'recipient', 'payname', 'addr1', 'addr2', 'memo', sysdate, '결제진행', 0)
 	</insert>
 	
 	<select id="getPayno" parameterType="string" resultType="int">
@@ -27,5 +32,15 @@
 	<insert id="createPayrequest" parameterType="com.spring.shop.vo.Payrequest">
 		insert into payrequest values(seqreq.nextval, #{customer}, #{pno}, #{pbno}, #{count}, #{price}, '결제진행', #{payno})
 	</insert>
+	
+	
+	<update id="payment" parameterType="com.spring.shop.vo.Payment">
+		update payment set recipient = #{recipient}, payname = #{payname}, address1 = #{address1}, address2 = #{address2}, memo = #{memo}, paydate = sysdate, status = '결제완료', total = #{total} where payno = #{payno} 
+	</update>
+	
+	<update id="updatePayrequest" parameterType="com.spring.shop.vo.Payment">
+		update payrequest set status = '결제완료' where payno = #{payno} 
+	</update>
+	
 	
 </mapper>

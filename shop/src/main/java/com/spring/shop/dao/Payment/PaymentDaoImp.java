@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.Cart;
+import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
 
 @Repository
@@ -44,5 +45,18 @@ public class PaymentDaoImp implements PaymentDao {
 		List<Payrequest> preqlist = sqlSession.selectList(PaymentMapper+".getPayrequestList", customer);
 		System.out.println("PaymentDaoImp check : getPayrequestList");
 		return preqlist;
+	}
+	
+	@Override
+	public void payment(Payment payment) {
+		sqlSession.update(PaymentMapper+".payment", payment);
+		sqlSession.update(PaymentMapper+".updatePayrequest", payment);
+		System.out.println("payment success");
+	}
+	
+	@Override
+	public Payment getPaymentResult(int payno) {
+		Payment result = sqlSession.selectOne(PaymentMapper+".getPaymentResult", payno);
+		return result;
 	}
 }

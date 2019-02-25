@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.spring.shop.dao.Payment.PaymentDao;
+import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
 
 @Service("PaymentService")
@@ -32,5 +33,15 @@ public class PaymentServiceImp implements PaymentService {
 	@Override
 	public List<Payrequest> getPayrequestList(String customer) throws Exception{
 		return paymentDao.getPayrequestList(customer);
+	}
+	
+	@Override
+	public void payment(Payment payment) throws Exception{
+		paymentDao.payment(payment);
+	}
+	
+	@Override
+	public Payment getPaymentResult(int payno) throws Exception{
+		return paymentDao.getPaymentResult(payno);
 	}
 }

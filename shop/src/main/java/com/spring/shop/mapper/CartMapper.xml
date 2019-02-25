@@ -5,7 +5,7 @@
   
 <mapper namespace="com.spring.shop.mapper.CartMapper">
 	<insert id="insert" parameterType="com.spring.shop.vo.Cart">
-		insert into cart values(#{pno}, #{pbno}, #{customer}, #{count}, #{price}, '결제준비', sysdate)
+		insert into cart values(#{pno}, #{pbno}, #{customer}, #{count}, #{price}, sysdate)
 	</insert>
 	
 	<select id="getCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">

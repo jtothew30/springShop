@@ -21,10 +21,20 @@
 		}
 		//alert(sel.value);
 		if(sel.value == 'base'){
-			$("#recipient").html("${base.recipient}");
-			$("#addr").html("${base.addr1}<br>${base.addr2}");
-			$("#phone").html("${base.phone}");
-			$("#memo").html("${base.memo}");
+			var list = new Array();
+			list = "${addrlist}";
+			//alert("check : "+list.length + "/"+list);
+			if(list.length==2){
+				$("#recipient").html("현재 등록된 배송지 정보가 없습니다.");
+				$("#addr").html("");
+				$("#phone").html("");
+				$("#memo").html("<input type='text' id='newmemo'>");				
+			}else{				
+				$("#recipient").html("${base.recipient}");
+				$("#addr").html("<span id='addr1'>${base.addr1}</span><br><span id='addr2'>${base.addr2}</span>");
+				$("#phone").html("${base.phone}");
+				$("#memo").html("<input type='text' id='newmemo'>");
+			}
 		}else{
 			$("#recipient").html("<input type='text' id='newrecipient' required>");
 			$("#phone").html("<input type='text' id='newphone' placeholder='xxx-xxxx-xxxx' required>");
@@ -117,35 +127,96 @@
 	
 	
 	function pay() {
+		var totalprice = $("#finalPrice").html();
+		var recipient = "";
+		var addr1addr1 = "";
+		var addr2 = "";
+		var phone = "";
+		var memo = $("#newmemo").val();
+		var name = "";
+		var count = 0;
+		var payno = 0;
+		
+		var radio = document.getElementsByName("seladdr");
+		var sel;
+		for(var i=0; i<radio.length; i++){
+			if(radio[i].checked){
+				sel = radio[i];
+				break;
+			}
+		}
+		if(sel.value == 'base'){			
+			recipient = $("#recipient").html();
+			addr1 = $("#addr1").html();
+			addr2 = $("#addr2").html();
+			phone = $("#phone").html();
+		}else{
+			recipient = $("#newrecipient").val();
+			addr1 = $("#addr1").val();
+			addr2 = $("#addr2").val();
+			phone = $("#newphone").html();			
+		}
+		
+		//alert("total:"+totalprice+"//recipient:"+recipient+"//addr:"+addr1+"-"+addr2+"//phone:"+phone+"//memo:"+memo);
+		
+		var list = Array();		// for controller
+		var itemlist = Array(); // for bootpay request
+		<c:forEach var="preq" items="${preqlist}">
+			var json1 = new Object();
+			json1.pno = "${preq.pno}";
+			json1.pbno = "${preq.pbno}";
+			json1.options = "${preq.options}";
+			json1.count = "${preq.count}";
+			json1.pname = "${preq.pname}";
+			list.push(json1);			
+			count += json1.count*1;
+			
+			var json2 = new Object();
+			json2.item_name = "${preq.options}";
+			json2.qty = "${preq.count}";
+			json2.unique = "${preq.reqno}";
+			json2.price = "${preq.price}";
+			json2.cat1 = "${preq.category1}";
+			json2.cat2 = "${preq.category2}";
+			json2.cat3 = "${preq.category3}";
+			itemlist.push(json2);		
+			
+			payno = "${preq.payno}";
+		</c:forEach>
+		
+		
+		name = list[0].pname+"-"+list[0].options;
+		if(list.length >= 2)
+			name += (" 및 "+(list.length-1)+"개");
+		
 		BootPay.request({
-			price: '1000', //실제 결제되는 가격
+			price: 1000, //실제 결제되는 가격 totalprice
 			application_id: "5c6661f2396fa61dea25a794",
-			name: '블링블링 마스카라', //결제창에서 보여질 이름
+			name: name, //결제창에서 보여질 이름
 			pg: 'danal',
 			 //결제수단, 입력하지 않으면 결제수단 선택부터 화면이 시작합니다.
 			show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
-			items: [
+			items: itemlist, /* [
 				{
-					item_name: '나는 아이템', //상품명
-					qty: 1, //수량
+					item_name: name, //상품명
+					qty: count, //수량
 					unique: '123', //해당 상품을 구분짓는 primary key
 					price: 1000, //상품 단가
 					cat1: 'TOP', // 대표 상품의 카테고리 상, 50글자 이내
 					cat2: '티셔츠', // 대표 상품의 카테고리 중, 50글자 이내
 					cat3: '라운드 티', // 대표상품의 카테고리 하, 50글자 이내
 				}
-			],
+			], */
 			user_info: {
-				username: '사용자 이름',
-				email: '사용자 이메일',
-				addr: '사용자 주소',
-				phone: '010-1234-4567'
+				username: "${customer}",
+				email: "${email}",
+				addr: addr1+" "+addr2,
+				phone: phone
 			},
-			order_id: '고유order_id_1234', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
-			params: {callback1: '그대로 콜백받을 변수 1', callback2: '그대로 콜백받을 변수 2', customvar1234: '변수명도 마음대로'},
-			account_expire_at: '2018-05-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
+			order_id: payno, //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+			params: {recipient: recipient, address1: addr1, address2: addr2, memo: memo},
+			account_expire_at: '2019-05-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
 			extra: {
-			    start_at: '2018-10-10', // 정기 결제 시작일 - 시작일을 지정하지 않으면 그 날 당일로부터 결제가 가능한 Billing key 지급
 				end_at: '2021-10-10', // 정기결제 만료일 -  기간 없음 - 무제한
 		        vbank_result: 1, // 가상계좌 사용시 사용, 가상계좌 결과창을 볼지(1), 말지(0), 미설정시 봄(1)
 		        quota: '0,2,3' // 결제금액이 5만원 이상시 할부개월 허용범위를 설정할 수 있음, [0(일시불), 2개월, 3개월] 허용, 미설정시 12개월까지 허용
@@ -163,7 +234,7 @@
 			//결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
 			//주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
 			console.log(data);
-			if (is_somthing) { // 재고 수량 관리 로직 혹은 다른 처리
+			if (true) { // 재고 수량 관리 로직 혹은 다른 처리
 				this.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
 			} else {
 				this.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
@@ -175,6 +246,30 @@
 			//결제가 정상적으로 완료되면 수행됩니다
 			//비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.
 			console.log(data);
+			
+			payment={
+					payno: data.order_id,
+					recipient: data.params.recipient,
+					payname: data.item_name,
+					address1: data.params.address1,
+					address2: data.params.address2,
+					memo: data.params.memo,
+					total: data.amount
+				};
+					
+			$.ajax({
+				type: "POST",
+				url: "payment.do",
+				data : {'payment' : JSON.stringify(payment)},
+				success : function(data){
+					swal("결제가 완료되었습니다!","결제 확인 페이지로 이동합니다.", "success")
+					.then((value) => {
+					  location.href="paymentResult.do?payno="+data;
+					});
+				}
+			})
+				
+			
 		});
 	}
 </script>
@@ -240,8 +335,21 @@
 					<c:choose>
 				    	<c:when test="${empty addrlist}">
 				    		<tr>
-				    			<td colspan="2">현재 등록된 배송지 정보가 없습니다.</td>
-				    		</tr>
+								<td width="20%">받으시는 분</td>
+								<td width="80%" id="recipient">현재 등록된 배송지 정보가 없습니다.</td>
+							</tr>
+							<tr>
+								<td width="20%">주소</td>
+								<td width="80%" id="addr"></td>
+							</tr>
+							<tr>
+								<td width="20%">연락처</td>
+								<td width="80%" id="phone"></td>
+							</tr>
+							<tr>
+								<td width="20%">배송시 요구사항</td>
+								<td width="80%" id="memo"><input type="text" id="newmemo"></td>
+							</tr>
 				    	</c:when>
 			    		<c:otherwise>		    			
 				    		<tr>
@@ -250,7 +358,7 @@
 							</tr>
 							<tr>
 								<td width="20%">주소</td>
-								<td width="80%" id="addr">${base.addr1}<br>${base.addr2}</td>
+								<td width="80%" id="addr"><span id="addr1">${base.addr1}</span><br><span id="addr2">${base.addr2}</span></td>
 							</tr>
 							<tr>
 								<td width="20%">연락처</td>
@@ -258,7 +366,7 @@
 							</tr>
 							<tr>
 								<td width="20%">배송시 요구사항</td>
-								<td width="80%" id="memo"><input type="text" id="newmemo" required></td>
+								<td width="80%" id="memo"><input type="text" id="newmemo"></td>
 							</tr>					
 			   		    </c:otherwise>
 		  		    </c:choose>			    		    
