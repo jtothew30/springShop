@@ -12,7 +12,8 @@
 	</h1>
 	
 	<h1>
-		<a href="admin.do">admin페이지</a>
+		<a href="admin/main.do">admin페이지</a>	
+		<a href="main.do">main페이지</a>	
 	</h1>
 	
 	<h1>

@@ -202,6 +202,8 @@
 
 </head>
 <body>
+	<c:import url="header.jsp"/>
+
 	<!-- Start Top Bar -->
 	<div class="top-bar">
 		<div class="top-bar-left">
