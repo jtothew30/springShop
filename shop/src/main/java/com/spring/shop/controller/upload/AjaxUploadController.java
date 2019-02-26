@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AjaxUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(AjaxUploadController.class);
 
-	private static final Logger logger = LoggerFactory.getLogger(AjaxUploadController.class);
-	
 	//servlet-context.xml에 선언	
 	//@Resource(name="uploadPath")
 	//String uploadPath;

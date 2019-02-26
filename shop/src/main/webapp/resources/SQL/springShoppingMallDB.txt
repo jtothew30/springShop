@@ -1,4 +1,4 @@
---����
+﻿--계정
 drop table account; 
 create table account(
 	id varchar2(100) not null,
@@ -22,18 +22,18 @@ create sequence seqaddr
 commit;
 
 
---����� ���̺�
+--배송지 테이블
 drop table address; 
 create table address(  
-	addrno number(7) not null, 	   --����� ��ȣ  		
-	customer varchar2(100) not null,   --�ֹ��� id
-	addrname varchar2(100) not null,   --����� �̸�
-	recipient varchar2(100) not null,  --�޴� ��� �̸�
-	base varchar2(50) not null,	   --�⺻ ����� �÷��� true/false
-	addr1 varchar2(200) not null,	   --�ּ�1
-	addr2 varchar2(200) not null,	   --�ּ�2
-	phone varchar2(100) not null,	   --����ó
-	usedate date not null,		   --�ֱ� ��� ��¥
+	addrno number(7) not null, 	   --배송지 번호  		
+	customer varchar2(100) not null,   --주문자 id
+	addrname varchar2(100) not null,   --배송지 이름
+	recipient varchar2(100) not null,  --받는 사람 이름
+	base varchar2(50) not null,	   --기본 배송지 플래그 true/false
+	addr1 varchar2(200) not null,	   --주소1
+	addr2 varchar2(200) not null,	   --주소2
+	phone varchar2(100) not null,	   --연락처
+	usedate date not null,		   --최근 사용 날짜
 	primary key(addrno)	
 );
 commit;
@@ -47,20 +47,20 @@ create sequence seqpro
  increment by 1;
 commit;
 
---��ǰ
+--상품
 drop table production; 
 create table production(
-	pno number(7) not null,		 --��ǰ��ȣ
-	pname varchar2(150) not null,    --��ǰ��
-	brand varchar2(150) not null,    --�������
-	inprice number(7) not null,      --�԰���
-	outprice number(7) not null,     --���簡��
-	category1 varchar2(100) not null, --ū ī�װ�(ex.�Ƿ�/��ȭ...)
-	category2 varchar2(100) not null, --�߰� ī�װ�(ex.�����Ƿ�/�����Ƿ�...)
-	category3 varchar2(100) not null, --���� ī�װ�(ex.Ƽ����/���콺...)
-	options varchar2(100) not null,	  --�ɼ�	
-	script varchar2(300) not null,    --�ΰ�����
-	sales number(7) not null,          --�Ǹŷ�
+	pno number(7) not null,		 --상품번호
+	pname varchar2(150) not null,    --상품명
+	brand varchar2(150) not null,    --제조사명
+	inprice number(7) not null,      --입고가격
+	outprice number(7) not null,     --현재가격
+	category1 varchar2(100) not null, --큰 카테고리(ex.의류/잡화...)
+	category2 varchar2(100) not null, --중간 카테고리(ex.여자의류/남자의류...)
+	category3 varchar2(100) not null, --세부 카테고리(ex.티셔츠/블라우스...)
+	options varchar2(100) not null,	  --옵션	
+	script varchar2(300) not null,    --부가설명
+	sales number(7) not null,          --판매량
 	primary key(pno)
 );
 commit;
@@ -71,25 +71,25 @@ create sequence seqboard
  increment by 1;
 commit;
 
---��ǰ �Խ���
+--상품 게시판
 drop table proboard;   
 create table proboard(
 	pbno number(7) not null,
 	title varchar2(150) not null,
 	pbdate date not null,
-	price number(7) not null,      --������
-	event number(7) not null,      --���ΰ���(if.�԰��� != ���簡�� )
-	totalsales number(7) not null, --�� �Ǹŷ�(��ǰ �Ǹŷ����� ����)
+	price number(7) not null,      --원가격
+	event number(7) not null,      --할인가격(if.입고가격 != 현재가격 )
+	totalsales number(7) not null, --총 판매량(상품 판매량들의 총합)
 	primary key(pbno)
 );
 commit;
 
---�� ��ǰ,��ǰ�Ǹű� ���� ���̺�
+--각 상품,상품판매글 관계 테이블
 drop table procontain;
 create table procontain(
-	pbno number(7) not null,	--��ǰ �Խñ� ��ȣ ����
-	pname varchar2(150) not null,	--�ش� ��ǰ�� ���� ��ǰ�� �̸�
-	path varchar2(200) not null	--�̹��� ���
+	pbno number(7) not null,	--상품 게시글 번호 참조
+	pname varchar2(150) not null,	--해당 상품에 속한 상품의 이름
+	path varchar2(200)				--이미지 경로
 );
 commit;
 
@@ -101,7 +101,7 @@ commit;
 
 
 
---��ǰ ���
+--상품 재고
 drop table prostock;
 create table prostock(
 	pno number(7) not null,
@@ -111,15 +111,15 @@ commit;
 
 
 
---��ٱ���
+--장바구니
 drop table cart;  
 create table cart( 
-	pno number(7) not null,		  --��ٱ��Ͽ� ��� ��ǰ ����
-	pbno number(7) not null, 	  --��ǰ �Խñ� ����
-	customer varchar2(100) not null,  --�̿��� id
-	count number(7) not null,         --����
-	price number(7) not null,         --���� ����
-	cartdate date not null	          --��ٱ��� ��� ��¥
+	pno number(7) not null,		  --장바구니에 담긴 상품 참조
+	pbno number(7) not null, 	  --상품 게시글 참조
+	customer varchar2(100) not null,  --이용자 id
+	count number(7) not null,         --수량
+	price number(7) not null,         --낱개 가격
+	cartdate date not null	          --장바구니 등록 날짜
 );
 commit;
 
@@ -131,19 +131,19 @@ create sequence seqpay
  increment by 1;
 commit;
 
---��������(����)
+--최종결제(종합)
 drop table payment;
 create table payment(
-	payno number(7) not null,	  --������ȣ
-	customer varchar2(100) not null,  --������ id
-	recipient varchar2(100) not null,  --�޴� ��� �̸�
-	payname varchar2(100) not null,   --������ ��ǰ�̸�
-	address1 varchar2(200) not null,  --����� �ּ�1
-	address2 varchar2(200) not null,  --����� �ּ�2
-	memo varchar2(300) not null,	  --���� �� or ��û
-	paydate date not null,            --���� ��¥
-	status varchar2(100) not null,    --���� ����(��������,�����Ϸ�,����ȯ��)
-	total number(7) not null,         --�� ����
+	payno number(7) not null,	  --결제번호
+	customer varchar2(100) not null,  --구매자 id
+	recipient varchar2(100) not null,  --받는 사람 이름
+	payname varchar2(100) not null,   --결제된 상품이름
+	address1 varchar2(200) not null,  --배송지 주소1
+	address2 varchar2(200) not null,  --배송지 주소2
+	memo varchar2(300) not null,	  --남길 말 or 요청
+	paydate date not null,            --결제 날짜
+	status varchar2(100) not null,    --결제 상태(결제진행,결제완료,결제환불)
+	total number(7) not null,         --총 가격
 	primary key(payno)
 );
 commit;
@@ -156,17 +156,17 @@ create sequence seqreq
  increment by 1;
 commit;
 
---������û(��ǰ��)
+--결제요청(상품별)
 drop table payrequest;
 create table payrequest(
-	reqno number(7) not null,	  --������û��ȣ	
-	customer varchar2(100) not null,  --������ id
-	pno number(7) not null,		  --��ǰ ���� ����
-	pbno number(7) not null, 	  --��ǰ �Խñ� ����
-	count number(7) not null,	  --����
-	price number(7) not null,	  --���� ����	
-	status varchar2(100) not null,    --���� ����(��������,�����Ϸ�,����ȯ��)
-	payno number(7) not null,	  --�������� ������ ����
+	reqno number(7) not null,	  --결제요청번호	
+	customer varchar2(100) not null,  --구매자 id
+	pno number(7) not null,		  --상품 정보 참조
+	pbno number(7) not null, 	  --상품 게시글 참조
+	count number(7) not null,	  --수량
+	price number(7) not null,	  --낱개 가격	
+	status varchar2(100) not null,    --결제 상태(결제진행,결제완료,결제환불)
+	payno number(7) not null,	  --최종결제 건으로 참조
 	primary key(reqno)
 );
 commit;
@@ -181,16 +181,16 @@ create sequence seqrev
 commit;
 
 
---��ǰ ����
+--상품 리뷰
 drop table review;
 create table review(
-	rno  number(7) not null,	--�����ȣ
-	writer varchar2(100) not null,  --����ۼ��� id
-	content varchar2(500) not null, --��۳���
-	img varchar2(300),		--÷���̹���
-	stars number(7),		--����
-	qna varchar2(50) not null,	--QnA �÷���
-	pbno number(7) not null		--��ǰ �Խ��� ����
+	rno  number(7) not null,	--리뷰번호
+	writer varchar2(100) not null,  --댓글작성자 id
+	content varchar2(500) not null, --댓글내용
+	img varchar2(300),		--첨부이미지
+	stars number(7),		--별점
+	qna varchar2(50) not null,	--QnA 플래그
+	pbno number(7) not null		--상품 게시판 참조
 	primary key(rno)
 );
 commit;
@@ -254,21 +254,21 @@ col memo for a20
 
 
 --dummy production
-insert into production values(seqpro.nextval, 'Į������������3��', 'CALLIBASIC', 50000, 50000, '��ȭ', '��������', '�����', 'Į������������3��(�׷���)', 'none', 0);
-insert into production values(seqpro.nextval, 'Į������������3��', 'CALLIBASIC', 50000, 50000, '��ȭ', '��������', '�����', 'Į������������3��(���̺�)', 'none', 0);
+insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(그레이)', 'none', 0);
+insert into production values(seqpro.nextval, '칼리베이직가방3종', 'CALLIBASIC', 50000, 50000, '잡화', '여성가방', '숄더백', '칼리베이직가방3종(네이비)', 'none', 0);
 commit;
 
-insert into proboard values(seqboard.nextval, 'Ư�� ����! Į������������3�� ��Ʈ!', sysdate, 50000, 50000, 0);
+insert into proboard values(seqboard.nextval, '특가 할인! 칼리베이직가방3종 세트!', sysdate, 50000, 50000, 0);
 commit;
 
-insert into procontain values(1, 'Į������������3��');
+insert into procontain values(1, '칼리베이직가방3종');
 commit;
 
 
 --dummy address
-insert into address values(seqaddr.nextval, 'testID', '�׽�Ʈ�ּ�', '�޴���1', 'true', '�ֿ������ҿ�����������1', '�ֿ�����Ҽҿ�����2', '010-1234-4567', sysdate);
-insert into address values(seqaddr.nextval, 'testID', '�׽�Ʈ�ּ�', '�޴���2', 'false', 'juso111111111111', 'juso222222222222222', '010-1234-4567', sysdate);
-insert into address values(seqaddr.nextval, 'testID', '�׽�Ʈ�ּ�', '�޴���3', 'false', '�ּ�3333333333333333', '�ּ�4444444444444444444', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이1', 'true', '주우우우우우우소오오오오오오1', '주우우우우우소소오오오2', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이2', 'false', 'juso111111111111', 'juso222222222222222', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', '테스트주소', '받는이3', 'false', '주소3333333333333333', '주소4444444444444444444', '010-1234-4567', sysdate);
 
 commit;
 
