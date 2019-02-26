@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.spring.shop.dao.Account.AccountDao;
+import com.spring.shop.dao.Accout.AccountDao;
 import com.spring.shop.vo.Account;
 
 @Service("AccountService")
