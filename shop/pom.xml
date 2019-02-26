@@ -47,6 +47,12 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -180,11 +186,18 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
+		
 		<dependency>
-			<groupId>com.oracle</groupId>
+			<groupId>oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.4.0-atlassian-hosted</version>
-			<scope>test</scope>
+			<version>11.2.0.3</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
 		</dependency>
 		
 		
@@ -195,21 +208,21 @@
 		</dependency>
 
 	</dependencies>
-		<repositories>
-	<!-- 	<repository>
+	<repositories>
+		<repository>
 			<id>oracle</id>
 			<name>ORACLE JDBC Repository</name>
 			<url>http://www.datanucleus.org/downloads/maven2/</url>
-		</repository> --> 
-	 
-		<repository>
+		</repository>
+
+		<!-- <repository>
 			<id>mesir-repo</id>
 			<name>ORACLE JDBC Repository</name>
 			<url>https://maven.atlassian.com/3rdparty/</url>
-		</repository> 
-		
+		</repository> -->
+
 	</repositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>

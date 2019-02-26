@@ -4,10 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.spring.shop.mapper.ProBoardMapper">
+		
+	
 	<select id="selectProductions" resultType="com.spring.shop.vo.Production" parameterType="int">
 	     select * from production 
 		 where pname = (select pname from procontain 
 		 				where pbno=#{pbno}
 		 				)
 	</select>
+	
+	<select id="selectListAll" resultType="com.spring.shop.vo.ProBoard">
+		select * from proboard
+	</select>
+	
+	<insert id="insertProBoard" parameterType="com.spring.shop.vo.ProBoard">
+		insert into proboard values(
+			seqboard.nextval,
+			#{title},
+			sysdate,
+			#{price},
+			#{event},
+			#{totalsales}			
+		)	
+	</insert>
+	
+	<insert id="insertPnameContain" parameterType="hashmap">
+		insert into procontain values(#{pbno}, #{pname})
+	</insert>
+	
+	<select id="selectBoardForContain" parameterType="com.spring.shop.vo.ProBoard" resultType="com.spring.shop.vo.ProBoard">
+		select * from proboard where title=#{title} and price=#{price} and event=#{event} and totalsales=#{totalsales}
+	</select>
+	
+	<select id="selectForSearch" parameterType="String" resultType="com.spring.shop.vo.ProBoard">
+		select rownum rn, s.*
+		from (
+	        	select DISTINCT b.*, p.category1, p.category2, p.category3 
+				from (
+					select pb.*, pname
+					from (
+		                select distinct * from proboard
+		            ) pb 
+		            left outer join procontain b
+		            on pb.pbno = b.pbno
+		            where pb.title like '%'||#{kwd}||'%'           
+				) b
+				left outer join production p
+				on p.pname = b.pname
+		    ) s
+		order by rn	
+	</select>	
 </mapper>

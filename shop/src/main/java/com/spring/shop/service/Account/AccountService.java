@@ -1,7 +1,5 @@
 package com.spring.shop.service.Account;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.spring.shop.vo.Account;
 
 

@@ -1,6 +1,6 @@
 package com.spring.shop.vo;
 
-public class Production {
+public class Production {	
 	private int pno;
 	private String pname;
 	private String brand;
@@ -12,9 +12,16 @@ public class Production {
 	private String options;
 	private String script;
 	private int sales;
-	private int count;	// production count for payment or adding in cart
+	private int count; // 1. 재고 -> procontain TABLE
+					   // 2. production count for payment or adding in cart
+					   // 충돌사항 없는지 check / view에서 주의할것
 	
-	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getPno() {
 		return pno;
 	}
@@ -81,11 +88,12 @@ public class Production {
 	public void setSales(int sales) {
 		this.sales = sales;
 	}
-	public int getCount() {
-		return count;
-	}
-	public void setCount(int count) {
-		this.count = count;
+	@Override
+	public String toString() {
+		return "Production [pno=" + pno + ", pname=" + pname + ", brand=" + brand + ", inprice=" + inprice
+				+ ", outprice=" + outprice + ", category1=" + category1 + ", category2=" + category2 + ", category3="
+				+ category3 + ", options=" + options + ", script=" + script + ", sales=" + sales + ", count=" + count
+				+ "]";
 	}
 	
 	

@@ -33,7 +33,7 @@
  		<property name="dataSource" ref="dataSource"/>
         <!-- property name="configLocation" value="classpath:config/context-sqlMap.xml"/ -->
         <property name="mapperLocations" value="classpath:com/spring/shop/mapper/*Mapper.xml"/>
-    </bean>
+    </bean>    
     
     
     

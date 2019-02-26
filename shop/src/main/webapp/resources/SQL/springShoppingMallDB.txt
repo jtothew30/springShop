@@ -1,4 +1,4 @@
---°èÁ¤
+--ï¿½ï¿½ï¿½ï¿½
 drop table account; 
 create table account(
 	id varchar2(100) not null,
@@ -22,18 +22,18 @@ create sequence seqaddr
 commit;
 
 
---¹è¼ÛÁö Å×ÀÌºí
+--ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 drop table address; 
 create table address(  
-	addrno number(7) not null, 	   --¹è¼ÛÁö ¹øÈ£  		
-	customer varchar2(100) not null,   --ÁÖ¹®ÀÚ id
-	addrname varchar2(100) not null,   --¹è¼ÛÁö ÀÌ¸§
-	recipient varchar2(100) not null,  --¹Þ´Â »ç¶÷ ÀÌ¸§
-	base varchar2(50) not null,	   --±âº» ¹è¼ÛÁö ÇÃ·¡±× true/false
-	addr1 varchar2(200) not null,	   --ÁÖ¼Ò1
-	addr2 varchar2(200) not null,	   --ÁÖ¼Ò2
-	phone varchar2(100) not null,	   --¿¬¶ôÃ³
-	usedate date not null,		   --ÃÖ±Ù »ç¿ë ³¯Â¥
+	addrno number(7) not null, 	   --ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£  		
+	customer varchar2(100) not null,   --ï¿½Ö¹ï¿½ï¿½ï¿½ id
+	addrname varchar2(100) not null,   --ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	recipient varchar2(100) not null,  --ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	base varchar2(50) not null,	   --ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ true/false
+	addr1 varchar2(200) not null,	   --ï¿½Ö¼ï¿½1
+	addr2 varchar2(200) not null,	   --ï¿½Ö¼ï¿½2
+	phone varchar2(100) not null,	   --ï¿½ï¿½ï¿½ï¿½Ã³
+	usedate date not null,		   --ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
 	primary key(addrno)	
 );
 commit;
@@ -47,20 +47,20 @@ create sequence seqpro
  increment by 1;
 commit;
 
---»óÇ°
+--ï¿½ï¿½Ç°
 drop table production; 
 create table production(
-	pno number(7) not null,		 --»óÇ°¹øÈ£
-	pname varchar2(150) not null,    --»óÇ°¸í
-	brand varchar2(150) not null,    --Á¦Á¶»ç¸í
-	inprice number(7) not null,      --ÀÔ°í°¡°Ý
-	outprice number(7) not null,     --ÇöÀç°¡°Ý
-	category1 varchar2(100) not null, --Å« Ä«Å×°í¸®(ex.ÀÇ·ù/ÀâÈ­...)
-	category2 varchar2(100) not null, --Áß°£ Ä«Å×°í¸®(ex.¿©ÀÚÀÇ·ù/³²ÀÚÀÇ·ù...)
-	category3 varchar2(100) not null, --¼¼ºÎ Ä«Å×°í¸®(ex.Æ¼¼ÅÃ÷/ºí¶ó¿ì½º...)
-	options varchar2(100) not null,	  --¿É¼Ç	
-	script varchar2(300) not null,    --ºÎ°¡¼³¸í
-	sales number(7) not null,          --ÆÇ¸Å·®
+	pno number(7) not null,		 --ï¿½ï¿½Ç°ï¿½ï¿½È£
+	pname varchar2(150) not null,    --ï¿½ï¿½Ç°ï¿½ï¿½
+	brand varchar2(150) not null,    --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	inprice number(7) not null,      --ï¿½Ô°ï¿½ï¿½ï¿½
+	outprice number(7) not null,     --ï¿½ï¿½ï¿½ç°¡ï¿½ï¿½
+	category1 varchar2(100) not null, --Å« Ä«ï¿½×°ï¿½(ex.ï¿½Ç·ï¿½/ï¿½ï¿½È­...)
+	category2 varchar2(100) not null, --ï¿½ß°ï¿½ Ä«ï¿½×°ï¿½(ex.ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½...)
+	category3 varchar2(100) not null, --ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½×°ï¿½(ex.Æ¼ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ì½º...)
+	options varchar2(100) not null,	  --ï¿½É¼ï¿½	
+	script varchar2(300) not null,    --ï¿½Î°ï¿½ï¿½ï¿½ï¿½ï¿½
+	sales number(7) not null,          --ï¿½Ç¸Å·ï¿½
 	primary key(pno)
 );
 commit;
@@ -71,25 +71,25 @@ create sequence seqboard
  increment by 1;
 commit;
 
---»óÇ° °Ô½ÃÆÇ
+--ï¿½ï¿½Ç° ï¿½Ô½ï¿½ï¿½ï¿½
 drop table proboard;   
 create table proboard(
 	pbno number(7) not null,
 	title varchar2(150) not null,
 	pbdate date not null,
-	price number(7) not null,      --¿ø°¡°Ý
-	event number(7) not null,      --ÇÒÀÎ°¡°Ý(if.ÀÔ°í°¡°Ý != ÇöÀç°¡°Ý )
-	totalsales number(7) not null, --ÃÑ ÆÇ¸Å·®(»óÇ° ÆÇ¸Å·®µéÀÇ ÃÑÇÕ)
+	price number(7) not null,      --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	event number(7) not null,      --ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½(if.ï¿½Ô°ï¿½ï¿½ï¿½ != ï¿½ï¿½ï¿½ç°¡ï¿½ï¿½ )
+	totalsales number(7) not null, --ï¿½ï¿½ ï¿½Ç¸Å·ï¿½(ï¿½ï¿½Ç° ï¿½Ç¸Å·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 	primary key(pbno)
 );
 commit;
 
---°¢ »óÇ°,»óÇ°ÆÇ¸Å±Û °ü°è Å×ÀÌºí
+--ï¿½ï¿½ ï¿½ï¿½Ç°,ï¿½ï¿½Ç°ï¿½Ç¸Å±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 drop table procontain;
 create table procontain(
-	pbno number(7) not null,	--»óÇ° °Ô½Ã±Û ¹øÈ£ ÂüÁ¶
-	pname varchar2(150) not null,	--ÇØ´ç »óÇ°¿¡ ¼ÓÇÑ »óÇ°ÀÇ ÀÌ¸§
-	path varchar2(200) not null	--ÀÌ¹ÌÁö °æ·Î
+	pbno number(7) not null,	--ï¿½ï¿½Ç° ï¿½Ô½Ã±ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½
+	pname varchar2(150) not null,	--ï¿½Ø´ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½Ì¸ï¿½
+	path varchar2(200) not null	--ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 );
 commit;
 
@@ -101,7 +101,7 @@ commit;
 
 
 
---»óÇ° Àç°í
+--ï¿½ï¿½Ç° ï¿½ï¿½ï¿½
 drop table prostock;
 create table prostock(
 	pno number(7) not null,
@@ -111,15 +111,15 @@ commit;
 
 
 
---Àå¹Ù±¸´Ï
+--ï¿½ï¿½Ù±ï¿½ï¿½ï¿½
 drop table cart;  
 create table cart( 
-	pno number(7) not null,		  --Àå¹Ù±¸´Ï¿¡ ´ã±ä »óÇ° ÂüÁ¶
-	pbno number(7) not null, 	  --»óÇ° °Ô½Ã±Û ÂüÁ¶
-	customer varchar2(100) not null,  --ÀÌ¿ëÀÚ id
-	count number(7) not null,         --¼ö·®
-	price number(7) not null,         --³¹°³ °¡°Ý
-	cartdate date not null	          --Àå¹Ù±¸´Ï µî·Ï ³¯Â¥
+	pno number(7) not null,		  --ï¿½ï¿½Ù±ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+	pbno number(7) not null, 	  --ï¿½ï¿½Ç° ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+	customer varchar2(100) not null,  --ï¿½Ì¿ï¿½ï¿½ï¿½ id
+	count number(7) not null,         --ï¿½ï¿½ï¿½ï¿½
+	price number(7) not null,         --ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	cartdate date not null	          --ï¿½ï¿½Ù±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
 );
 commit;
 
@@ -131,19 +131,19 @@ create sequence seqpay
  increment by 1;
 commit;
 
---ÃÖÁ¾°áÁ¦(Á¾ÇÕ)
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 drop table payment;
 create table payment(
-	payno number(7) not null,	  --°áÁ¦¹øÈ£
-	customer varchar2(100) not null,  --±¸¸ÅÀÚ id
-	recipient varchar2(100) not null,  --¹Þ´Â »ç¶÷ ÀÌ¸§
-	payname varchar2(100) not null,   --°áÁ¦µÈ »óÇ°ÀÌ¸§
-	address1 varchar2(200) not null,  --¹è¼ÛÁö ÁÖ¼Ò1
-	address2 varchar2(200) not null,  --¹è¼ÛÁö ÁÖ¼Ò2
-	memo varchar2(300) not null,	  --³²±æ ¸» or ¿äÃ»
-	paydate date not null,            --°áÁ¦ ³¯Â¥
-	status varchar2(100) not null,    --°áÁ¦ »óÅÂ(°áÁ¦ÁøÇà,°áÁ¦¿Ï·á,°áÁ¦È¯ºÒ)
-	total number(7) not null,         --ÃÑ °¡°Ý
+	payno number(7) not null,	  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
+	customer varchar2(100) not null,  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id
+	recipient varchar2(100) not null,  --ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	payname varchar2(100) not null,   --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½Ì¸ï¿½
+	address1 varchar2(200) not null,  --ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½1
+	address2 varchar2(200) not null,  --ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½2
+	memo varchar2(300) not null,	  --ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ or ï¿½ï¿½Ã»
+	paydate date not null,            --ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
+	status varchar2(100) not null,    --ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½,ï¿½ï¿½ï¿½ï¿½È¯ï¿½ï¿½)
+	total number(7) not null,         --ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	primary key(payno)
 );
 commit;
@@ -156,17 +156,17 @@ create sequence seqreq
  increment by 1;
 commit;
 
---°áÁ¦¿äÃ»(»óÇ°º°)
+--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»(ï¿½ï¿½Ç°ï¿½ï¿½)
 drop table payrequest;
 create table payrequest(
-	reqno number(7) not null,	  --°áÁ¦¿äÃ»¹øÈ£	
-	customer varchar2(100) not null,  --±¸¸ÅÀÚ id
-	pno number(7) not null,		  --»óÇ° Á¤º¸ ÂüÁ¶
-	pbno number(7) not null, 	  --»óÇ° °Ô½Ã±Û ÂüÁ¶
-	count number(7) not null,	  --¼ö·®
-	price number(7) not null,	  --³¹°³ °¡°Ý	
-	status varchar2(100) not null,    --°áÁ¦ »óÅÂ(°áÁ¦ÁøÇà,°áÁ¦¿Ï·á,°áÁ¦È¯ºÒ)
-	payno number(7) not null,	  --ÃÖÁ¾°áÁ¦ °ÇÀ¸·Î ÂüÁ¶
+	reqno number(7) not null,	  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½È£	
+	customer varchar2(100) not null,  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ id
+	pno number(7) not null,		  --ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	pbno number(7) not null, 	  --ï¿½ï¿½Ç° ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+	count number(7) not null,	  --ï¿½ï¿½ï¿½ï¿½
+	price number(7) not null,	  --ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½	
+	status varchar2(100) not null,    --ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½,ï¿½ï¿½ï¿½ï¿½È¯ï¿½ï¿½)
+	payno number(7) not null,	  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	primary key(reqno)
 );
 commit;
@@ -181,16 +181,16 @@ create sequence seqrev
 commit;
 
 
---»óÇ° ¸®ºä
+--ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 drop table review;
 create table review(
-	rno  number(7) not null,	--¸®ºä¹øÈ£
-	writer varchar2(100) not null,  --´ñ±ÛÀÛ¼ºÀÚ id
-	content varchar2(500) not null, --´ñ±Û³»¿ë
-	img varchar2(300),		--Ã·ºÎÀÌ¹ÌÁö
-	stars number(7),		--º°Á¡
-	qna varchar2(50) not null,	--QnA ÇÃ·¡±×
-	pbno number(7) not null		--»óÇ° °Ô½ÃÆÇ ÂüÁ¶
+	rno  number(7) not null,	--ï¿½ï¿½ï¿½ï¿½ï¿½È£
+	writer varchar2(100) not null,  --ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½ï¿½ id
+	content varchar2(500) not null, --ï¿½ï¿½Û³ï¿½ï¿½ï¿½
+	img varchar2(300),		--Ã·ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½
+	stars number(7),		--ï¿½ï¿½ï¿½ï¿½
+	qna varchar2(50) not null,	--QnA ï¿½Ã·ï¿½ï¿½ï¿½
+	pbno number(7) not null		--ï¿½ï¿½Ç° ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	primary key(rno)
 );
 commit;
@@ -254,21 +254,21 @@ col memo for a20
 
 
 --dummy production
-insert into production values(seqpro.nextval, 'Ä®¸®º£ÀÌÁ÷°¡¹æ3Á¾', 'CALLIBASIC', 50000, 50000, 'ÀâÈ­', '¿©¼º°¡¹æ', '¼ñ´õ¹é', 'Ä®¸®º£ÀÌÁ÷°¡¹æ3Á¾(±×·¹ÀÌ)', 'none', 0);
-insert into production values(seqpro.nextval, 'Ä®¸®º£ÀÌÁ÷°¡¹æ3Á¾', 'CALLIBASIC', 50000, 50000, 'ÀâÈ­', '¿©¼º°¡¹æ', '¼ñ´õ¹é', 'Ä®¸®º£ÀÌÁ÷°¡¹æ3Á¾(³×ÀÌºñ)', 'none', 0);
+insert into production values(seqpro.nextval, 'Ä®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½', 'CALLIBASIC', 50000, 50000, 'ï¿½ï¿½È­', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ä®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½(ï¿½×·ï¿½ï¿½ï¿½)', 'none', 0);
+insert into production values(seqpro.nextval, 'Ä®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½', 'CALLIBASIC', 50000, 50000, 'ï¿½ï¿½È­', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'Ä®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½(ï¿½ï¿½ï¿½Ìºï¿½)', 'none', 0);
 commit;
 
-insert into proboard values(seqboard.nextval, 'Æ¯°¡ ÇÒÀÎ! Ä®¸®º£ÀÌÁ÷°¡¹æ3Á¾ ¼¼Æ®!', sysdate, 50000, 50000, 0);
+insert into proboard values(seqboard.nextval, 'Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½! Ä®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½ ï¿½ï¿½Æ®!', sysdate, 50000, 50000, 0);
 commit;
 
-insert into procontain values(1, 'Ä®¸®º£ÀÌÁ÷°¡¹æ3Á¾');
+insert into procontain values(1, 'Ä®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½');
 commit;
 
 
 --dummy address
-insert into address values(seqaddr.nextval, 'testID', 'Å×½ºÆ®ÁÖ¼Ò', '¹Þ´ÂÀÌ1', 'true', 'ÁÖ¿ì¿ì¿ì¿ì¿ì¿ì¼Ò¿À¿À¿À¿À¿À¿À1', 'ÁÖ¿ì¿ì¿ì¿ì¿ì¼Ò¼Ò¿À¿À¿À2', '010-1234-4567', sysdate);
-insert into address values(seqaddr.nextval, 'testID', 'Å×½ºÆ®ÁÖ¼Ò', '¹Þ´ÂÀÌ2', 'false', 'juso111111111111', 'juso222222222222222', '010-1234-4567', sysdate);
-insert into address values(seqaddr.nextval, 'testID', 'Å×½ºÆ®ÁÖ¼Ò', '¹Þ´ÂÀÌ3', 'false', 'ÁÖ¼Ò3333333333333333', 'ÁÖ¼Ò4444444444444444444', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', 'ï¿½×½ï¿½Æ®ï¿½Ö¼ï¿½', 'ï¿½Þ´ï¿½ï¿½ï¿½1', 'true', 'ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1', 'ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½2', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', 'ï¿½×½ï¿½Æ®ï¿½Ö¼ï¿½', 'ï¿½Þ´ï¿½ï¿½ï¿½2', 'false', 'juso111111111111', 'juso222222222222222', '010-1234-4567', sysdate);
+insert into address values(seqaddr.nextval, 'testID', 'ï¿½×½ï¿½Æ®ï¿½Ö¼ï¿½', 'ï¿½Þ´ï¿½ï¿½ï¿½3', 'false', 'ï¿½Ö¼ï¿½3333333333333333', 'ï¿½Ö¼ï¿½4444444444444444444', '010-1234-4567', sysdate);
 
 commit;
 

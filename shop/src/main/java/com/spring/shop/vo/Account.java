@@ -10,7 +10,6 @@ public class Account {
 	private String phone;
 	private String adate;
 	
-	
 	public String getId() {
 		return id;
 	}
@@ -58,6 +57,11 @@ public class Account {
 	}
 	public void setAdate(String adate) {
 		this.adate = adate;
+	}
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", pw=" + pw + ", name=" + name + ", age=" + age + ", gender=" + gender
+				+ ", email=" + email + ", phone=" + phone + ", adate=" + adate + "]";
 	}
 	
 	
