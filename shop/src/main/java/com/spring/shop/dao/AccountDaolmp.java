@@ -1,8 +1,10 @@
 package com.spring.shop.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
+
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.Account;
@@ -32,5 +34,18 @@ public class AccountDaolmp implements AccountDao{
 		System.out.println("dbInsert 넘어온 phone="+account.getPhone());
 		sqlSession.insert(AccountMapper+".insert", account);
 		System.out.println("dbInsert success");
+	}
+	
+	public void dbUpdate(Account account) {
+		System.out.println("dbUpdate 넘어온 pw ="+account.getPw());
+		System.out.println("dbUpdate 넘어온 email="+account.getEmail());
+		System.out.println("dbUpdate 넘어온 phone="+account.getPhone());
+		sqlSession.update(AccountMapper+".update",account);
+		System.out.println("dbUpdate success");
+	}
+	
+	@Override
+	public List<Account> memlist(Account account) {
+		return sqlSession.selectList("select", account);
 	}
 }

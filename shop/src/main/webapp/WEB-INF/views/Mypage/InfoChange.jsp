@@ -25,39 +25,39 @@
 	    <div class="col-lg-8 col-md-10 mx-auto">
 	    <br>
 	    <h3>회원정보수정</h3>
-	    <form name="acct"  method="post" action="acct_change.do">
+	    <form name="acct"  method="post" action="acct_InfoChange.do">
 		   <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label>아이디</label>
-	           <input type="text" class="form-control" placeholder="아이디" name="id" id="id" readonly="readonly">
+	           <input type="text" class="form-control" placeholder="아이디" value="${dto.id}" name="id" id="id" readonly="readonly">
 	            <p class="help-block text-danger" id="maskId"></p>
 	         </div>
 	       </div>
 	       <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label>패스워드</label>
-	           <input type="password" placeholder="패스워드" id="pw" name="pw1" required>
+	           <input type="password" class="form-control" placeholder="패스워드" name="pw" id="pw1" required>
 	           <p class="help-block text-danger" id="maskPw1"></p>
 	         </div>
 	       </div>
-	        <div class="control-group">
+	       <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label>패스워드 확인</label>
 	           <input type="password" class="form-control" placeholder="패스워드 확인" name="pw2" id="pw2" onkeyup="pwCheck();" required>
 	           <p class="help-block text-danger" id="maskPw2"></p>
 	         </div>
-	       </div>     
+	       </div>   
 	       <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label>이름</label>
-	           <input type="text" class="form-control" placeholder="이름" name="name" id="name" readonly="readonly">
+	           <input type="text" class="form-control" placeholder="이름" value="${dto.name}" name="name" id="name" readonly="readonly">
 	            <p class="help-block text-danger" id="maskName"></p>
 	         </div>
 	       </div>
 	       <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label >나이</label>
-	           <input type="number" class="form-control" placeholder="나이" name="age" id="age" min="14" max="120" readonly="readonly">	         
+	           <input type="number" class="form-control" placeholder="나이" value="${dto.age}" name="age" id="age" min="14" max="120" readonly="readonly">	         
 	           <p class="help-block text-danger" id="maskAge"></p>
 	         </div>
 	       </div>

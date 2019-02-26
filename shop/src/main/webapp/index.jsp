@@ -17,10 +17,11 @@
 	
 	<h1>
 		<a href="signUp/signUp.do">회원가입 테스트</a>
+		<a href="list.do">회원리스트</a>
 	</h1>
 	
 	<h1>
-		<a href="info.do">회원정보수정</a>
+		<a href="infoChange.do">회원정보수정</a>
 	</h1>
 	
 	<h1>

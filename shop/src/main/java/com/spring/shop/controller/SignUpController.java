@@ -46,6 +46,6 @@ public class SignUpController {
 		System.out.println("acct_insert 넘어온 email="+account.getEmail());
 		System.out.println("acct_insert 넘어온 phone="+account.getPhone());		
 		service.dbInsert(account);
-		return "redirect:/index.jsp" ;
+		return "/Mypage/InfoChange" ;
   }
 }
