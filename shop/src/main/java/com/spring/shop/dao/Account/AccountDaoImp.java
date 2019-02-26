@@ -2,7 +2,6 @@ package com.spring.shop.dao.Account;
 
 import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.Account;
@@ -19,17 +18,17 @@ public class AccountDaoImp implements AccountDao{
 		System.out.println("AccountDaolmp check:"+id);
 		int ck=(Integer)sqlSession.selectOne(AccountMapper+".idCheck",id);
 		System.out.println("AccountDaolmp check2:"+id);
-		return ck>0?"t":"f"; // t Áßº¹ ¾ÆÀÌµğ Á¸Àç / f »ç¿ë °¡´É 
+		return ck>0?"t":"f"; // t ì¤‘ë³µ ì•„ì´ë”” ì¡´ì¬ / f ì‚¬ìš© ê°€ëŠ¥ 
 	}
 	
 	public void dbInsert(Account account) {
-		System.out.println("dbInsert ³Ñ¾î¿Â id="+account.getId());
-		System.out.println("dbInsert ³Ñ¾î¿Â pw="+account.getPw());
-		System.out.println("dbInsert ³Ñ¾î¿Â name="+account.getName());
-		System.out.println("dbInsert ³Ñ¾î¿Â age="+account.getAge());
-		System.out.println("dbInsert ³Ñ¾î¿Â gender="+account.getGender());
-		System.out.println("dbInsert ³Ñ¾î¿Â email="+account.getEmail());
-		System.out.println("dbInsert ³Ñ¾î¿Â phone="+account.getPhone());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ id="+account.getId());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ pw="+account.getPw());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ name="+account.getName());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ age="+account.getAge());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ gender="+account.getGender());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ email="+account.getEmail());
+		System.out.println("dbInsert ë„˜ì–´ì˜¨ phone="+account.getPhone());
 		sqlSession.insert(AccountMapper+".insert", account);
 		System.out.println("dbInsert success");
 	}

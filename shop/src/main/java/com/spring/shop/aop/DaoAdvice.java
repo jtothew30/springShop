@@ -10,16 +10,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@Component //root-context.xml¿¡¼­ beanÀ¸·Î µî·ÏÇÒ ¼ö ÀÖ°Ô ÇÏ´Â ¾î³ëÅ×ÀÌ¼Ç
-@Aspect //spring aopÀÇ a¸¦ ÀÇ¹Ì -> aop ±â¼úÀ» »ç¿ëÇÏ°Ú´Ù. aop:aspectj-autoproxy°¡ °Ë»ç
+@Component //root-context.xmlì—ì„œ beanìœ¼ë¡œ ë“±ë¡í•  ìˆ˜ ìˆê²Œ í•˜ëŠ” ì–´ë…¸í…Œì´ì…˜
+@Aspect //spring aopì˜ aë¥¼ ì˜ë¯¸ -> aop ê¸°ìˆ ì„ ì‚¬ìš©í•˜ê² ë‹¤. aop:aspectj-autoproxyê°€ ê²€ì‚¬
 public class DaoAdvice {
 	private static final Logger logger = LoggerFactory.getLogger(DaoAdvice.class);
 	
-	//Join points ±â¼ú¿¡´Â Before(¸Ş¼Òµå ½ÇÇà Àü), After(¸Ş¼Òµå ½ÇÇà ÈÄ), AfterReturning(¹İÈ¯µÈ °ª),
-	//AfterThrowing(¿¹¿Ü¹ß»ı), Around(¸Ş¼Òµå°¡ ½ÇÇàµÇ±â Àü ÈÄ)°¡ ÀÖ´Ù.
-	//pointcuts ±â¼ú·Î DAO¿¡ ¾î¶² ¸Ş¼­µå Aspect¸¦ Àû¿ëÇÒ °ÍÀÎÁö °áÁ¤
-	@Before("execution(* com.spring.shop.dao.*.*(..))")//Join points ±â¼ú
-	public void startLog(JoinPoint joinPoint){//JoinPoint´Â ½ÇÇàµÇ´Â ¸Ş¼Òµå¿¡ ³Ñ¾î¿À´Â Á¤º¸¸¦ °¡Áö°í ÀÖ´Ù.
+	//Join points ê¸°ìˆ ì—ëŠ” Before(ë©”ì†Œë“œ ì‹¤í–‰ ì „), After(ë©”ì†Œë“œ ì‹¤í–‰ í›„), AfterReturning(ë°˜í™˜ëœ ê°’),
+	//AfterThrowing(ì˜ˆì™¸ë°œìƒ), Around(ë©”ì†Œë“œê°€ ì‹¤í–‰ë˜ê¸° ì „ í›„)ê°€ ìˆë‹¤.
+	//pointcuts ê¸°ìˆ ë¡œ DAOì— ì–´ë–¤ ë©”ì„œë“œ Aspectë¥¼ ì ìš©í•  ê²ƒì¸ì§€ ê²°ì •
+	@Before("execution(* com.spring.shop.dao.*.*(..))")//Join points ê¸°ìˆ 
+	public void startLog(JoinPoint joinPoint){//JoinPointëŠ” ì‹¤í–‰ë˜ëŠ” ë©”ì†Œë“œì— ë„˜ì–´ì˜¤ëŠ” ì •ë³´ë¥¼ ê°€ì§€ê³  ìˆë‹¤.
 		//logger.info("method path : " + joinPoint.getSignature());	
 	}//end
 
@@ -28,17 +28,17 @@ public class DaoAdvice {
 		//logger.info("method path : " + joinPoint.getSignature());
 	}//end
 	
-	//@Around´Â ±²ÀåÈ÷ °­·ÂÇÑ AOP ±â´ÉÀ¸·Î ProceedingJoinPointÀ¸·Î ¸Ş¼Òµå ½ÇÇàÀ» Á¦¾îÇÒ ¼ö ÀÖ´Ù.
-	//@Around´Â ²À ¹İÈ¯ Å¸ÀÔÀ¸·Î pjp.proceed() Áï Object¸¦ ½á¾ßÇÏ°í throws ThrowableÀ» »ç¿ëÇØ¾ß ÇÑ´Ù.
+	//@AroundëŠ” êµ‰ì¥íˆ ê°•ë ¥í•œ AOP ê¸°ëŠ¥ìœ¼ë¡œ ProceedingJoinPointìœ¼ë¡œ ë©”ì†Œë“œ ì‹¤í–‰ì„ ì œì–´í•  ìˆ˜ ìˆë‹¤.
+	//@AroundëŠ” ê¼­ ë°˜í™˜ íƒ€ì…ìœ¼ë¡œ pjp.proceed() ì¦‰ Objectë¥¼ ì¨ì•¼í•˜ê³  throws Throwableì„ ì‚¬ìš©í•´ì•¼ í•œë‹¤.
 	@Around("execution(* com.spring.shop.dao.*.*(..))")
 	public Object timeLog(ProceedingJoinPoint pjp) throws Throwable{
-		//ÇØ´ç ¸Ş¼Òµå°¡ ½ÇÇàµÇ´Â ½Ã°£
+		//í•´ë‹¹ ë©”ì†Œë“œê°€ ì‹¤í–‰ë˜ëŠ” ì‹œê°„
 		//logger.info("timeLog start");
-		long startTime = System.currentTimeMillis(); //¸Ş¼Òµå ½ÇÇà Àü ½Ã°£
-		Object result = pjp.proceed(); //¸Ş¼Òµå ½ÇÇà
-		long endTime = System.currentTimeMillis(); //¸Ş¼Òµå ½ÇÇà ÈÄ ½Ã°£
-		//logger.info("time Log end time:("+((endTime-startTime)/1000.0)+"ÃÊ)");
-		logger.info("time Log :("+((endTime-startTime)/1000.0)+"ÃÊ)");
+		long startTime = System.currentTimeMillis(); //ë©”ì†Œë“œ ì‹¤í–‰ ì „ ì‹œê°„
+		Object result = pjp.proceed(); //ë©”ì†Œë“œ ì‹¤í–‰
+		long endTime = System.currentTimeMillis(); //ë©”ì†Œë“œ ì‹¤í–‰ í›„ ì‹œê°„
+		//logger.info("time Log end time:("+((endTime-startTime)/1000.0)+"ì´ˆ)");
+		logger.info("time Log :("+((endTime-startTime)/1000.0)+"ì´ˆ)");
 		return result;
 	}//end
 	

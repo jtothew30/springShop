@@ -27,7 +27,7 @@ public class CartDaoImp implements CartDao {
 	
 	@Override
 	public List<Cart> getCartList(String customer){
-		System.out.println("daoimp getCartList ÁøÀÔ check");
+		System.out.println("daoimp getCartList ì§„ì… check");
 		List<Cart> cartlist = sqlSession.selectList(CartMapper+".getCartList", customer);
 		System.out.println("daoimp getCartList check : " + cartlist.size());
 		return cartlist;

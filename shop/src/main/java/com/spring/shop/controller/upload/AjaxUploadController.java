@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AjaxUploadController {
 	private static final Logger logger = LoggerFactory.getLogger(AjaxUploadController.class);
 
- 	//servlet-context.xmlø° º±æ	
-	@Resource(name="uploadPath")
-	String uploadPath;
+ 	//servlet-context.xmlÏóê ÏÑ†Ïñ∏	
+	//@Resource(name="uploadPath")
+	//String uploadPath;
 
- 	@RequestMapping(value="/upload/uploadAjax", method=RequestMethod.GET)
-	public void uploadAjax() {
-		// view/upload/uploadAjax.jsp∑Œ ¿Ãµø
-	}
+ 	//@RequestMapping(value="/upload/uploadAjax", method=RequestMethod.GET)
+	//public void uploadAjax() {
+		// view/upload/uploadAjax.jspÎ°ú Ïù¥Îèô
+	//}
 }

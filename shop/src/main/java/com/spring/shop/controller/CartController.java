@@ -45,7 +45,7 @@ public class CartController {
 	public String addCart(HttpServletRequest request) throws Exception{		
 		int pbno = Integer.parseInt(request.getParameter("pbno"));
 		String list = request.getParameter("list");
-		System.out.println("addCart ÁıÀÔ Ã¼Å©, pbno : " + pbno);
+		System.out.println("addCart ì§‘ì… ì²´í¬, pbno : " + pbno);
 		
 		
 		String customer = "testID";
@@ -65,7 +65,7 @@ public class CartController {
 			  
 			  for(Cart c :mycart) {
 				  if(c.getPno() == pro.getPno()) {
-					  System.out.println("Àå¹Ù±¸´Ï »óÇ°°ú Áßº¹");
+					  System.out.println("ì¥ë°”êµ¬ë‹ˆ ìƒí’ˆê³¼ ì¤‘ë³µ");
 					  return "false"; 
 				  }
 			  }
@@ -80,7 +80,7 @@ public class CartController {
 		  }
 	  
 		  service.addCart(cartlist);	
-		  System.out.println("Àå¹Ù±¸´Ï¿¡ ´ãÀ½");
+		  System.out.println("ì¥ë°”êµ¬ë‹ˆì— ë‹´ìŒ");
 		  
 		return "true";
 	}	

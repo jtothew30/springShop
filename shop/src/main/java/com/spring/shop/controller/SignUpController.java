@@ -38,13 +38,13 @@ public class SignUpController {
 	
 	@RequestMapping("/acct_insert.do")
 	public String acct_insert(Account account) throws Exception {
-		System.out.println("acct_insert ³Ñ¾î¿Â id="+account.getId());
-		System.out.println("acct_insert ³Ñ¾î¿Â pw="+account.getPw());
-		System.out.println("acct_insert ³Ñ¾î¿Â name="+account.getName());
-		System.out.println("acct_insert ³Ñ¾î¿Â age="+account.getAge());
-		System.out.println("acct_insert ³Ñ¾î¿Â gender="+account.getGender());
-		System.out.println("acct_insert ³Ñ¾î¿Â email="+account.getEmail());
-		System.out.println("acct_insert ³Ñ¾î¿Â phone="+account.getPhone());		
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ id="+account.getId());
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ pw="+account.getPw());
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ name="+account.getName());
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ age="+account.getAge());
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ gender="+account.getGender());
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ email="+account.getEmail());
+		System.out.println("acct_insert ë„˜ì–´ì˜¨ phone="+account.getPhone());		
 		service.dbInsert(account);
 		return "redirect:/index.jsp" ;
   }

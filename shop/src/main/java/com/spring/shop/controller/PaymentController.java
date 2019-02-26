@@ -102,7 +102,7 @@ public class PaymentController {
 	@ResponseBody
 	@RequestMapping(value="/payrequest.do", method=RequestMethod.POST)
 	public void cart(HttpServletRequest request) throws Exception{
-		System.out.println("payRequest.do ÁøÀÔ Ã¼Å©");		
+		System.out.println("payRequest.do ì§„ì… ì²´í¬");		
 		String customer = "testID"; 
 		
 		service.createPayment(customer); // create new payment
