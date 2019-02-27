@@ -29,7 +29,7 @@
 	</insert>
 	
 	<insert id="insertPnameContain" parameterType="hashmap">
-		insert into procontain values(#{pbno}, #{pname})
+		insert into procontain values(#{pbno}, #{pname}, null)
 	</insert>
 	
 	<select id="selectBoardForContain" parameterType="com.spring.shop.vo.ProBoard" resultType="com.spring.shop.vo.ProBoard">

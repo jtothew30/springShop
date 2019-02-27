@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.MyPageMapper">
+  	<select id="getMyOrderList" parameterType="string" resultType="com.spring.shop.vo.Payment">
+  		select * from payment where customer = #{customer} and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료') 
+  		order by paydate desc
+  	</select>
+  	
+  	<select id="getMyClaimList" parameterType="string" resultType="com.spring.shop.vo.Payment">
+  		select * from payment where customer = #{customer} and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환') 
+  		order by paydate desc
+  	</select>
+  	
+  	<select id="getPayrequestList" parameterType="int" resultType="com.spring.shop.vo.Payrequest">
+  		select pr.*, p.pname, p.options, p.category1, p.category2, p.category3 from (select pr.*, pb.title from payrequest pr 
+									left outer join proboard pb 
+									on pr.pbno = pb.pbno 
+									where payno = #{payno}   
+									) pr 
+		left outer join production p 
+		on pr.pno = p.pno 
+		order by pbno
+  	</select>
+  	
+  	<select id="searchOrderDate" parameterType="map" resultType="com.spring.shop.vo.Payment">
+  		<![CDATA[
+  		select * from payment where customer = #{customer} and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료')   		 
+  		and (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 		
+  		order by paydate desc 
+  		]]> 
+  	</select>
+  	
+  	
+  	<select id="searchClaimDate" parameterType="map" resultType="com.spring.shop.vo.Payment">
+  		<![CDATA[
+  		select * from payment where customer = #{customer} and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환')   		 
+  		and (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 		
+  		order by paydate desc 
+  		]]> 
+  	</select>
+    
+    
+    <update id="cancePay" parameterType="int">
+    	update payment set status = '취소진행중' where payno = #{payno}
+    </update>
+    
+    <update id="cancelReq" parameterType="int">
+    	update payrequest set status = '취소진행중' where payno = #{payno}
+    </update>
+    
+    
+  
+  </mapper>
