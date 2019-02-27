@@ -6,13 +6,17 @@
 <mapper namespace="com.spring.shop.mapper.AccountMapper">
 	<select id="select" resultType="com.spring.shop.vo.Account">
 		select
-			id,name,age,email
+			id,name,email,phone
 		from
 			account
 	</select>
 
 	<select id="idCheck" resultType="int" parameterType="string">
 	     select count(*) from account where id=#{id}
+	</select>
+	
+	<select id="view" resultType="com.spring.shop.vo.Account">
+		select id,name,age,gender,email,phone from account where name=#{name}
 	</select>
 	
 	<insert id="insert" parameterType="com.spring.shop.vo.Account">

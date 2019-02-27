@@ -48,4 +48,9 @@ public class AccountDaolmp implements AccountDao{
 	public List<Account> memlist(Account account) {
 		return sqlSession.selectList("select", account);
 	}
+	
+	@Override
+	public Account viewmem(String id) {
+		return sqlSession.selectOne("view", id);
+	}
 }

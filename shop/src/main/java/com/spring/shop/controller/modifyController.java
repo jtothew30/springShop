@@ -27,7 +27,9 @@ public class modifyController {
 	AccountDao dao;
 	
 	@RequestMapping("infoChange.do")
-	public String InfoChange() {
+	public String InfoChange(String name, Model model) throws Exception {
+		model.addAttribute("dto",service.viewmem(name));
+		logger.info("클릭한 name: " + name);
 		return "/Mypage/InfoChange";
 	}	
 	
@@ -38,6 +40,11 @@ public class modifyController {
 		System.out.println("acct_InfoChange 넘어온 phone="+account.getPhone());
 		service.dbUpdate(account);
 		return "redirect:/index.jsp";
+	}
+	
+	@RequestMapping("main.do")
+	public String Main() {
+		return "/Mypage/InfoMain";
 	}
 	
 	@RequestMapping("change.do")
@@ -53,21 +60,6 @@ public class modifyController {
 	@RequestMapping("orderList.do")
 	public String orderList() {
 		return "/Mypage/orderList";
-	}
-	
-	@RequestMapping("claimRequest.do")
-	public String claim() {
-		return "/Mypage/claim/ClaimRequest";
-	}
-	
-	@RequestMapping("cancel.do")
-	public String cancelStat() {
-		return "/Mypage/claim/CancelStat";
-	}
-	
-	@RequestMapping("rtnexch.do")
-	public String rtnexch() {
-		return "/Mypage/claim/RtnExchStat";
 	}
 	
 	@RequestMapping("list.do")

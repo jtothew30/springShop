@@ -34,4 +34,9 @@ public class AccountServicelmp implements AccountService{
 	public List<Account> memlist(Account account) throws Exception {
 		return accountDao.memlist(account);
 	}
+	
+	@Override
+	public Account viewmem(String id) throws Exception {
+		return accountDao.viewmem(id);
+	}
 }

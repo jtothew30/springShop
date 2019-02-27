@@ -23,17 +23,17 @@
                             <tr>
                                 <th>ID</th>
                                 <th>이름</th>
-                                <th>나이</th>
                                 <th>이메일</th>
+                                <th>연락처</th>
                             </tr>
                         </thead>
                         <tbody>
                         <c:forEach items="${list}" var="account">
                             <tr>
                                 <td>${account.id}</td>
-                                <td>${account.name}</td>
-                                <td>${account.age}</td>
+                                <td><a href="infoChange.do?name=${account.name}">${account.name}</a></td>
                                 <td>${account.email}</td>
+                                <td>${account.phone}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -72,14 +73,14 @@
 	       <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label>연락처</label>
-	           <input type="tel" placeholder="연락처(xxx-xxxx-xxxx)" id="phone" name="phone" onblur="phoneCheck();" required>
+	           <input type="tel" placeholder="연락처(xxx-xxxx-xxxx)" value="${dto.phone}" id="phone" name="phone" onblur="phoneCheck();" required>
 	           <p class="help-block text-danger" id="maskPhone"></p>
 	         </div>
 	       </div>
 	       <div class="control-group">
 	         <div class="form-group floating-label-form-group controls">
 	           <label>이메일</label>
-	           <input type="email" class="form-control" placeholder="이메일" name="email" id="email" onkeyup="emailCheck();" required>
+	           <input type="email" class="form-control" placeholder="이메일" value="${dto.email}" name="email" id="email" onkeyup="emailCheck();" required>
 	           <p class="help-block text-danger" id="maskEmail"></p>
 	         </div>
 	       </div>

@@ -17,7 +17,6 @@
   width: 100%;
   height: 30px;
   margin-bottom: 40px;
-  background: url("/img/main/pc/interpark_logo.png") no-repeat center 0;
 }
 
 .interparkLogo a {
@@ -226,11 +225,11 @@
 .contentsWrap .myInfoMain .mainMenu .menuBox a {
   position: relative;
   display: block;
-  min-height: 60px;
+  min-height: 70px;
   margin: 43px 20px 0;
   padding-left: 75px;
   line-height: 1;
-  background: url("/img/main/pc/mainmenu_icon.png") no-repeat 0 0;
+  background: url("/shop/resources/image/change.JPG") no-repeat 0 0;
   text-decoration: none;
   font-size: 15px;
 }
@@ -250,7 +249,7 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  background: url("/img/main/pc/new_noti_icon.png") no-repeat 0 0;
+  background: url("/shop/resources/image/change.JPG") no-repeat 0 0; 
 }
 
 .contentsWrap .myInfoMain .mainMenu .menuBox.infoModify {

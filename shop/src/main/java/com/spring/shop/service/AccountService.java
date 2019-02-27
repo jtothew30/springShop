@@ -9,4 +9,5 @@ public interface AccountService {
 	public void dbInsert(Account account) throws Exception;
 	public void dbUpdate(Account account) throws Exception;
 	public List<Account> memlist(Account account) throws Exception;
+	public Object viewmem(String name) throws Exception;
 }

@@ -16,12 +16,12 @@
 	</h1>
 	
 	<h1>
-		<a href="signUp/signUp.do">회원가입 테스트</a>
-		<a href="list.do">회원리스트</a>
+		<a href="main.do">마이페이지</a>
 	</h1>
 	
 	<h1>
-		<a href="infoChange.do">회원정보수정</a>
+		<a href="signUp/signUp.do">회원가입 테스트</a>
+		<a href="list.do">회원리스트</a>
 	</h1>
 	
 	<h1>
@@ -34,12 +34,6 @@
 	
 	<h1>
 		<a href="orderList.do">주문내역</a>
-	</h1>
-	
-	<h1>
-		<a href="claimRequest.do">취소/교환/반품신청</a>
-		<a href="cancel.do">취소현황</a>
-		<a href="rtnexch.do">교환/반품현황</a>
 	</h1>
 	
 </body>
