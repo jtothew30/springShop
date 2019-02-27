@@ -15,12 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.shop.service.ProBoard.ProBoardService;
 import com.spring.shop.service.Production.ProductionService;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.ProBoard;
 import com.spring.shop.vo.Production;
 
@@ -63,15 +65,60 @@ public class AdminController {
 		productionService.resetProductionCount(pro);
 		return "redirect:productList.do";
 	}
-
-	// 재고관리 - 리스트 출력
+	
+	// 재고관리 - 상품삭제
+	@RequestMapping("deleteProduction.do")
+	public String prductDelete(int pno) {
+		return null;
+	}
+	// 재고관리 - 상품수정
+	@RequestMapping("updateProduction.do")
+	public String productEdit(int pno) {
+		return null;
+	}
+	
+	//기존등록제품--> 옵션추가등록페이지 이동
+	@RequestMapping("insertNewOption.do")
+	public ModelAndView insertNewOption(int pno) {
+		ModelAndView mav = new ModelAndView("admin/productInsert");
+		Production pro = productionService.selectProduction(pno);
+		mav.addObject("pro",pro);		
+		return mav;		
+	}		
+	
+//	// 재고관리 - 리스트 출력
+//	@RequestMapping("productList.do")
+//	public ModelAndView productList() {
+//		ModelAndView mav = new ModelAndView("admin/productList");
+//		List<Production> list = productionService.productionSelectAllService();
+//		Paging paging = new Paging();
+//		paging.setDisplayRow(12);
+//		paging.setTotalCount(productionService.selectProductAllNum());		
+//		mav.addObject("list", list);
+//		return mav;
+//	}
+	
 	@RequestMapping("productList.do")
-	public ModelAndView productList() {
+	public ModelAndView productList(Paging paging, @RequestParam(value="kwd",required=false) String kwd) {
 		ModelAndView mav = new ModelAndView("admin/productList");
-		List<Production> list = productionService.productionSelectAllService();
-		mav.addObject("list", list);
+		if(kwd==null) {
+			kwd="";
+		}
+		paging.setKwd(kwd);
+		paging.setTotalCount(productionService.selectSearchCount(kwd));
+		
+		logger.info(paging.toString());
+		
+		List<Production> list = productionService.selectSearch(paging);
+		
+		
+		
+		mav.addObject("paging", paging);		
+		mav.addObject("list", list);		
 		return mav;
 	}
+	
+	
 
 	// 재고관리 - 재고량 update
 	@RequestMapping("proCountUpdate.do")
@@ -119,11 +166,13 @@ public class AdminController {
 		HashMap<String, Object> pbnopname = new HashMap<String, Object>();
 		pbnopname.put("pbno", pbno); // int --> Auto Boxing --> Integer
 		pbnopname.put("pname", pname);
+		String path = "/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname;
+		pbnopname.put("path",path);
 		proBoardService.insertPnameContain(pbnopname);		
 		
+		path=application.getRealPath("/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname);
 		String[] options = proBoard.getOptions().split(",");	//proBoard.options -> parsing 필요 "," 구문	
 		
-		String path=application.getRealPath("/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname);
 		File dir = new File(path);
 		if (!dir.isDirectory()) { dir.mkdirs(); }
 		for(MultipartFile file : filelist) {

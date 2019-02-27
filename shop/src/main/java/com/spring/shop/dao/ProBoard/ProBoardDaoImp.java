@@ -50,4 +50,9 @@ public class ProBoardDaoImp implements ProBoardDao{
 		return sqlSession.selectList(ProBoardMapper+".selectForSearch", kwd);
 	}
 
+	@Override
+	public int getAllCount(String kwd) {
+		return sqlSession.selectOne(ProBoardMapper+".selectAllCount", kwd);
+	}
+
 }

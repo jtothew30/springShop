@@ -13,4 +13,5 @@ public interface ProBoardService {
 	void insertPnameContain(HashMap<String, Object> pbnopname);
 	ProBoard selectBoardForContain(ProBoard proBoard);
 	List<ProBoard> getpbList(String kwd);
+	int getAllCount(String kwd);	
 }

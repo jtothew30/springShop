@@ -6,9 +6,6 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Header</title>
-	<link rel="stylesheet" href="resources/css/foundation.css">
-	<link rel="stylesheet" href="resources/css/app.css">
-	<link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css">
 	<style type="text/css">
 		.multilevel-accordion-menu .is-accordion-submenu-parent a {
 			background: #4d5158;

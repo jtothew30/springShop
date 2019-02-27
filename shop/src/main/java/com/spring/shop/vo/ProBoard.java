@@ -13,8 +13,15 @@ public class ProBoard {
 	private String pname;
 	private String category1;
 	private String category2;
-	private String category3;
+	private String category3;	
+	public String path;
 	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
 	public String getPname() {
 		return pname;
 	}

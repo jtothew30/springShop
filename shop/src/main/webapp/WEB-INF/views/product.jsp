@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Product page</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/foundation-icons/foundation-icons.css">
 <style type="text/css">
 	.jbFiexd{
 		position: fixed;

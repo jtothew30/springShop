@@ -45,4 +45,9 @@ public class ProBoardServiceImp implements ProBoardService{
 	public List<ProBoard> getpbList(String kwd) {		
 		return proboardDao.getpbList(kwd);
 	}
+
+	@Override
+	public int getAllCount(String kwd) {
+		return proboardDao.getAllCount(kwd);
+	}
 }

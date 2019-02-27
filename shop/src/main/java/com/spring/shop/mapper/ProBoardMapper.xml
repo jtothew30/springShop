@@ -13,8 +13,12 @@
 		 				)
 	</select>
 	
+	<select id="selectAllCount" parameterType="string" resultType="int">
+		select count(*) from proboard where title like '%'||#{kwd}||'%'	
+	</select>
+	
 	<select id="selectListAll" resultType="com.spring.shop.vo.ProBoard">
-		select * from proboard
+		select proboard.* , pname, path from proboard, procontain where proboard.pbno = procontain.pbno
 	</select>
 	
 	<insert id="insertProBoard" parameterType="com.spring.shop.vo.ProBoard">
@@ -29,7 +33,7 @@
 	</insert>
 	
 	<insert id="insertPnameContain" parameterType="hashmap">
-		insert into procontain values(#{pbno}, #{pname})
+		insert into procontain values(#{pbno}, #{pname},#{path})
 	</insert>
 	
 	<select id="selectBoardForContain" parameterType="com.spring.shop.vo.ProBoard" resultType="com.spring.shop.vo.ProBoard">

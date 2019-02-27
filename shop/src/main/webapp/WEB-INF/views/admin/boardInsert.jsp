@@ -118,6 +118,7 @@
 						<p>
 							<label>제품선택:</label> 
 							<select name="pname" id="pnameSelect" onchange="change1();">
+								<option selected>---선택하시오---</option>
 								<c:forEach items="${list}" var="i">
 									<option value="${i}">${i}</option>
 								</c:forEach>
