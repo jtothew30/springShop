@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.Account;
+import com.sun.mail.imap.protocol.Namespaces.Namespace;
 
 @Repository
 public class AccountDaolmp implements AccountDao{
@@ -52,5 +53,10 @@ public class AccountDaolmp implements AccountDao{
 	@Override
 	public Account viewmem(String id) {
 		return sqlSession.selectOne("view", id);
+	}
+	
+	@Override
+	public void delete(Account account) throws Exception {
+		sqlSession.delete(".delete", account);
 	}
 }

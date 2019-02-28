@@ -10,4 +10,5 @@ public interface AccountDao {
 	public void dbUpdate(Account account) throws Exception;
 	public List<Account> memlist(Account account) throws Exception;
 	public Account viewmem(String id) throws Exception;
+	public void delete(Account account) throws Exception;
 }

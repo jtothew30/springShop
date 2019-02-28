@@ -4,6 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.spring.shop.mapper.AccountMapper">
+	<insert id="insert" parameterType="com.spring.shop.vo.Account">
+		insert into account values(#{id},#{pw},#{name},#{age},#{gender},#{email},#{phone}, sysdate)
+	</insert>
+	
 	<select id="select" resultType="com.spring.shop.vo.Account">
 		select
 			id,name,email,phone
@@ -19,12 +23,14 @@
 		select id,name,age,gender,email,phone from account where name=#{name}
 	</select>
 	
-	<insert id="insert" parameterType="com.spring.shop.vo.Account">
-		insert into account values(#{id},#{pw},#{name},#{age},#{gender},#{email},#{phone}, sysdate)
-	</insert>
-	
 	<update id="update" parameterType="com.spring.shop.vo.Account">
 		update account set pw=#{pw}, email=#{email}, phone=#{phone}
 		where id=#{id}
 	</update>
+	
+	<delete id="delete">
+		delete from account
+		where id=#{id}
+		and pw=#{pw}
+	</delete>
 </mapper>

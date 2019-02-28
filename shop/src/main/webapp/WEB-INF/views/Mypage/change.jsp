@@ -4,16 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보변경</title>
+<title>정보변경전 인증페이지</title>
 <link rel="stylesheet" href="resources/css/mypage/common.css">
-<link rel="stylesheet" href="resources/css/mypage/side.css">
+<link rel="stylesheet" href="resources/css/mypage/snb.css">
 <link rel="stylesheet" href="resources/css/mypage/openid.css">
 </head>
 <body>
 
 <div id="openIdWrap"> 
 			<div class="contentsWrap">
-				<form name="PasswordCertify" method="post" action="/member/memberjoin.do">
+				<form name="PasswordCertify" method="post" action="infoChange.do?name=${account.name}">
 					<div class="subConWrap">
 						<h2 class="mainTitle">회원정보수정</h2>
 						<div class="pwTopBox">
@@ -25,7 +25,7 @@
 						<div class="pwConfBox conTable">
 							<dl>
 								<dt>아이디</dt>
-								<dd id="memId">아이디~</dd>
+								<dd id="memId">${account.id}</dd>
 							</dl>
 							<dl>
 								<dt>비밀번호</dt>
@@ -40,10 +40,10 @@
 						</div>
 						<div class="interBtnArea">
 							<span>
-								<button type="submit" class="btnRed" onclick="javascript:fn_send(); return false;">확인</button>
+								<button type="submit" class="btnblue" onclick="javascript:fn_send(); return false;">확인</button>
 							</span>
 							<span>
-								<button type="submit" class="btnWhite" onclick="javascript:fn_goMain(); return false;">취소</button>
+								<input type="button" class="btnWhite" onclick="history.back();" value="취소">
 							</span>
 						</div>
 					</div>

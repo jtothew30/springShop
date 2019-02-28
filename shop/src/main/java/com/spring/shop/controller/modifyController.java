@@ -3,6 +3,7 @@ package com.spring.shop.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.shop.dao.AccountDao;
 import com.spring.shop.service.AccountService;
@@ -50,6 +52,30 @@ public class modifyController {
 	@RequestMapping("change.do")
 	public String Change() {
 		return "/Mypage/change";
+	}
+	
+	@RequestMapping(value="/Mypage/AccountDelete", method = RequestMethod.GET)
+	public void GetDelete() throws Exception {
+	 logger.info("GET delete");
+	}
+	
+	@RequestMapping(value="delete.do", method=RequestMethod.POST)
+	public String PostDelete(HttpSession session, Account account, RedirectAttributes rttr) throws Exception {
+		logger.info("POST delete");
+		
+		Account member = (Account)session.getAttribute("member");
+		
+		String oldPass = member.getPw();
+		String newPass = account.getPw();
+		
+		if(!(oldPass.equals(newPass))) {
+			rttr.addFlashAttribute("msg",false);
+			return "redirect:/Mypage/AccountDelete";
+		}
+		
+		service.delete(account);
+		
+		return "redirect:/";
 	}
 	
 	@RequestMapping("refer.do")

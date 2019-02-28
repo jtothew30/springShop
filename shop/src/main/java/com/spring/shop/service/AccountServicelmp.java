@@ -39,4 +39,9 @@ public class AccountServicelmp implements AccountService{
 	public Account viewmem(String id) throws Exception {
 		return accountDao.viewmem(id);
 	}
+	
+	@Override
+	public void delete(Account account) throws Exception {
+		accountDao.delete(account);
+	}
 }

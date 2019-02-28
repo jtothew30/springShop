@@ -17,6 +17,7 @@
 	
 	<h1>
 		<a href="main.do">마이페이지</a>
+		<a href="delete.do">회원탈퇴</a>
 	</h1>
 	
 	<h1>
