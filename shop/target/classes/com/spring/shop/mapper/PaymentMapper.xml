@@ -5,12 +5,14 @@
   
 <mapper namespace="com.spring.shop.mapper.PaymentMapper">
 	<select id="getPayrequestList" resultType="com.spring.shop.vo.Payrequest" parameterType="string">
-		select pr.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select pr.*, pb.title from payrequest pr 
+		select pr.*, p.pname, p.options, p.category1, p.category2, p.category3, p.stock  from (select pr.*, pb.title from payrequest pr 
 									left outer join proboard pb 
 									on pr.pbno = pb.pbno 
 									where pr.customer = #{customer} and pr.status = '결제진행' 
 									) pr 
-		left outer join production p 
+		left outer join (select p.*, ps.count as stock from production p 
+						 left outer join prostock ps 
+						 on p.pno = ps.pno) p 
 		on pr.pno = p.pno 
 		order by p.pno
 	</select>
@@ -18,6 +20,11 @@
 	
 	<select id="getPaymentResult" resultType="com.spring.shop.vo.Payment" parameterType="int">
 		select * from payment where payno = #{payno}
+	</select>
+	
+	
+	<select id="checkPayment" resultType="int" parameterType="string">
+		select count(*) from payment where customer = #{customer} and status = '결제진행'
 	</select>
 
 
@@ -41,6 +48,22 @@
 	<update id="updatePayrequest" parameterType="com.spring.shop.vo.Payment">
 		update payrequest set status = '결제완료' where payno = #{payno} 
 	</update>
+	
+	<select id="getPreq" parameterType="int" resultType="com.spring.shop.vo.Payrequest">
+		select * from payrequest where payno = #{payno}
+	</select>
+	
+	<update id="updateProstock" parameterType="com.spring.shop.vo.Payrequest">
+		update prostock set count = count - #{count} where pno = #{pno}
+	</update>
+	
+	<delete id="deletePayment">
+		delete from payment where customer = #{customer} and status = '결제진행'
+	</delete>
+	
+	<delete id="deletePayrequest">
+		delete from payrequest where customer = #{customer} and status = '결제진행'
+	</delete>
 	
 	
 </mapper>

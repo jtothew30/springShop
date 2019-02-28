@@ -10,6 +10,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript">
+	var flag;
+	
 	function changeSelectAddr() {
 		var radio = document.getElementsByName("seladdr");
 		var sel;
@@ -234,11 +236,38 @@
 			//결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
 			//주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
 			console.log(data);
-			if (true) { // 재고 수량 관리 로직 혹은 다른 처리
-				this.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
-			} else {
-				this.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+			
+			/* var suc = function () {
+				transactionConfirm();
 			}
+			var fai = function () {
+				removePaymentWindow();
+			}
+ */
+			// 재고 수량 관리 로직 혹은 다른 처리
+			$.ajax({
+				type: "POST",
+				context: this,
+				url: "checkStock.do",
+				success : function(f){
+					if(f=="true"){
+						this.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+					}else{							
+						$.ajax({	//진행 중이던 결제 정보 삭제 이후 장바구니로 이동
+							type: "POST",
+							context: this,
+							url: "deletePayment.do",
+							success : function(data){
+								swal("현재 요청한 상품의 재고가 부족한 상황입니다!","장바구니로 이동합니다.", "warning")
+								.then((value) => {
+								  location.href="../cart/cart.do";
+								});
+								this.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+							}
+						})	
+					}
+				}
+			})	
 		}).close(function (data) {
 		    // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
 		    console.log(data);

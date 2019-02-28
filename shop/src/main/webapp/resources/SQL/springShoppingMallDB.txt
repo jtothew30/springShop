@@ -226,6 +226,7 @@ col price for 999999
 col event for 999999
 col totalsales for 99999
 
+col path for a60
 
 col customer for a15
 col count for 999

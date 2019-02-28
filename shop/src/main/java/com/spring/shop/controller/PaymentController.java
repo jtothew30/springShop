@@ -57,6 +57,7 @@ public class PaymentController {
 			System.out.println("getPayrequestList category2 : " + preq.getCategory2());
 			System.out.println("getPayrequestList category3 : " + preq.getCategory3());
 			System.out.println("getPayrequestList pname : " + preq.getPname());
+			System.out.println("getPayrequestList stock : " + preq.getStock());
 			
 			total += preq.getPrice() * preq.getCount();
 		}
@@ -105,6 +106,12 @@ public class PaymentController {
 		System.out.println("payRequest.do 진입 체크");		
 		String customer = "testID"; 
 		
+		String delflag = request.getParameter("del");
+		if(delflag.equals("true"))
+			service.deletePayment(customer);
+		
+		
+		
 		service.createPayment(customer); // create new payment
 		int payno = service.getPayno(customer); // get payno from payment table for create new payrequest datas
 		
@@ -132,6 +139,55 @@ public class PaymentController {
 		}		
 		service.createPayrequest(preqlist); // create new payrequest datas		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkStock.do", method=RequestMethod.POST)
+	public String checkStock() throws Exception{
+		String customer = "testID"; 		
+		String flag = "true";
+		
+		System.out.println("checkStock 진입 체크");
+		
+		List<Payrequest> stocklist = service.getPayrequestList(customer);
+		for(Payrequest preq : stocklist) {
+			System.out.println(preq.getCount() + " / " + preq.getStock());
+			if(preq.getCount() > preq.getStock()) {
+				flag="false"; // request count > stock!!!			
+				break;
+			}
+		}
+		System.out.println("checkStock flag 체크 : " + flag);
+		return flag;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/checkPayment.do", method=RequestMethod.POST)
+	public boolean checkPayment() throws Exception{
+		String customer = "testID"; 		
+		System.out.println("checkPayment 진입 체크");
+		
+		int chk = service.checkPayment(customer);
+		
+		if(chk == 0)
+			return true;	// 진행 중인 결제건 없음.
+		else
+			return false;  // 이미 진행 중인 결제건이 존재.
+	}
+	
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/deletePayment.do", method=RequestMethod.POST)
+	public void deletePayment() throws Exception{
+		String customer = "testID"; 				
+		System.out.println("deletePayment check");
+		
+		service.deletePayment(customer);	
+	}
+	
 	
 	
 	@ResponseBody

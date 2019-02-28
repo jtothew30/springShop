@@ -50,6 +50,12 @@ public class PaymentDaoImp implements PaymentDao {
 	public void payment(Payment payment) {
 		sqlSession.update(PaymentMapper+".payment", payment);
 		sqlSession.update(PaymentMapper+".updatePayrequest", payment);
+		
+		List<Payrequest> preqlist = sqlSession.selectList(PaymentMapper+".getPreq", payment.getPayno());
+		
+		for(Payrequest preq : preqlist) {
+			sqlSession.update(PaymentMapper+".updateProstock", preq);
+		}	
 		System.out.println("payment success");
 	}
 	
@@ -58,4 +64,18 @@ public class PaymentDaoImp implements PaymentDao {
 		Payment result = sqlSession.selectOne(PaymentMapper+".getPaymentResult", payno);
 		return result;
 	}
+	
+	@Override
+	public void deletePayment(String customer) {
+		sqlSession.delete(PaymentMapper+".deletePayrequest", customer);
+		sqlSession.delete(PaymentMapper+".deletePayment", customer);
+	}
+	
+	@Override
+	public int checkPayment(String customer) {
+		int chk = sqlSession.selectOne(PaymentMapper+".checkPayment", customer);
+		return chk;
+	}
+	
+	
 }

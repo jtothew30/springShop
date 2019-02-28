@@ -4,6 +4,8 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>cart page</title>
+<!-- Bootstrap core CSS -->
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 
@@ -19,8 +21,14 @@
 			json.pno = "${cart.pno}";
 			json.pbno = "${cart.pbno}";
 			json.customer = "${cart.customer}";
+			json.pname = "${cart.pname}";
+			json.options = "${cart.options}";
 			json.count = "${cart.count}";
 			json.price = "${cart.price}"; 
+			json.category1 = "${cart.category1}"; 
+			json.category2 = "${cart.category2}";
+			json.category3 = "${cart.category3}";
+			json.title = "${cart.title}";
 			cartlist.push(json);
 		</c:forEach>
 	})
@@ -52,7 +60,6 @@
 		}
 		
 		payAlert();
-		//alert(JSON.stringify(chklist));
 	}
 	
 	function allPayRequest() {
@@ -83,17 +90,62 @@
 			.then((value) => {
 			  switch (value) {					 
 			    case "catch":
+			    	
 			    	$.ajax({
 						type: "POST",
-						url: "../payment/payrequest.do",
-						data : {'list' : JSON.stringify(sellist)},
-						success : function(){
-							swal("결제 페이지로 이동합니다.")
-							.then((value) => {
-								location.href="../payment/paymentPage.do";
-							});
+						url: "../payment/checkPayment.do",
+						success : function(data){
+							if(data == true){
+								$.ajax({
+									type: "POST",
+									url: "../payment/payrequest.do",
+									data : {'list' : JSON.stringify(sellist)},
+									success : function(){
+										swal("결제 페이지로 이동합니다.")
+										.then((value) => {
+											location.href="../payment/paymentPage.do";
+										});
+									}
+								})	
+							}else{
+								swal("이미 진행 중인 결제건이 있습니다!","","warning",  {
+									buttons: {				    
+									    catch: {
+									      text: "기존 결제건 확인.",
+									      value: "catch",
+									    },
+									    defeat:{
+									    	text: "기존 건 삭제 후 진행.",
+									    	value: "defeat",
+									    },
+									    cancel: "취소",
+									  },
+									})
+									.then((value) => {
+									  switch (value) {					 
+									    case "catch":
+									    	location.href="../payment/paymentPage.do";		    	
+									      break;	
+									    case "defeat":
+									    	$.ajax({
+												type: "POST",
+												url: "../payment/payrequest.do",
+												data : {'list' : JSON.stringify(sellist), 'del' : 'true'},
+												success : function(){
+													swal("결제페이지로 이동합니다.","", "success")
+													.then((value) => {
+												      location.href="../payment/paymentPage.do";
+													});			
+												}
+											})
+									    	break;
+									    default:
+									    	break;
+									  }
+									});	
+							}
 						}
-					})		    	
+					})		
 			      break;					 
 			    default:
 			    	break;
@@ -130,6 +182,25 @@
 			});	
 	}
 	
+	
+	function optionChange(pno) {
+		var pro;
+		for(var i=0; i<cartlist.length; i++){
+			if(cartlist[i].pno == pno){
+				pro = cartlist[i];
+				break;
+			}
+		}
+		
+		$("#opchg_img").html("<img src=\"${pageContext.request.contextPath}/resources/upload/"+pro.category1+"/"+pro.category2+"/"+pro.category3+"/"+pro.pname+"/메인.jpg\" width=\"130\">");
+		$("#opchg_title").html("<a href=\"../proboard/product.do?pbno="+pro.pbno+"\">"+pro.title+"</a>")
+		$("#opchg_pname").html(pro.pname);
+		$("#opchg_options").html(pro.options);
+		$("#opchg_count").val(pro.count);
+		$("#opchg_price").html(pro.price);
+		$("#opchg_total").html(pro.count*pro.price); 
+		
+	}
 </script>
 </head>
 <body>
@@ -153,7 +224,10 @@
 					<strong style="font-size:15pt;">${cart.pname}</strong> - ${cart.options}<br><br>
 					상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${cart.pbno}">${cart.title}</a>
 				</td>
-				<td width="20%">${cart.price} 원 / ${cart.count} 개</td>
+				<td width="20%">
+					${cart.price} 원 / ${cart.count} 개<br>
+					<input type="button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})" value="변경"> 
+				</td>
 				<td width="20%">
 					합계 : <span id="price${cart.pno}">${cart.count * cart.price}</span> 원&nbsp;&nbsp;
 					<input type="button" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
@@ -169,6 +243,71 @@
 	</div>
 	<input type="button" onclick="selPayRequest()" value="선택상품주문">
 	<input type="button" onclick="allPayRequest()" value="전체주문">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="modal fade" id="layerpop" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header">
+	        <!-- header title -->
+	        <h4 class="modal-title">옵션 변경</h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+	      		상품 변경 메뉴
+	           <table>
+	           		<thead>
+	           		<tr>
+	           			<th colspan="2" style="text-align:center;">상품정보</th>
+	           			<th style="text-align:center;">판매가</th>
+	           		</tr>
+	           		</thead>
+	           		<tr style="text-align:center;">
+	           			<td>
+	           				<span id="opchg_img"></span>
+	           			</td>
+	           			<td>	
+	           				<strong><span id="opchg_title"></span><br>상품 : <span id="opchg_pname"></span></strong>
+	           			</td>
+	           			<td id="opchg_price"></td>
+	           		</tr>
+	           </table><hr>	           
+	                     선택 옵션 : <select id="selectOption" onchange="selectOption()">
+							<option value="" selected>옵션 선택</option>
+							<span id="opchg_options"></span>
+						</select>
+							<%-- <option value="${op.options}">${op.options}-재고:${op.count}</option> --%>
+    
+	           - 개수 <input type="number" id="opchg_count" min="1" style="width:40pt; display: inline;"><hr>           
+	           <p>
+	           	총합계금액(수량) : <span id="opchg_total"></span>원
+	           </p>
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="">변경 완료</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+	
+	
+	<!-- Bootstrap core JavaScript -->
+	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>

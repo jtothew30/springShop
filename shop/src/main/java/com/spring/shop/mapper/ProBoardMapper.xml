@@ -7,10 +7,12 @@
 		
 	
 	<select id="selectProductions" resultType="com.spring.shop.vo.Production" parameterType="int">
-	     select * from production 
-		 where pname = (select pname from procontain 
-		 				where pbno=#{pbno}
-		 				)
+	    select p.*, ps.count from production p 
+	    left outer join prostock ps 
+	    on p.pno=ps.pno 
+		where p.pname = (select pname from procontain 
+		 			   where pbno=#{pbno} 
+					   )
 	</select>
 	
 	<select id="selectListAll" resultType="com.spring.shop.vo.ProBoard">
