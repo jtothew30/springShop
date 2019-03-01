@@ -6,6 +6,9 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Header</title>
+	<link rel="stylesheet" href="resources/css/foundation.css">
+	<link rel="stylesheet" href="resources/css/app.css">
+	<link rel="stylesheet" href="resources/foundation-icons/foundation-icons.css">
 	<style type="text/css">
 		.multilevel-accordion-menu .is-accordion-submenu-parent a {
 			background: #4d5158;
@@ -71,7 +74,7 @@
 		}
 	</style>
 </head>
-
+<%-- 
 <!-- Start Top Bar -->
 <!-- 	<div class="top-bar top-bar-center">
 		<div align="center">
@@ -104,7 +107,7 @@
 		</div>
 	</div> -->
 <!-- End Top Bar -->
-
+--%>
 <!-- NOTE: This is the off-canvas menu that appears when you click on the hamburger menu on smaller screens. Everything in the `.off-canvas` div belongs in `src/layouts/default.html`. Copy this section into the `default.html` file and remove it from this file.  -->
 <div class="off-canvas ecommerce-header-off-canvas position-left" id="ecommerce-header" data-off-canvas>
 
@@ -477,14 +480,15 @@
 						<li class="has-form" style="margin-top: 10px;">
 							<div class="row ">
 								<div class="large-8 small-9 columns">
-									<form action="search.do" name="searchProduct">
-										<input type="text" name="kwd" placeholder="Find Stuff">
+									<form action="search.do" id="searchProduct" name="searchProduct">
+										<input type="text" name="kwd" placeholder="Find Stuff" value="${paging.kwd}">
+										<input type="hidden" id="opt2" name="optionKwd" value="${paging.optionKwd}">										
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="large-4 small-3 columns" style="padding: 8px">
-								<input type="submit" class="alert button expand" value="검색">
+								<input type="submit" id="searchPro" class="alert button expand" value="검색">
 								</form>
 							</div>
 						</li>
@@ -499,7 +503,7 @@
 	<div class="ecommerce-header-mobile-left">
 		<button class="menu-icon" type="button" data-toggle="ecommerce-header"></button>
 		<form class="ecommerce-header-search-exandable">
-			<input type="search" placeholder="Search">
+			<input type="search" placeholder="Search" value="${paging.kwd}">
 		</form>
 	</div>
 	<div class="ecommerce-header-mobile-center">

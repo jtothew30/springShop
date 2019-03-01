@@ -128,10 +128,10 @@
 <c:import url="header.jsp" />
 
 <body>
-  <div class="main" style="margin: 10% 10%; width: 100%">
-    <div class="row expended">
+  <div class="main" style="margin-top:2em; ">
+    <div class="row ">
       <!-- product filter start -->
-      <div class="columns small-4 large-4 large-uncentered">
+      <div class="columns small-3 large-3">
         <div class="hide-for-small panel">
           <div class="product-filters">
             <ul class="mobile-product-filters vertical menu show-for-small-only" data-accordion-menu>
@@ -144,7 +144,8 @@
                       <a href="#" class="clear-all" id="category-clear-all">Clear All</a>
                       <c:forEach items="${cate2List}" var="i" varStatus="p">
                         <li>
-                          <input class="category-clear-selection" id="category-checkbox${p.index+1}" type="checkbox">
+                          <input class="category-clear-selection chkboxCate2" name="chkboxCate2" onclick="chk();" type="checkbox"
+                            value="${i}">
                           <label for="category-checkbox${p.index+1}">${i}</label>
                         </li>
                       </c:forEach>
@@ -155,7 +156,8 @@
                       <a href="#" class="clear-all" id="size-clear-all">Clear
                         All</a>
                       <c:forEach items="${cate3List}" var="op" varStatus="i">
-                        <li><input id="size-checkbox${i.index+1}" type="checkbox"><label for="size-checkbox${i.index+1}">${op}</label></li>
+                        <li><input class="chkboxCate3" name="chkboxCate3" onclick="chk();" type="checkbox" value="${op}">
+                          <label for="size-checkbox${i.index+1}">${op}</label></li>
                       </c:forEach>
                     </ul>
                   </li>
@@ -195,7 +197,8 @@
                 <ul class="categories-menu menu vertical nested is-active">
                   <a href="#" class="clear-all" id="category-clear-all">Clear All</a>
                   <c:forEach items="${cate2List}" var="i">
-                    <li><input id="category-checkbox${p.index+1}" type="checkbox"><label for="category-checkbox${p.index+1}">${i}</label></li>
+                    <li><input class="chkboxCate2" onclick="chk();" name="chkboxCate2" type="checkbox" value="${i}">
+                      <label for="category-checkbox${p.index+1}">${i}</label></li>
                   </c:forEach>
                 </ul>
               </li>
@@ -203,7 +206,8 @@
                 <ul class="categories-menu menu vertical nested is-active">
                   <a href="#" class="clear-all" id="size-clear-all">Clear All</a>
                   <c:forEach items="${cate3List}" var="op" varStatus="i">
-                    <li><input id="size-checkbox${i.index+1}" type="checkbox"><label for="size-checkbox${i.index+1}">${op}</label></li>
+                    <li><input class="chkboxCate3" onclick="chk();" name="chkboxCate3" type="checkbox" value="${op}">
+                      <label for="size-checkbox${i.index+1}">${op}</label></li>
                   </c:forEach>
                 </ul>
               </li>
@@ -240,75 +244,52 @@
       <!-- product filter end -->
       <!-- product Card start -->
 
-      <div class="columns small-8 large-8">
+      <div class="columns small-9 large-9" style="margin:0; padding:0;">
         <c:forEach items="${pbList}" var="b" varStatus="i">
-          <c:if test="${i.index%4 == 0 || i.first}">
+          <c:if test="${i.index%4 == 3 }">
             <div class="row">
           </c:if>
-          <div class="large-4 columns">
+          <div class="large-3 columns">
             <div class="product-card">
               <div class="product-card-thumbnail">
-                <a href="proboard/product.do?pbno=${b.pbno}"> <img src="${pageContext.request.contextPath}/resources/upload/${b.category1}/${b.category2}/${b.category3}/${b.pname}/1.JPG"
+                <a href="proboard/product.do?pbno=${b.pbno}"> <img src="${pageContext.request.contextPath}/resources/upload/${b.category1}/${b.category2}/${b.category3}/${b.pname}/1.jpg"
                     width="180" height="180" /></a>
               </div>
               <h2 class="product-card-title">
-                <a href="proboard/product.do?pbno=${b.pbno}"">${b.title}</a>
-							</h2>
-							<span class="
-                  product-card-desc">${b.pname}</span>
-                  <span class="product-card-price">
-                    <fmt:formatNumber value="${b.price}" type="currency" currencySymbol="￦" /></span> <span class="product-card-sale">
-                    <fmt:formatNumber value="${b.event}" type="currency" currencySymbol="￦" /></span>
+                <a href="proboard/product.do?pbno=${b.pbno}">${b.title}</a>
+              </h2>
+              <span class="
+                  product-card-desc">${b.options}</span>
+              <span class="product-card-price">
+                <fmt:formatNumber value="${b.price}" type="currency" currencySymbol="￦" /></span> <span class="product-card-sale">
+                <fmt:formatNumber value="${b.event}" type="currency" currencySymbol="￦" /></span>
             </div>
           </div>
-          <c:if test="${i.index%4 == 3 || i.last}">
+          <c:if test="${i.index%4 == 3}">
       </div>
       </c:if>
       </c:forEach>
-
-      <!-- prduct Card end -->
-      <!-- pageing template -->
-      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
-        <li class="pagination-previous disabled">Previous
-          <span class="show-for-sr">page</span></li>
-        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
-          <c:choose>
-            <c:when test="${param.page==index}">
-              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
-            </c:when>
-            <c:otherwise>
-              <li><a class="pagination-pointed-button" href="search.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
-            </c:otherwise>
-          </c:choose>
-        </c:forEach>
-        <li class="pagination-next">
-          <a class="pagination-pointed-button" href="#" aria-label="Next page">Next
-            <span class="show-for-sr">page</span>
-          </a></li>
-      </ul>
-      <!-- pageing template -->
-      <%-- <div id="paging">
-        <!-- 1~10까지 있는 페이지의 페이징 -->
-        <c:url var="action" value="${param.action}" />
-        <c:if test="${param.prev}">
-          <a href="${action}?page=${param.beginPage-1}">prev</a>
-        </c:if>
-        <c:forEach begin="${param.beginPage}" end="${param.endPage}" step="1" var="index">
-          <c:choose>
-            <c:when test="${param.page==index}">
-              ${index}
-            </c:when>
-            <c:otherwise>
-              <a href="${action}?page=${index}">${index}</a>
-            </c:otherwise>
-          </c:choose>
-        </c:forEach>
-        <c:if test="${param.next}">
-          <a href="${action}?page=${param.endPage+1}">next</a>
-        </c:if>
-      </div> --%>
-
     </div>
+    <!-- prduct Card end -->
+    <!-- pageing template -->
+    <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+      <li class="pagination-previous disabled">Previous
+        <span class="show-for-sr">page</span></li>
+      <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+        <c:choose>
+          <c:when test="${paging.page==index}">
+            <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
+          </c:when>
+          <c:otherwise>
+            <li><a class="pagination-pointed-button" href="search.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+          </c:otherwise>
+        </c:choose>
+      </c:forEach>
+      <li class="pagination-next disabled">Next
+        <span class="show-for-sr">page</span></li>
+    </ul>
+    <!-- pageing template -->
+  </div>
   </div>
 
 
@@ -333,6 +314,51 @@
       }
       $(this).siblings('li.toggleable').slideToggle();
     });
+
+    // 페이징 Previous / Next 활성화 체크
+    $(document).ready(function () {
+      var prev = '<c:out value="${paging.prev}"/>';
+      var next = '<c:out value="${paging.next}"/>';
+      if (prev == 'true') {
+        $(".pagination-previous").removeClass("disabled");
+        $(".pagination-previous").html(" <a class='pagination-pointed-top' href='${paging.beginPage-10}'" +
+          "aria-label='Next page'>Previous <span class='show-for-sr'>page</span></a>");
+      }
+      if (next == 'true') {
+        $(".pagination-next").removeClass("disabled");
+        $(".pagination-next").html("<a class='pagination-pointed-button' href='${paging.endPage+1}'" +
+          "aria-label='Next page'>Next<span class='show-for-sr'>page</span></a>");
+      }
+    });
+
+    // checkbox 받아온값 처리하기
+    $(document).ready(function () {
+      var list2 = '<c:out value="${paging.optionKwd}"/>';
+      var arr = decodeURIComponent(list2);
+      console.log("alist2: "+arr);
+    });
+
+    // 카테고리 checkbox 가져오기 
+    function chk() {
+      var listCate2 = [];
+      $('.chkboxCate2:checked').each(function () {
+        listCate2.push($(this).val());
+      });
+      var listCate3 = [];
+      $('.chkboxCate3:checked').each(function () {
+        listCate3.push($(this).val());
+      });
+      
+      var items = new Object();
+      items.listCate2 = listCate2;
+      items.listCate3 = listCate3;
+      
+      console.log(items);
+      
+      var opt2 = document.getElementById("opt2");
+      opt2.value = JSON.stringify(items);
+      $("#searchProduct").submit();
+    }
   </script>
 </body>
 <c:import url="footer.jsp" />

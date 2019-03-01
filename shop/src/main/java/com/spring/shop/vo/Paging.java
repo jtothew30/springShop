@@ -1,8 +1,16 @@
 package com.spring.shop.vo;
 
-public class Paging {
-	
-	private String kwd; // 검색어
+import java.util.ArrayList;
+
+/**
+ * @author kim
+ *
+ */
+public class Paging {	
+	private String kwd=""; // 검색어
+	private String optionKwd;
+	private ArrayList<String> listCate2;
+	private ArrayList<String> listCate3;
 	
 	private int page =1; //현재 페이지 (get)
 	private int totalCount; //row 전체의 수 (get)
@@ -81,13 +89,32 @@ public class Paging {
 	public void setKwd(String kwd) {
 		this.kwd = kwd;
 	}
+	
+	public String getOptionKwd() {
+		return optionKwd;
+	}
+	public void setOptionKwd(String optionKwd) {
+		this.optionKwd = optionKwd;
+	}
+	public ArrayList<String> getListCate2() {
+		return listCate2;
+	}
+	public void setListCate2(ArrayList<String> listCate2) {
+		this.listCate2 = listCate2;
+	}
+	public ArrayList<String> getListCate3() {
+		return listCate3;
+	}
+	public void setListCate3(ArrayList<String> listCate3) {
+		this.listCate3 = listCate3;
+	}
 	@Override
 	public String toString() {
-		return "Paging [kwd=" + kwd + ", page=" + page + ", totalCount=" + totalCount + ", beginPage=" + beginPage
+		return "Paging [kwd=" + kwd + ", optionKwd=" + optionKwd + ", listCate2=" + listCate2 + ", listCate3="
+				+ listCate3 + ", page=" + page + ", totalCount=" + totalCount + ", beginPage=" + beginPage
 				+ ", endPage=" + endPage + ", displayRow=" + displayRow + ", displayPage=" + displayPage + ", startNum="
 				+ startNum + ", endNum=" + endNum + ", prev=" + prev + ", next=" + next + "]";
 	}
-	
 	
 }//class end
 

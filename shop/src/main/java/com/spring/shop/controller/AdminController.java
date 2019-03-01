@@ -85,34 +85,15 @@ public class AdminController {
 		mav.addObject("pro",pro);		
 		return mav;		
 	}		
-	
-//	// 재고관리 - 리스트 출력
-//	@RequestMapping("productList.do")
-//	public ModelAndView productList() {
-//		ModelAndView mav = new ModelAndView("admin/productList");
-//		List<Production> list = productionService.productionSelectAllService();
-//		Paging paging = new Paging();
-//		paging.setDisplayRow(12);
-//		paging.setTotalCount(productionService.selectProductAllNum());		
-//		mav.addObject("list", list);
-//		return mav;
-//	}
-	
+		
 	@RequestMapping("productList.do")
 	public ModelAndView productList(Paging paging, @RequestParam(value="kwd",required=false) String kwd) {
 		ModelAndView mav = new ModelAndView("admin/productList");
-		if(kwd==null) {
-			kwd="";
-		}
+		if(kwd==null) kwd="";
 		paging.setKwd(kwd);
 		paging.setTotalCount(productionService.selectSearchCount(kwd));
-		
 		logger.info(paging.toString());
-		
 		List<Production> list = productionService.selectSearch(paging);
-		
-		
-		
 		mav.addObject("paging", paging);		
 		mav.addObject("list", list);		
 		return mav;
@@ -176,7 +157,7 @@ public class AdminController {
 		File dir = new File(path);
 		if (!dir.isDirectory()) { dir.mkdirs(); }
 		for(MultipartFile file : filelist) {
-			String originFileName = file.getOriginalFilename(); // 원본 파일 명
+			String originFileName = file.getOriginalFilename().toLowerCase(); // 원본 파일 명(소문자강제처리)
 	        long fileSize = file.getSize(); // 파일 사이즈
 	        logger.info("originFileName : " + originFileName);
 	        logger.info("fileSize : " + fileSize);
@@ -195,11 +176,34 @@ public class AdminController {
 
 	// 게시글관리 - 리스트 출력
 	@RequestMapping("boardList.do")
-	public ModelAndView boardList() throws Exception {
+	public ModelAndView boardList(Paging paging) throws Exception {
 		ModelAndView mav = new ModelAndView("admin/boardList");
-		List<ProBoard> list = proBoardService.getlist();
+		if(paging.getKwd()==null) paging.setKwd("");		
+		// 검색어 => 총 검색자료수 가져오기
+		int count = proBoardService.selectSearchCount(paging.getKwd());
+		// 페이징 객체 넣고 세팅준비끝
+		paging.setTotalCount(count);			
+		// 페이징 => 검색리스트 받아오기
+		// List<ProBoard> list = proBoardService.getlist();
+		List<ProBoard> list = proBoardService.selectSearchList(paging);		
+		mav.addObject("paging", paging);
 		mav.addObject("list", list);
 		return mav;
 	}
-
+	
+	// 게시글관리 - 글 수정 페이지 이동 (TODO 수정페이지 make)
+	@RequestMapping("boardEdit.do")
+	public ModelAndView boardEdit(@RequestParam("pbno") int pbno) {
+		ModelAndView mav = new ModelAndView("admin/boardEdit");
+		ProBoard pb = proBoardService.getProBoardDetail(pbno);
+		mav.addObject("pb",pb);
+		return mav;		
+	}
+	
+	// 게시글관리 - 글 삭제
+	@RequestMapping("boardDelete.do")
+	public String boardDelete(@RequestParam("pbno") int pbno) {
+		proBoardService.deleteProBoard(pbno);
+		return "redirect:boardList.do";		
+	}
 }

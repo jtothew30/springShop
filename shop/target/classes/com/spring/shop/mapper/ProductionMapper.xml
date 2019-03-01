@@ -63,7 +63,8 @@
 			from (
 				select rownum rn, pr.* 
 				from production pr
-				where pname like '%'||#{kwd}||'%'			
+				where pname like '%'||#{kwd}||'%'
+				order by pno desc			
 			) p
 			order by rn
 		) where rn between #{startNum} and #{endNum}

@@ -16,6 +16,40 @@
 	<select id="selectAllCount" parameterType="string" resultType="int">
 		select count(*) from proboard where title like '%'||#{kwd}||'%'	
 	</select>
+	<select id="selectAllCountP" parameterType="com.spring.shop.vo.Paging" resultType="int">
+		select count(*) from (
+			select b.*
+			from(
+				select rownum rn, pb.*
+				from (
+					select p.*, pname, path, category1,category2,category3
+					from proboard p, (
+                        select DISTINCT category1, category2, category3, c.*
+                        from production a, procontain c
+                        where a.pname = c.pname
+                        <choose>
+				            <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
+							     and category2 in
+							    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
+							       #{item}
+							    </foreach>
+						    </when>
+						    <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
+							  	 and category3 in
+							    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
+								    #{item}
+								</foreach>
+						    </when>
+						</choose>
+                    ) c
+					where p.pbno = c.pbno
+				) pb
+				where pb.title like '%'||#{kwd}||'%'				
+                order by pbno desc
+			) b
+			order by rn
+		) 
+	</select>
 	
 	<select id="selectListAll" resultType="com.spring.shop.vo.ProBoard">
 		select proboard.* , pname, path from proboard, procontain where proboard.pbno = procontain.pbno
@@ -57,5 +91,71 @@
 				on p.pname = b.pname
 		    ) s
 		order by rn	
+	</select>
+	
+	
+	
+	<select id="selectProBoardDetail" parameterType="int" resultType="com.spring.shop.vo.ProBoard">
+		select * from proboard where pbno = #{pbno}
+	</select>
+	
+	<delete id="deleteProBoard" parameterType="int">
+		delete from proboard where pbno = #{pbno} 
+	</delete>
+	
+	<select id="selectSearchCount" parameterType="string" resultType="int">
+		select count(*) from proboard where title like '%'||#{kwd}||'%'
+	</select>
+	
+	<select id="selectSearchList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.ProBoard">
+		select * from (
+			select b.*
+			from(
+				select rownum rn, pb.*
+				from (
+					select p.*, pname, path
+					from proboard p, procontain c
+					where p.pbno = c.pbno
+				) pb
+				where title like '%'||#{kwd}||'%'			
+				order by pbno desc
+			) b
+			order by rn
+		) where rn between #{startNum} and #{endNum}
 	</select>	
+	
+	<select id="searchForPaging" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.ProBoard">
+		select * from (
+			select b.*
+			from(
+				select rownum rn, pb.*
+				from (
+					select p.*, pname, path, category1,category2,category3
+					from proboard p, (
+                        select DISTINCT category1, category2, category3, c.*
+                        from production a, procontain c
+                        where a.pname = c.pname
+                        <choose>
+				            <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
+							     and category2 in
+							    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
+							       #{item}
+							    </foreach>
+						    </when>
+						    <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
+							  	 and category3 in
+							    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
+								    #{item}
+								</foreach>
+						    </when>
+						</choose>
+                    ) c
+					where p.pbno = c.pbno
+				) pb
+				where pb.title like '%'||#{kwd}||'%'				
+                order by pbno desc
+			) b
+			order by rn
+		) where rn between #{startNum} and #{endNum}
+	</select>
 </mapper>

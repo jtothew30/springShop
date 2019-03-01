@@ -204,23 +204,21 @@
 		</div>
 	</div>
 	<!-- pageing template -->
-      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">
+      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
         <li class="pagination-previous disabled">Previous
-          <span class="show-for-sr">page</span></li>
+			<span class="show-for-sr">page</span></li>
         <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
           <c:choose>
-            <c:when test="${param.page==index}">
+            <c:when test="${paging.page==index}">
               <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
             </c:when>
             <c:otherwise>
               <li><a class="pagination-pointed-button" href="productList.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
             </c:otherwise>
           </c:choose>
-        </c:forEach>
-        <li class="pagination-next">
-          <a class="pagination-pointed-button" href="#" aria-label="Next page">Next
-            <span class="show-for-sr">page</span>
-          </a></li>
+        </c:forEach>        
+        <li class="pagination-next disabled">Next
+            <span class="show-for-sr">page</span></li>
       </ul>
       <!-- pageing template -->
 	<script src="../resources/js/vendor/jquery.js"></script>
@@ -231,6 +229,20 @@
 			e.preventDefault();
 			$(this).next().toggleClass('is-active');
 			$(this).toggleClass('is-active');
+		});		
+		$(document).ready(function(){
+			var prev = '<c:out value="${paging.prev}"/>';
+			var next = '<c:out value="${paging.next}"/>';
+			if(prev == 'true'){
+				$(".pagination-previous").removeClass("disabled");
+				$(".pagination-previous").html(" <a class='pagination-pointed-top' href='${paging.beginPage-10}'"
+						+"aria-label='Next page'>Previous <span class='show-for-sr'>page</span></a>");
+			}
+			if(next == 'true'){
+				$(".pagination-next").removeClass("disabled");
+				$(".pagination-next").html( "<a class='pagination-pointed-button' href='${paging.endPage+1}'"
+						+"aria-label='Next page'>Next<span class='show-for-sr'>page</span></a>");
+			}
 		});
 	</script>
 </body>

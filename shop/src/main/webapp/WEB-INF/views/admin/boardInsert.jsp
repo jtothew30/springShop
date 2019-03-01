@@ -96,7 +96,7 @@
 				<form name="boardInsertForm" action="boardInsert.do" method="post" enctype="multipart/form-data">
 					<div class="row column">
 						<p>
-							글 제목:<input name="title" type="text">
+							글 제목:<input id="title" name="title" type="text">
 						</p>
 					</div>
 					<div class="row column">
@@ -164,6 +164,7 @@
 			}
 			</c:forEach>
 			$("#optionSelect").html(str);
+			$("#title").val(selected);
 		}
 	</script>
 </body>
