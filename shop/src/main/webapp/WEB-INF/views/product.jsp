@@ -117,7 +117,6 @@
 			data : {'list' : JSON.stringify(seloplist), 'pbno' : pbno},
 			success : function(data){
 				if(data == 'false'){
-					swal("");
 					swal("이미 장바구니에 있는 옵션을 선택하셨습니다! 장바구니 상품들을 확인하시겠습니까?", "", "warning", {
 						  buttons: {				    
 						    catch: {

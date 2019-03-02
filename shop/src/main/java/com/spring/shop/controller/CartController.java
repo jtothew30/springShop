@@ -2,7 +2,9 @@ package com.spring.shop.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -96,5 +98,51 @@ public class CartController {
 		cart.setCustomer(customer);
 		
 		service.deleteCart(cart);	
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="getOptions.do", method=RequestMethod.POST,  produces = "application/text; charset=utf8")
+	public String getOptions(HttpServletRequest request) throws Exception{		
+		int pbno = Integer.parseInt(request.getParameter("pbno"));
+		
+		List<Production> prolist = service.getOptions(pbno);
+		Gson gson = new Gson();	
+		String str = gson.toJson(prolist);
+		System.out.println(str);
+		
+		return str;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="changeOption.do", method=RequestMethod.POST)
+	public Boolean changeOption(HttpServletRequest request) throws Exception{		
+		int lastpno = Integer.parseInt(request.getParameter("lastpno"));
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		int price = Integer.parseInt(request.getParameter("price"));
+		int count = Integer.parseInt(request.getParameter("count"));
+		
+		String customer = "testID";
+		
+		List<Cart> mycart = service.getCartList(customer); // for duplicate check
+		
+		for(Cart c :mycart) {
+			  if(c.getPno() == pno) {
+				  System.out.println("장바구니 상품과 중복");
+				  return false; 
+			  }
+		  }
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("customer", customer);
+		map.put("lastpno", lastpno);
+		map.put("pno", pno);
+		map.put("price", price);
+		map.put("count", count);
+		
+		service.changeOption(map);
+		return true;
 	}
 }

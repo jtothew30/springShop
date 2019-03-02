@@ -13,6 +13,8 @@
 
 	var cartlist;	// all my cart list
 	var sellist;	// selected production list for payment
+	var oplist;     // options list from change menu modal
+	var lastpro;
 	
 	$(function(){
 		cartlist = new Array();
@@ -188,6 +190,7 @@
 		for(var i=0; i<cartlist.length; i++){
 			if(cartlist[i].pno == pno){
 				pro = cartlist[i];
+				lastpro = cartlist[i];
 				break;
 			}
 		}
@@ -195,12 +198,102 @@
 		$("#opchg_img").html("<img src=\"${pageContext.request.contextPath}/resources/upload/"+pro.category1+"/"+pro.category2+"/"+pro.category3+"/"+pro.pname+"/메인.jpg\" width=\"130\">");
 		$("#opchg_title").html("<a href=\"../proboard/product.do?pbno="+pro.pbno+"\">"+pro.title+"</a>")
 		$("#opchg_pname").html(pro.pname);
-		$("#opchg_options").html(pro.options);
+		$("#opchg_option").html(pro.options);
 		$("#opchg_count").val(pro.count);
 		$("#opchg_price").html(pro.price);
 		$("#opchg_total").html(pro.count*pro.price); 
+		//$("#opchg_originalop").html(pro.options);
+		
+		
+		oplist = new Array();
+		var str = "<option selected>변경 옵션 선택</option>";
+		$.ajax({
+			type: "POST",
+			url: "getOptions.do",
+			data : {'pbno' : pro.pbno},
+			success : function(data){
+				var prolist = JSON.parse(data);
+				//alert(prolist.length);
+				for(var i=0; i<prolist.length; i++){
+					if(prolist[i].pno != pro.pno){
+						console.log("prolist[i].pno : " + prolist[i].pno +"/ pro.pno : " + pro.pno);
+						oplist.push(prolist[i]);
+						str += "<option value=\""+prolist[i].options+"\">"+prolist[i].options+"-재고:"+prolist[i].count+"</option>";
+					}						
+				}
+				//alert(str);
+				$("#selectOption").html(str);
+			}
+		})
+	}
+	
+	
+	function selectOption() {
+		var sel = document.getElementById("selectOption");
+		var op = sel.options[sel.selectedIndex].value;
+		var count = $("#opchg_count").val();
+		var pro = new Object();		
+		
+		for(var i=0; i<oplist.length; i++){
+			if(oplist[i].options == op){
+				console.log("oplist[i].options : "+oplist[i].options+" / option : "+op);
+				pro = oplist[i];
+				break;
+			}
+		}
+		
+		if(pro.count < count){
+			swal("옵션 '"+pro.options+"'의 재고를 넘어선 요청입니다.");
+			$("#opchg_count").val(pro.count);
+			return;
+		}
+		
+		console.log("option:"+op+"/price:"+pro.outprice+"/count:"+count);
+		$("#opchg_price").html(pro.outprice);
+		$("#opchg_total").html(count*pro.outprice);	
+	}
+	
+	function changeOption() {
+		var sel = document.getElementById("selectOption");
+		var op = sel.options[sel.selectedIndex].value;
+		
+		if(op == '변경 옵션 선택'){
+			swal("옵션을 선택해주세요!", "변경처리가 제대로 되지 않았습니다.", "warning");
+			return;
+		}
+		
+		var count = $("#opchg_count").val();
+		var pro = new Object();		
+		
+		for(var i=0; i<oplist.length; i++){
+			if(oplist[i].options == op){
+				console.log("oplist[i].options : "+oplist[i].options+" / option : "+op);
+				pro = oplist[i];
+				break;
+			}
+		}
+		
+		
+		
+		
+		$.ajax({
+			type: "POST",
+			url: "changeOption.do",
+			data : {'lastpno' : lastpro.pno, 'pno' : pro.pno, 'price' : pro.outprice, 'count' : count},
+			success : function(data){				
+				if(data == true){
+					swal("옵션이 변경되었습니다.", "", "success")
+					.then((value) => {
+						location.reload();
+					});
+				}else{
+					swal("이미 장바구니에 있는 옵션을 선택하셨습니다!", "변경처리가 제대로 되지 않았습니다.", "warning");
+				}		
+			}
+		})
 		
 	}
+	
 </script>
 </head>
 <body>
@@ -260,11 +353,14 @@
 	      <!-- header -->
 	      <div class="modal-header">
 	        <!-- header title -->
-	        <h4 class="modal-title">옵션 변경</h4>
+	        <h4 class="modal-title">상품 변경 메뉴</h4>
 	      </div>
 	      <!-- body -->
-	      <div class="modal-body">
-	      		상품 변경 메뉴
+	      <div class="modal-body">	      		
+	      		현재 옵션 : <strong id="opchg_option"></strong><hr>
+                 <select id="selectOption" onchange="selectOption()" style="width:300pt; display: inline;"></select>
+	              - 개수 <input type="number" id="opchg_count" min="1" onInput="selectOption()" style="width:40pt; display: inline;"><hr> 
+	           
 	           <table>
 	           		<thead>
 	           		<tr>
@@ -282,21 +378,15 @@
 	           			<td id="opchg_price"></td>
 	           		</tr>
 	           </table><hr>	           
-	                     선택 옵션 : <select id="selectOption" onchange="selectOption()">
-							<option value="" selected>옵션 선택</option>
-							<span id="opchg_options"></span>
-						</select>
-							<%-- <option value="${op.options}">${op.options}-재고:${op.count}</option> --%>
-    
-	           - 개수 <input type="number" id="opchg_count" min="1" style="width:40pt; display: inline;"><hr>           
+	                                       
 	           <p>
 	           	총합계금액(수량) : <span id="opchg_total"></span>원
 	           </p>
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="">변경 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="changeOption()">변경 완료</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>
