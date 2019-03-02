@@ -56,7 +56,7 @@
 							<c:forEach items="${list}" var="list">
 								<tr>
 									<td>${list.pbno}</td>
-									<td><img src="/shop${list.path}/1.jpg" width="100" height="100"></td>
+									<td><img src="${pageContext.request.contextPath}${list.path}/1.jpg" width="100" height="100"></td>
 									<td><a href="../proboard/product.do?pbno=${list.pbno}">${list.title}</a></td>
 									<td>${list.pbdate}</td>
 									<td>${list.price}</td>

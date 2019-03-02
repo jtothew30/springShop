@@ -57,7 +57,7 @@ public class ProBoardDaoImp implements ProBoardDao{
 	}
 
 	@Override
-	public ProBoard getProBoardDetail(int pbno) {
+	public ProBoard selectProBoardDetail(int pbno) {
 		return sqlSession.selectOne(ProBoardMapper+".selectProBoardDetail", pbno);
 	}
 
@@ -84,6 +84,16 @@ public class ProBoardDaoImp implements ProBoardDao{
 	@Override
 	public int getAllCount(Paging paging) {
 		return sqlSession.selectOne(ProBoardMapper+".selectAllCountP",paging);
+	}
+
+	@Override
+	public void updateBoard(ProBoard proBoard) {
+		sqlSession.update(ProBoardMapper+".updateBoard",proBoard);
+	}
+
+	@Override
+	public void deleteProcontain(int pbno) {
+		sqlSession.delete(ProBoardMapper+".deleteProcontain", pbno);
 	}
 	
 	

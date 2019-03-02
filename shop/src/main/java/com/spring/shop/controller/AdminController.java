@@ -2,6 +2,7 @@ package com.spring.shop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -133,32 +134,90 @@ public class AdminController {
 	@RequestMapping(value = "boardInsert.do", method = RequestMethod.POST)
 	public String boardInsert(ProBoard proBoard, MultipartHttpServletRequest request) throws Exception {
 		logger.info(proBoard.toString());
-		List<MultipartFile> filelist = request.getFiles("file");
-		String pname = request.getParameter("pname");
-		String category1 = request.getParameter("category1");
-		String category2 = request.getParameter("category2");
-		String category3 = request.getParameter("category3");
+		
+		List<MultipartFile> filelist = request.getFiles("file");		
+		String inputPath = "/resources/upload/";
+		proBoard.setPath(inputPath);
+		
+		logger.info(proBoard.toString());
+		
 		proBoardService.insertProBoardService(proBoard);
 		// query input 타이밍에 pbno, pbdate ==> null 상태		
 		ProBoard pb = proBoardService.selectBoardForContain(proBoard);		
 		
-		//procontain 연동 등록 필요 ==> [pbno, pname]
-		int pbno = pb.getPbno();
-		HashMap<String, Object> pbnopname = new HashMap<String, Object>();
-		pbnopname.put("pbno", pbno); // int --> Auto Boxing --> Integer
-		pbnopname.put("pname", pname);
-		String path = "/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname;
-		pbnopname.put("path",path);
-		proBoardService.insertPnameContain(pbnopname);		
+		logger.info(pb.toString());
 		
-		path=application.getRealPath("/resources/upload"+"/"+category1+"/"+category2+"/"+category3+"/"+pname);
+		//procontain 연동 등록 필요 ==> [pbno, pno]
+		int pbno = pb.getPbno();
 		String[] options = proBoard.getOptions().split(",");	//proBoard.options -> parsing 필요 "," 구문	
+		for (int i = 0; i < options.length; i++) {
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			map.put("pbno", pbno);
+			map.put("pname", proBoard.getPname());
+			map.put("options", options[i]);
+			
+			logger.info(map.toString());
+			
+			productionService.insertProcontainPnamePno(map);
+		}
+		
+		String path=application.getRealPath(pb.getPath());
 		
 		File dir = new File(path);
 		if (!dir.isDirectory()) { dir.mkdirs(); }
 		for(MultipartFile file : filelist) {
 			String originFileName = file.getOriginalFilename().toLowerCase(); // 원본 파일 명(소문자강제처리)
 	        long fileSize = file.getSize(); // 파일 사이즈
+	       
+	        logger.info("originFileName : " + originFileName);
+	        logger.info("fileSize : " + fileSize);
+	        
+	        try {
+	        	file.transferTo(new File(path, originFileName));
+	        }catch(IllegalStateException e) {
+	        	e.printStackTrace();
+	        }catch(IOException e) {
+	        	e.printStackTrace();
+	        }
+		}		
+		return "redirect:boardList.do";				
+	}	
+	// 게시글관리 - 글 수정 업데이트
+	@RequestMapping("boardUpdate.do")
+	public ModelAndView boardUpdate(ProBoard proBoard, MultipartHttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("redirect:boardList.do");
+		
+		List<MultipartFile> filelist = request.getFiles("file");		
+		String inputPath = "/resources/upload/";
+		proBoard.setPath(inputPath);
+		proBoardService.updateBoard(proBoard);
+		int pbno = proBoard.getPbno();
+		ProBoard pb = proBoardService.selectProBoardDetail(pbno);
+		//procontain 연동 등록 필요 ==> [pbno, pno]		
+		pbno = pb.getPbno();
+		//기존 pbno,pno 삭제
+		proBoardService.deleteProcontain(pbno);
+		
+		String[] options = proBoard.getOptions().split(",");	//proBoard.options -> parsing 필요 "," 구문	
+		for (int i = 0; i < options.length; i++) {
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			map.put("pbno", pbno);
+			map.put("pname", proBoard.getPname());
+			map.put("options", options[i]);
+			
+			logger.info(map.toString());
+			
+			productionService.insertProcontainPnamePno(map);
+		}
+		
+		String path=application.getRealPath(pb.getPath());
+		
+		File dir = new File(path);
+		if (!dir.isDirectory()) { dir.mkdirs(); }
+		for(MultipartFile file : filelist) {
+			String originFileName = file.getOriginalFilename().toLowerCase(); // 원본 파일 명(소문자강제처리)
+	        long fileSize = file.getSize(); // 파일 사이즈
+	       
 	        logger.info("originFileName : " + originFileName);
 	        logger.info("fileSize : " + fileSize);
 	        
@@ -170,9 +229,8 @@ public class AdminController {
 	        	e.printStackTrace();
 	        }
 		}
-		
-		return "redirect:boardList.do";				
-	}	
+		return mav;
+	}
 
 	// 게시글관리 - 리스트 출력
 	@RequestMapping("boardList.do")
@@ -191,14 +249,26 @@ public class AdminController {
 		return mav;
 	}
 	
-	// 게시글관리 - 글 수정 페이지 이동 (TODO 수정페이지 make)
+	// 게시글관리 - 글 수정 페이지 이동 
 	@RequestMapping("boardEdit.do")
 	public ModelAndView boardEdit(@RequestParam("pbno") int pbno) {
 		ModelAndView mav = new ModelAndView("admin/boardEdit");
-		ProBoard pb = proBoardService.getProBoardDetail(pbno);
+		ProBoard pb = proBoardService.selectProBoardDetail(pbno);
+		
+		// production 에서 목록을 받아옴
+		List<Production> plist = productionService.productionSelectAllService();
+		mav.addObject("plist",plist);
+		
+		HashSet<String> list = new HashSet<String>();
+		for (Production p  : plist) {
+			list.add(String.valueOf(p.getPname()));
+		}	
+		mav.addObject("list",list);		
 		mav.addObject("pb",pb);
 		return mav;		
 	}
+	
+	
 	
 	// 게시글관리 - 글 삭제
 	@RequestMapping("boardDelete.do")

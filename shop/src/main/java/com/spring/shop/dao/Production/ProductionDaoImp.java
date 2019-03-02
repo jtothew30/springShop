@@ -1,5 +1,6 @@
 package com.spring.shop.dao.Production;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,6 +64,11 @@ public class ProductionDaoImp implements ProductionDao {
 	@Override
 	public int selectSearchCount(String kwd) {
 		return sqlSession.selectOne(ProductionMapper+".selectSearchCount", kwd);
+	}
+
+	@Override
+	public void insertProcontainPnamePno(HashMap<String, Object> map) {
+		sqlSession.insert(ProductionMapper+".insertProcontainPnamePno",map);
 	}
 	
 	

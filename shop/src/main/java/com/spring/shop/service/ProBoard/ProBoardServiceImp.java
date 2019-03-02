@@ -53,8 +53,8 @@ public class ProBoardServiceImp implements ProBoardService{
 	}
 
 	@Override
-	public ProBoard getProBoardDetail(int pbno) {
-		return proboardDao.getProBoardDetail(pbno);
+	public ProBoard selectProBoardDetail(int pbno) {
+		return proboardDao.selectProBoardDetail(pbno);
 	}
 
 	@Override
@@ -80,5 +80,15 @@ public class ProBoardServiceImp implements ProBoardService{
 	@Override
 	public int getAllCount(Paging paging) {
 		return proboardDao.getAllCount(paging);
+	}
+
+	@Override
+	public void updateBoard(ProBoard proBoard) {
+		proboardDao.updateBoard(proBoard);
+	}
+
+	@Override
+	public void deleteProcontain(int pbno) {
+		proboardDao.deleteProcontain(pbno);
 	}
 }

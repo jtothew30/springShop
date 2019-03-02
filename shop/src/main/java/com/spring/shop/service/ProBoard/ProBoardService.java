@@ -18,9 +18,11 @@ public interface ProBoardService {
 	List<ProBoard> selectProboardListPaging(Paging paging);
 	
 	int getAllCount(String kwd);
-	ProBoard getProBoardDetail(int pbno);
+	ProBoard selectProBoardDetail(int pbno);
 	void deleteProBoard(int pbno);
 	int selectSearchCount(String kwd);
 	List<ProBoard> selectSearchList(Paging paging);
 	int getAllCount(Paging paging);
+	void updateBoard(ProBoard proBoard);
+	void deleteProcontain(int pbno);
 }

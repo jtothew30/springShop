@@ -99,8 +99,10 @@ public class ProBoard {
 	public String toString() {
 		return "ProBoard [rn=" + rn + ", pbno=" + pbno + ", title=" + title + ", pbdate=" + pbdate + ", price=" + price
 				+ ", event=" + event + ", totalsales=" + totalsales + ", options=" + options + ", pname=" + pname
-				+ ", category1=" + category1 + ", category2=" + category2 + ", category3=" + category3 + "]";
+				+ ", category1=" + category1 + ", category2=" + category2 + ", category3=" + category3 + ", path="
+				+ path + "]";
 	}
+	
 	
 	
 }

@@ -74,4 +74,11 @@
 		select count(*) from production where pname like '%'||#{kwd}||'%'
 	</select>
 	
+	<insert id="insertProcontainPnamePno" parameterType="hashmap">
+		insert into procontain
+		select pb.pbno, p.pno 
+		from proboard pb, production p 
+        where pb.pbno = #{pbno} and p.pname = #{pname} and p.options = #{options}            			
+		
+	</insert>
 </mapper>

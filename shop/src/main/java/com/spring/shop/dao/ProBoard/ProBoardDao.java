@@ -20,8 +20,10 @@ public interface ProBoardDao {
 	int getAllCount(String kwd);
 	int getAllCount(Paging paging);
 	
-	ProBoard getProBoardDetail(int pbno);
+	ProBoard selectProBoardDetail(int pbno);
 	void deleteProBoard(int pbno);
 	int selectSearchCount(String kwd);
 	List<ProBoard> selectSearchList(Paging paging);
+	void updateBoard(ProBoard proBoard);
+	void deleteProcontain(int pbno);
 }

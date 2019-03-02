@@ -1,5 +1,6 @@
 package com.spring.shop.service.Production;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -59,6 +60,11 @@ public class ProductionServiceImp implements ProductionService {
 	@Override
 	public int selectSearchCount(String kwd) {
 		return productionDao.selectSearchCount(kwd);
+	}
+
+	@Override
+	public void insertProcontainPnamePno(HashMap<String, Object> map) {
+		productionDao.insertProcontainPnamePno(map);
 	}
 
 }

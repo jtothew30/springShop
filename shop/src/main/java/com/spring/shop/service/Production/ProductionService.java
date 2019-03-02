@@ -1,5 +1,6 @@
 package com.spring.shop.service.Production;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.spring.shop.vo.Paging;
@@ -15,4 +16,5 @@ public interface ProductionService {
 	int selectProductAllNum();
 	List<Production> selectSearch(Paging paging);
 	int selectSearchCount(String kwd);
+	void insertProcontainPnamePno(HashMap<String, Object> map);
 }
