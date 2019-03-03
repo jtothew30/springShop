@@ -80,6 +80,7 @@ create table proboard(
 	price number(7) not null,      --원가격
 	event number(7) not null,      --할인가격(if.입고가격 != 현재가격 )
 	totalsales number(7) not null, --총 판매량(상품 판매량들의 총합)
+	path varchar2(200),				--이미지 경로
 	primary key(pbno)
 );
 commit;
@@ -88,8 +89,7 @@ commit;
 drop table procontain;
 create table procontain(
 	pbno number(7) not null,	--상품 게시글 번호 참조
-	pname varchar2(150) not null,	--해당 상품에 속한 상품의 이름
-	path varchar2(200)				--이미지 경로
+	pno varchar2(150) not null,	--해당 상품에 속한 상품 정보
 );
 commit;
 
@@ -184,16 +184,20 @@ commit;
 --상품 리뷰
 drop table review;
 create table review(
-	rno  number(7) not null,	--리뷰번호
+	rno  number(7) not null,		--리뷰번호
+	options varchar2(100) null,	 	--리뷰 남길 상품
 	writer varchar2(100) not null,  --댓글작성자 id
 	content varchar2(500) not null, --댓글내용
-	img varchar2(300),		--첨부이미지
-	stars number(7),		--별점
-	qna varchar2(50) not null,	--QnA 플래그
-	pbno number(7) not null		--상품 게시판 참조
+	img varchar2(300),				--첨부이미지
+	stars number(7),				--별점
+	qna varchar2(50) not null,	  	--QnA 플래그
+	rdate date not null,			--작성날짜
+	pbno number(7) not null,		--상품 게시판 참조
 	primary key(rno)
 );
 commit;
+
+
 
 
 
@@ -250,6 +254,16 @@ col addr1 for a20
 col addr2 for a20
 col phone for a13
 col memo for a20
+
+
+col rno for 9999
+col writer for a15
+col content for a30
+col img for a15
+col stars for 99
+col qna for a10
+col rdate for a10
+col pbno for 9999
 
 
 

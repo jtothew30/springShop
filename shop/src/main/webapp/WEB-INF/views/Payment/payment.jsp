@@ -296,11 +296,41 @@
 					  location.href="paymentResult.do?payno="+data;
 					});
 				}
-			})
-				
-			
+			})		
 		});
 	}
+	
+	
+	function cancel() {
+		swal("결제 진행을 취소하시겠습니까?", "", "warning", {
+			  buttons: {				    
+			    catch: {
+			      text: "예",
+			      value: "catch",
+			    },
+			    cancel: "아니오",
+			  },
+			})
+			.then((value) => {
+			  switch (value) {					 
+			    case "catch":
+			    	$.ajax({
+						type: "POST",
+						url: "deletePayment.do",
+						success : function(){
+							swal("결제가 취소되었습니다.","장바구니 페이지로 이동합니다.", "success")
+							.then((value) => {
+							  location.href="../cart/cart.do";
+							});
+						}
+					})    	
+			      break;					 
+			    default:
+			    	break;
+			  }
+			});
+	}
+	
 </script>
 </head>
 <body>
@@ -407,7 +437,7 @@
 	
 	<br><br><br>
 	<input type="button" onclick="pay()" value="결제하기"> 
-	
+	<input type="button" onclick="cancel()" value="취소"> 
 	<br><br><br>
 	
 	

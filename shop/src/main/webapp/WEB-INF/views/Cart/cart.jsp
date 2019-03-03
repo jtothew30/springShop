@@ -101,7 +101,7 @@
 								$.ajax({
 									type: "POST",
 									url: "../payment/payrequest.do",
-									data : {'list' : JSON.stringify(sellist)},
+									data : {'list' : JSON.stringify(sellist), 'del' : 'false'},
 									success : function(){
 										swal("결제 페이지로 이동합니다.")
 										.then((value) => {

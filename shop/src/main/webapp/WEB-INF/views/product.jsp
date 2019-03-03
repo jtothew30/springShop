@@ -4,7 +4,15 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Product page</title>
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
+
+
+
 <style type="text/css">
 	.jbFiexd{
 		position: fixed;
@@ -188,7 +196,7 @@
 					$.ajax({
 						type: "POST",
 						url: "../payment/payrequest.do",
-						data : {'list' : JSON.stringify(templist), 'pbno' : pbno},
+						data : {'list' : JSON.stringify(templist), 'pbno' : pbno, 'del' : 'false'},
 						success : function(){
 							swal("결제페이지로 이동합니다.","", "success")
 							.then((value) => {
@@ -440,48 +448,9 @@
 				<div class="tabs-panel" id="panel3" role="tabpanel"
 					aria-labelledby="panel3-label" aria-hidden="true">
 					<h4>상품리뷰</h4>
-					<div class="media-object stack-for-small">
-						<div class="media-object-section">
-							<img class="thumbnail" src="https://placehold.it/200x200"
-								hidden="" style="display: none !important;">
-						</div>
-						<div class="media-object-section">
-							<h5>Mike Stevenson</h5>
-							<p>I'm going to improvise. Listen, there's something you
-								should know about me... about inception. An idea is like a
-								virus, resilient, highly contagious. The smallest seed of an
-								idea can grow. It can grow to define or destroy you.</p>
-						</div>
-					</div>
-					<div class="media-object stack-for-small">
-						<div class="media-object-section">
-							<img class="thumbnail" src="https://placehold.it/200x200"
-								hidden="" style="display: none !important;">
-						</div>
-						<div class="media-object-section">
-							<h5>Mike Stevenson</h5>
-							<p>I'm going to improvise. Listen, there's something you
-								should know about me... about inception. An idea is like a
-								virus, resilient, highly contagious. The smallest seed of an
-								idea can grow. It can grow to define or destroy you</p>
-						</div>
-					</div>
-					<div class="media-object stack-for-small">
-						<div class="media-object-section">
-							<img class="thumbnail" src="https://placehold.it/200x200"
-								hidden="" style="display: none !important;">
-						</div>
-						<div class="media-object-section">
-							<h5>Mike Stevenson</h5>
-							<p>I'm going to improvise. Listen, there's something you
-								should know about me... about inception. An idea is like a
-								virus, resilient, highly contagious. The smallest seed of an
-								idea can grow. It can grow to define or destroy you</p>
-						</div>
-					</div>
-					<label> My Review <textarea placeholder="None"></textarea>
-					</label>
-					<button class="button">Submit Review</button>
+					
+					<c:import url="/review/review.do" />
+					
 				</div>
 				<div class="tabs-panel" id="panel4" role="tabpanel"
 					aria-labelledby="panel4-label" aria-hidden="true">
@@ -564,5 +533,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 </body>
 </html>
