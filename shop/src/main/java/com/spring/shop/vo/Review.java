@@ -5,13 +5,11 @@ public class Review {
 	private String options; 
 	private String writer;
 	private String content; 
-	private String img; 
+	private String path; 
 	private int stars;
 	private String qna;
 	private String rdate;
 	private int pbno;
-	
-	
 	
 	public int getRno() {
 		return rno;
@@ -37,11 +35,12 @@ public class Review {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getImg() {
-		return img;
+	
+	public String getPath() {
+		return path;
 	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setPath(String path) {
+		this.path = path;
 	}
 	public int getStars() {
 		return stars;
@@ -67,6 +66,10 @@ public class Review {
 	public void setPbno(int pbno) {
 		this.pbno = pbno;
 	}
-	
-	
+	@Override
+	public String toString() {
+		return "Review [rno=" + rno + ", options=" + options + ", writer=" + writer + ", content=" + content + ", path="
+				+ path + ", stars=" + stars + ", qna=" + qna + ", rdate=" + rdate + ", pbno=" + pbno + "]";
+	}
+
 }

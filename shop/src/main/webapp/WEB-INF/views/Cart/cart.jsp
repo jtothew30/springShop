@@ -62,6 +62,7 @@
 		}
 		
 		payAlert();
+		//alert(JSON.stringify(chklist));
 	}
 	
 	function allPayRequest() {
@@ -195,7 +196,7 @@
 			}
 		}
 		
-		$("#opchg_img").html("<img src=\"${pageContext.request.contextPath}/resources/upload/"+pro.category1+"/"+pro.category2+"/"+pro.category3+"/"+pro.pname+"/메인.jpg\" width=\"130\">");
+		$("#opchg_img").html("<img src=\"${pageContext.request.contextPath}/resources/upload/"+pro.pbno+"/"+pro.pname+"/메인.jpg\" width=\"130\">");
 		$("#opchg_title").html("<a href=\"../proboard/product.do?pbno="+pro.pbno+"\">"+pro.title+"</a>")
 		$("#opchg_pname").html(pro.pname);
 		$("#opchg_option").html(pro.options);
@@ -313,7 +314,7 @@
 					<input type="checkbox" class="chk" onclick="chkChange()" value="${cart.pno}">
 				</td>
 				<td width="17%">
-					<img src="${pageContext.request.contextPath}/resources/upload/${cart.category1}/${cart.category2}/${cart.category3}/${cart.pname}/메인.jpg">
+					<img src="${pageContext.request.contextPath}/resources/upload/${cart.pbno}/${cart.pname}/메인.jpg">
 				</td>
 				<td width="40%">
 					<strong style="font-size:15pt;">${cart.pname}</strong> - ${cart.options}<br><br>

@@ -10,7 +10,17 @@
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	/* var prolist;
 	
+	$(function(){
+		prolist = new Array();
+		<c:forEach var="pro" items="${prolist}">
+			var json = new Object();
+			json.pno = "${pro.pno}";
+			json.options = "${pro.options}";
+			prolist.push(json);
+		</c:forEach>	
+	}) */
 	
 	function reviewWirte() {
 		var content = $("#content").val();
@@ -51,17 +61,18 @@
 	      </div>
 	      <!-- body -->
 	      <div class="modal-body">	 
-	      	<form name="review"  method="post" action="../review/reviewWirte.do">  		
+	      	<form name="review"  method="post" action="../review/reviewWirte.do" enctype="multipart/form-data">  		
 	      		<input type="hidden" name="pbno" value="${pbno}">
+	      		<input type="hidden" name="path" value="${pbno}${proboard.title}">
 	      		<table>
 	      			<tr>
 	      				<td>구매한 옵션</td>
 	      				<td>
 	      					<select id="selectOption" name="options" style="width:300pt; display: inline;">
 	      						<option value="없음" selected>옵션 선택</option>
-								<!--<c:forEach var="op" items="${prolist}">
-									<option value="${op.options}">${op.options}-재고:${op.count}</option>
-								</c:forEach>-->
+								<c:forEach var="op" items="${prolist}">
+									<option value="${op.options}">${op.options}</option>
+								</c:forEach>
 	      					</select>
 						</td>
 	      			</tr>

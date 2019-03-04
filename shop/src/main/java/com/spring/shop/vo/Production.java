@@ -1,6 +1,7 @@
 package com.spring.shop.vo;
 
-public class Production {	
+public class Production {
+	private int rn;
 	private int pno;
 	private String pname;
 	private String brand;
@@ -15,9 +16,14 @@ public class Production {
 	private int count; // 1. 재고 -> procontain TABLE
 					   // 2. production count for payment or adding in cart
 					   // 충돌사항 없는지 check / view에서 주의할것
-	
 	public int getCount() {
 		return count;
+	}
+	public int getRn() {
+		return rn;
+	}
+	public void setRn(int rn) {
+		this.rn = rn;
 	}
 	public void setCount(int count) {
 		this.count = count;

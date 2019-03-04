@@ -6,9 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.ProBoard;
 import com.spring.shop.vo.Production;
 
@@ -44,10 +44,56 @@ public class ProBoardDaoImp implements ProBoardDao{
 	public ProBoard selectBoardForContain(ProBoard proBoard) {		
 		return sqlSession.selectOne(ProBoardMapper+".selectBoardForContain", proBoard);
 	}
-
+	// ------- old
 	@Override
 	public List<ProBoard> getpbList(String kwd) {		
 		return sqlSession.selectList(ProBoardMapper+".selectForSearch", kwd);
 	}
+	// ------- old
+	@Override
+	public int getAllCount(String kwd) {
+		return sqlSession.selectOne(ProBoardMapper+".selectAllCount", kwd);
+	}
 
+	@Override
+	public ProBoard selectProBoardDetail(int pbno) {
+		return sqlSession.selectOne(ProBoardMapper+".selectProBoardDetail", pbno);
+	}
+
+	@Override
+	public void deleteProBoard(int pbno) {
+		sqlSession.delete(ProBoardMapper+".deleteProBoard", pbno);
+	}
+
+	@Override
+	public int selectSearchCount(String kwd) {
+		return sqlSession.selectOne(ProBoardMapper+".selectSearchCount", kwd);
+	}
+
+	@Override
+	public List<ProBoard> selectSearchList(Paging paging) {
+		return sqlSession.selectList(ProBoardMapper+".selectSearchList", paging);
+	}
+
+	@Override
+	public List<ProBoard> selectProboardListPaging(Paging paging) {
+		return sqlSession.selectList(ProBoardMapper+".searchForPaging", paging);
+	}
+
+	@Override
+	public int getAllCount(Paging paging) {
+		return sqlSession.selectOne(ProBoardMapper+".selectAllCountP",paging);
+	}
+
+	@Override
+	public void updateBoard(ProBoard proBoard) {
+		sqlSession.update(ProBoardMapper+".updateBoard",proBoard);
+	}
+
+	@Override
+	public void deleteProcontain(int pbno) {
+		sqlSession.delete(ProBoardMapper+".deleteProcontain", pbno);
+	}
+	
+	
 }

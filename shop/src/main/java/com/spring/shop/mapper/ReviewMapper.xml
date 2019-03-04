@@ -4,8 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.spring.shop.mapper.ReviewMapper">
   
+  	<select id="getOptions" parameterType="int" resultType="com.spring.shop.vo.Production">
+  		select * from production 
+		where pno in (select pno from procontain 
+		 				where pbno=#{pbno} 
+		 				)
+  	</select>
+  
+  
   	<insert id="reviewWirte" parameterType="com.spring.shop.vo.Review">
-  		insert into review values(seqrev.nextval, #{options}, #{writer}, #{content}, 'img', #{stars}, #{qna}, sysdate, #{pbno})
+  		insert into review values(seqrev.nextval, #{options}, #{writer}, #{content}, #{path}, #{stars}, #{qna}, sysdate, #{pbno})
   	</insert>
     
   

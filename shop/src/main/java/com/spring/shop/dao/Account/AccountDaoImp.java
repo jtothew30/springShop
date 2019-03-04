@@ -21,6 +21,7 @@ public class AccountDaoImp implements AccountDao{
 		return ck>0?"t":"f"; // t 중복 아이디 존재 / f 사용 가능 
 	}
 	
+	@Override
 	public void dbInsert(Account account) {
 		System.out.println("dbInsert 넘어온 id="+account.getId());
 		System.out.println("dbInsert 넘어온 pw="+account.getPw());

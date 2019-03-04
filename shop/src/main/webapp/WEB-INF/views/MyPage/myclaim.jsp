@@ -35,7 +35,7 @@
 				var str= "";
 				for(var i=0; i<obj.length; i++){
 					str += "<tr align=\"center\">";
-					str += "<td width=\"20%\"><img src=\"${pageContext.request.contextPath}/resources/upload/"+obj[i].category1+"/"+obj[i].category2+"/"+obj[i].category3+"/"+obj[i].pname+"/메인.jpg\" width='150'></td>";   
+					str += "<td width=\"20%\"><img src=\"${pageContext.request.contextPath}/resources/upload/"+obj[i].pbno+"/"+obj[i].pname+"/메인.jpg\" width='150'></td>";   
 					str += "<td width=\"40%\">";
 					str += "<strong style=\"font-size:15pt;\">"+obj[i].pname+"<br></strong>-"+obj[i].options+"-<br><br>";
 					str += "상품 글 보러 가기 => <a href=\"../proboard/product.do?pbno="+obj[i].pbno+"\">"+obj[i].title+"</a></td>";

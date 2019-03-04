@@ -187,7 +187,7 @@
 			json.price = seloplist[i].outprice;
 			templist.push(json);
 		}
-		
+	
 		$.ajax({
 			type: "POST",
 			url: "../payment/checkPayment.do",
@@ -242,7 +242,7 @@
 						});	
 				}
 			}
-		})
+		})	
 	}
 	
 	
@@ -329,11 +329,11 @@
 					width="650" height="350">
 				<div class="grid-x grid-padding-x small-up-4">
 					<div class="cell">
-						<img src="${pageContext.request.contextPath}/resources/upload/${path}/1.JPG" width="200"
+						<img src="${pageContext.request.contextPath}/resources/upload/${path}/1.jpg" width="200"
 							height="200" align="middle">
 					</div>
 					<div class="cell">
-						<img src="${pageContext.request.contextPath}/resources/upload/${path}/2.JPG" width="200"
+						<img src="${pageContext.request.contextPath}/resources/upload/${path}/2.jpg" width="200"
 							height="200" align="middle">
 					</div>
 				</div>
@@ -379,9 +379,9 @@
 					aria-labelledby="panel1-label">
 					<div class="media-object stack-for-small">
 						<div class="media-object-section" style="text-align: center">
-							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단1.JPG" width="100%" align="middle">
-							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단2.JPG" width="100%" align="middle">
-							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단3.JPG" width="100%" align="middle">
+							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단1.jpg" width="100%" align="middle">
+							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단2.jpg" width="100%" align="middle">
+							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단3.jpg" width="100%" align="middle">
 						</div>
 					</div>
 				</div>

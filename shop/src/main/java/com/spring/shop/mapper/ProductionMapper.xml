@@ -5,12 +5,17 @@
   
 <mapper namespace="com.spring.shop.mapper.ProductionMapper">
 	
+	<!-- 전체 제품등록 갯수 -->
+	<select id="selectProductAllNum" resultType="int">
+		select count(*) as totalcount from production
+	</select>
+	
 	<!-- detail -->
-	<select id="selectProductOne" parameterType="int">
+	<select id="selectProductOne" resultType="com.spring.shop.vo.Production" parameterType="int">
 		select * from production where pno = #{pno}
 	</select>
 	
-	<!-- TODO -->
+	
 	<!-- 초기등록시 리셋을 위한 detail이 필요한데 pno값을 모름 -->
 	<!-- pname, options 받아서 검색 return detail 필요 -->
 	<select id="selectProductForCount" parameterType="com.spring.shop.vo.Production" resultType="com.spring.shop.vo.Production">
@@ -22,6 +27,7 @@
 	<select id="selectProductAll" resultType="com.spring.shop.vo.Production" >
 		select p.*, (select count from prostock s where p.pno = s.pno) count 
 		from production p
+		order by pno
 	</select>	
 		
 	<!-- 제품등록 -->
@@ -48,9 +54,55 @@
 	
 	<!-- 재고 update -->
 	<update id="updateProductCount" parameterType="com.spring.shop.vo.Production">
-		update prostock set count=#{count} where #{pno} = pno
+		update prostock set count=#{count} where pno = #{pno}
 	</update>
 	
-	<!-- pname기준으로 한묶음으로 검색 -->
+	<select id="selectSearch" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Production">
+		select * from(
+         select p.* 
+         from (
+            select rownum rn, pr.* 
+            from (
+               select p.*, count
+               from production p, prostock s
+               where p.pno = s.pno
+            ) pr
+            where pname like '%'||#{kwd}||'%'
+            order by pno desc         
+         ) p
+         order by rn
+      ) where rn between #{startNum} and #{endNum}
+	</select>
 	
+	<select id="selectSearchCount" parameterType="string" resultType="int">
+		select count(*) from production where pname like '%'||#{kwd}||'%'
+	</select>
+	
+	<insert id="insertProcontainPnamePno" parameterType="hashmap">
+		insert into procontain
+		select pb.pbno, p.pno 
+		from proboard pb, production p 
+        where pb.pbno = #{pbno} and p.pname = #{pname} and p.options = #{options}            			
+		
+	</insert>
+	
+	<update id="updateProduction" parameterType="com.spring.shop.vo.Production">
+		update production
+		set 
+			pname=#{pname}
+			brand=#{brand}
+			inprice=#{inprice}
+			outprice=#{outprice}
+			category1=#{category1}
+			category2=#{category2}
+			category3=#{category3}
+			options=#{options}
+			script=#{script}
+			sales=#{sales}		
+		where pno = #{pno}
+	</update>
+	
+	<delete id="deleteProduction" parameterType="int">
+		delete from production where pno=#{pno}
+	</delete>
 </mapper>

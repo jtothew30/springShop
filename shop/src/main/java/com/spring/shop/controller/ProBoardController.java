@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.shop.service.ProBoard.ProBoardService;
 import com.spring.shop.vo.ProBoard;
@@ -31,8 +29,10 @@ public class ProBoardController {
 		int pbno = Integer.parseInt(request.getParameter("pbno"));	
 		List<Production> prolist = service.getprolist(pbno);
 		
-		String path = prolist.get(0).getCategory1()+"/"+prolist.get(0).getCategory2()+ "/"+prolist.get(0).getCategory3()+"/"+prolist.get(0).getPname();
+		String path = pbno+"/"+prolist.get(0).getPname();
 		logger.info("img path:"+path);
+		
+		ProBoard proboard = service.selectProBoardDetail(pbno);
 		
 		
 		for(Production pro : prolist) {
@@ -41,6 +41,7 @@ public class ProBoardController {
 		model.addAttribute("prolist", prolist);
 		model.addAttribute("path", path);
 		model.addAttribute("pbno", pbno);
+		model.addAttribute("proboard", proboard);
 		return "product";		
 	}
 	

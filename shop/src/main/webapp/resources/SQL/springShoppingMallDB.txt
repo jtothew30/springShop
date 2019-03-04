@@ -80,7 +80,7 @@ create table proboard(
 	price number(7) not null,      --원가격
 	event number(7) not null,      --할인가격(if.입고가격 != 현재가격 )
 	totalsales number(7) not null, --총 판매량(상품 판매량들의 총합)
-	path varchar2(200),				--이미지 경로
+	path varchar2(200) not null,   --이미지 경로 (pbno/title/파일명
 	primary key(pbno)
 );
 commit;
@@ -89,7 +89,7 @@ commit;
 drop table procontain;
 create table procontain(
 	pbno number(7) not null,	--상품 게시글 번호 참조
-	pno varchar2(150) not null,	--해당 상품에 속한 상품 정보
+	pno number(7) not null		--상품번호
 );
 commit;
 
@@ -188,7 +188,7 @@ create table review(
 	options varchar2(100) null,	 	--리뷰 남길 상품
 	writer varchar2(100) not null,  --댓글작성자 id
 	content varchar2(500) not null, --댓글내용
-	img varchar2(300),				--첨부이미지
+	path varchar2(300),				--첨부이미지 경로
 	stars number(7),				--별점
 	qna varchar2(50) not null,	  	--QnA 플래그
 	rdate date not null,			--작성날짜

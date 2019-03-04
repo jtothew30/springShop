@@ -72,6 +72,10 @@
 		margin-left: 0;
 	}
 }
+input{
+	
+	border-radius: 0.5em;
+}
 </style>
 </head>
 
@@ -96,18 +100,36 @@
 				<form name="boardInsertForm" action="boardInsert.do" method="post" enctype="multipart/form-data">
 					<div class="row column">
 						<p>
-							글 제목:<input name="title" type="text">
+							<label>제품선택:</label> 
+							<select name="pname" id="pnameSelect" onchange="change1();">
+								<option selected>---선택하시오---</option>
+								<c:forEach items="${list}" var="i">
+									<option value="${i}">${i}</option>
+								</c:forEach>
+							</select>
 						</p>
 					</div>
 					<div class="row column">
+							<label>옵션선택:</label>
+						<div id="optionSelect"></div>
 						<p>
-							원 가격:<input name="price" type="text">
-						</p>
 					</div>
 					<div class="row column">
 						<p>
-							할인가격:<input name="event" type="text">
+							글 제목:<input id="title" name="title" type="text">
 						</p>
+					</div>
+					<div class="row">
+						<div class="columns large-6 medium-6 small-6">
+							<p>
+								원 가격:<input name="price" type="text">
+							</p>
+						</div>
+						<div class="column large-6 medium-6 small-6">
+							<p>
+								할인가격:<input name="event" type="text">
+							</p>
+						</div>
 					</div>
 					<div class="row column">
 						<p>
@@ -116,24 +138,8 @@
 					</div>
 					<div class="row column">
 						<p>
-							<label>제품선택:</label> 
-							<select name="pname" id="pnameSelect" onchange="change1();">
-								<c:forEach items="${list}" var="i">
-									<option value="${i}">${i}</option>
-								</c:forEach>
-							</select>
-						</p>
-					</div>
-					<div class="row column">
-						<p>
-							<label>옵션선택:</label>
-						<div id="optionSelect"></div>
-						</p>
-					</div>
-					<div class="row column">
-						<p>
 							<label>상품이미지 등록:</label> 
-							<input multiple="multiple" type="file" name="file" />
+							<input multiple="multiple" type="file" class="button warning expanded" name="file" />
 						</p>
 					</div>							
 			</div>
@@ -163,6 +169,7 @@
 			}
 			</c:forEach>
 			$("#optionSelect").html(str);
+			$("#title").val(selected);
 		}
 	</script>
 </body>
