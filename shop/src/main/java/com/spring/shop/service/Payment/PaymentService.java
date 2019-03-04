@@ -12,4 +12,6 @@ public interface PaymentService {
 	public List<Payrequest> getPayrequestList(String customer) throws Exception;
 	public void payment(Payment payment) throws Exception;
 	public Payment getPaymentResult(int payno) throws Exception;
+	public void deletePayment(String customer) throws Exception;
+	public int checkPayment(String customer) throws Exception;
 }

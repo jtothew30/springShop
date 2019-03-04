@@ -25,4 +25,19 @@
 		delete from cart where pno = #{pno} and customer = #{customer}
 	</delete>
 	
+	<select id="getOptions" parameterType="int" resultType="com.spring.shop.vo.Production">	
+		select p.*, ps.count from production p 
+		left outer join prostock ps 
+		on p.pno=ps.pno 
+		where p.pname = (select pname from procontain 
+				 		 where pbno=#{pbno} 
+						)
+	</select>
+	
+	<update id="changeOption" parameterType="map">
+		<![CDATA[
+  		update cart set pno = #{pno}, price = #{price}, count = #{count}, cartdate = sysdate where customer=#{customer} and pno = #{lastpno}
+  		]]> 
+	</update>
+	
 </mapper>

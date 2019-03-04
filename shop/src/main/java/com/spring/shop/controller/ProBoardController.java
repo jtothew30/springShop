@@ -10,11 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.spring.shop.service.ProBoard.ProBoardService;
-import com.spring.shop.vo.ProBoard;
 import com.spring.shop.vo.Production;
 
 @Controller

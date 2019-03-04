@@ -4,10 +4,15 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Product page</title>
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/foundation-icons/foundation-icons.css">
+
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
+
+
+
 <style type="text/css">
 	.jbFiexd{
 		position: fixed;
@@ -18,11 +23,13 @@
 <script type="text/javascript">
 	var prolist; 
 	var seloplist;
+	var stocklist;
 	var total;
 	
 	$(function(){
 		prolist = new Array();
 		seloplist = new Array();
+		stocklist = new Array();
 		<c:forEach var="pro" items="${prolist}">
 			var json = new Object();
 			json.pno = "${pro.pno}";
@@ -30,12 +37,18 @@
 			json.outprice = "${pro.outprice}"; 
 			json.count = 1;
 			prolist.push(json);
+			
+			var stock = new Object();
+			stock.pno = "${pro.pno}";
+			stock.options = "${pro.options}";
+			stock.stock = "${pro.count}";
+			stocklist.push(stock);
 		</c:forEach>	
 	})
 		
 	function selectOption() {
 		var sel = document.getElementById("selectOption");
-		var op = sel.options[sel.selectedIndex].text;
+		var op = sel.options[sel.selectedIndex].value;
 		
 		var pro;
 		var flag = false;
@@ -103,7 +116,8 @@
 			return;
 		}
 		
-		
+		if(checkStock()==-1)
+			return;
 		
 		$.ajax({
 			type: "POST",
@@ -111,7 +125,6 @@
 			data : {'list' : JSON.stringify(seloplist), 'pbno' : pbno},
 			success : function(data){
 				if(data == 'false'){
-					swal("");
 					swal("이미 장바구니에 있는 옵션을 선택하셨습니다! 장바구니 상품들을 확인하시겠습니까?", "", "warning", {
 						  buttons: {				    
 						    catch: {
@@ -162,6 +175,9 @@
 			return;
 		}
 		
+		if(checkStock()==-1)
+			return;
+		
 		var templist = new Array();
 		for(var i=0; i<seloplist.length; i++){
 			var json = new Object();
@@ -174,17 +190,74 @@
 	
 		$.ajax({
 			type: "POST",
-			url: "../payment/payrequest.do",
-			data : {'list' : JSON.stringify(templist), 'pbno' : pbno},
-			success : function(){
-				swal("결제페이지로 이동합니다.","", "success")
-				.then((value) => {
-			      location.href="../payment/paymentPage.do";
-				});			
+			url: "../payment/checkPayment.do",
+			success : function(data){
+				if(data == true){
+					$.ajax({
+						type: "POST",
+						url: "../payment/payrequest.do",
+						data : {'list' : JSON.stringify(templist), 'pbno' : pbno, 'del' : 'false'},
+						success : function(){
+							swal("결제페이지로 이동합니다.","", "success")
+							.then((value) => {
+						      location.href="../payment/paymentPage.do";
+							});			
+						}
+					})		
+				}else{
+					swal("이미 진행 중인 결제건이 있습니다!","","warning",  {
+						  buttons: {				    
+						    catch: {
+						      text: "기존 결제건 확인.",
+						      value: "catch",
+						    },
+						    defeat:{
+						    	text: "기존 건 삭제 후 진행.",
+						    	value: "defeat",
+						    },
+						    cancel: "취소",
+						  },
+						})
+						.then((value) => {
+						  switch (value) {					 
+						    case "catch":
+						    	location.href="../payment/paymentPage.do";		    	
+						      break;	
+						    case "defeat":
+						    	$.ajax({
+									type: "POST",
+									url: "../payment/payrequest.do",
+									data : {'list' : JSON.stringify(templist), 'pbno' : pbno, 'del' : 'true'},
+									success : function(){
+										swal("결제페이지로 이동합니다.","", "success")
+										.then((value) => {
+									      location.href="../payment/paymentPage.do";
+										});			
+									}
+								})
+						    	break;
+						    default:
+						    	break;
+						  }
+						});	
+				}
 			}
 		})	
 	}
 	
+	
+	function checkStock() {
+		for(var i=0; i<seloplist.length; i++){
+			for(var j=0; j<stocklist.length; j++){
+				if(seloplist[i].pno == stocklist[j].pno){					
+					if(seloplist[i].count*1 > stocklist[j].stock*1){
+						swal("옵션 '"+seloplist[i].options+"'의 재고를 넘어선 요청입니다.");
+						return -1;
+					}					
+				}
+			}			
+		}
+	}
 	
 	
 	
@@ -271,7 +344,7 @@
 				<label>옵션 <select id="selectOption" onchange="selectOption()">
 						<option value="" selected>옵션 선택</option>
 						<c:forEach var="op" items="${prolist}">
-							<option value="${op.options}">${op.options}</option>
+							<option value="${op.options}">${op.options}-재고:${op.count}</option>
 						</c:forEach>
 				</select>
 				</label>
@@ -375,48 +448,9 @@
 				<div class="tabs-panel" id="panel3" role="tabpanel"
 					aria-labelledby="panel3-label" aria-hidden="true">
 					<h4>상품리뷰</h4>
-					<div class="media-object stack-for-small">
-						<div class="media-object-section">
-							<img class="thumbnail" src="https://placehold.it/200x200"
-								hidden="" style="display: none !important;">
-						</div>
-						<div class="media-object-section">
-							<h5>Mike Stevenson</h5>
-							<p>I'm going to improvise. Listen, there's something you
-								should know about me... about inception. An idea is like a
-								virus, resilient, highly contagious. The smallest seed of an
-								idea can grow. It can grow to define or destroy you.</p>
-						</div>
-					</div>
-					<div class="media-object stack-for-small">
-						<div class="media-object-section">
-							<img class="thumbnail" src="https://placehold.it/200x200"
-								hidden="" style="display: none !important;">
-						</div>
-						<div class="media-object-section">
-							<h5>Mike Stevenson</h5>
-							<p>I'm going to improvise. Listen, there's something you
-								should know about me... about inception. An idea is like a
-								virus, resilient, highly contagious. The smallest seed of an
-								idea can grow. It can grow to define or destroy you</p>
-						</div>
-					</div>
-					<div class="media-object stack-for-small">
-						<div class="media-object-section">
-							<img class="thumbnail" src="https://placehold.it/200x200"
-								hidden="" style="display: none !important;">
-						</div>
-						<div class="media-object-section">
-							<h5>Mike Stevenson</h5>
-							<p>I'm going to improvise. Listen, there's something you
-								should know about me... about inception. An idea is like a
-								virus, resilient, highly contagious. The smallest seed of an
-								idea can grow. It can grow to define or destroy you</p>
-						</div>
-					</div>
-					<label> My Review <textarea placeholder="None"></textarea>
-					</label>
-					<button class="button">Submit Review</button>
+					
+					<c:import url="/review/review.do" />
+					
 				</div>
 				<div class="tabs-panel" id="panel4" role="tabpanel"
 					aria-labelledby="panel4-label" aria-hidden="true">
@@ -499,5 +533,7 @@
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 </body>
 </html>

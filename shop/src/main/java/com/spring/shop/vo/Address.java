@@ -10,9 +10,7 @@ public class Address {
 	private String addr2;
 	private String phone;
 	private String usedate;
-	
-	
-	
+		
 	public String getAddrname() {
 		return addrname;
 	}

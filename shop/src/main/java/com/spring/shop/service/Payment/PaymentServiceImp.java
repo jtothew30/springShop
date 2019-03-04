@@ -44,4 +44,14 @@ public class PaymentServiceImp implements PaymentService {
 	public Payment getPaymentResult(int payno) throws Exception{
 		return paymentDao.getPaymentResult(payno);
 	}
+	
+	@Override
+	public void deletePayment(String customer) throws Exception{
+		paymentDao.deletePayment(customer);
+	}
+	
+	@Override
+	public int checkPayment(String customer) throws Exception{
+		return paymentDao.checkPayment(customer);
+	}
 }

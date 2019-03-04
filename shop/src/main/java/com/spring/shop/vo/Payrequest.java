@@ -18,7 +18,16 @@ public class Payrequest {
 	private String category2;
 	private String category3;
 	
+	private int stock;
 	
+	
+	
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 	public int getReqno() {
 		return reqno;
 	}

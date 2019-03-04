@@ -48,6 +48,9 @@
 			<td>${payment.memo}</td>
 		</tr>	
 	</table>
+	
+	
+	<a href="../mypage/myorder.do">마이페이지 - 주문/배송 정보</a>
 <!-- Bootstrap core JavaScript -->
 <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
