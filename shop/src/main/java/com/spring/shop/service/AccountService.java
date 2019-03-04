@@ -10,5 +10,6 @@ public interface AccountService {
 	public void dbUpdate(Account account) throws Exception;
 	public List<Account> memlist(Account account) throws Exception;
 	public Object viewmem(String name) throws Exception;
+	public Account login(Account account) throws Exception;
 	public void delete(Account account) throws Exception;
 }

@@ -21,12 +21,17 @@ public class AccountServicelmp implements AccountService{
 	}
 	
 	@Override
-	public void dbInsert(Account account) throws Exception{
+	public void dbInsert(Account account) throws Exception {
 		accountDao.dbInsert(account);
 	}
 	
 	@Override
-	public void dbUpdate(Account account) throws Exception{
+	public Account login(Account account) throws Exception {
+		return accountDao.login(account);
+	}
+	
+	@Override
+	public void dbUpdate(Account account) throws Exception {
 		accountDao.dbUpdate(account);
 	}
 

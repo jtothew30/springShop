@@ -37,6 +37,10 @@ public class AccountDaolmp implements AccountDao{
 		System.out.println("dbInsert success");
 	}
 	
+	public Account login(Account account) throws Exception {
+		return sqlSession.selectOne("login", account);
+	}
+	
 	public void dbUpdate(Account account) {
 		System.out.println("dbUpdate 넘어온 pw ="+account.getPw());
 		System.out.println("dbUpdate 넘어온 email="+account.getEmail());
@@ -57,6 +61,6 @@ public class AccountDaolmp implements AccountDao{
 	
 	@Override
 	public void delete(Account account) throws Exception {
-		sqlSession.delete(".delete", account);
+		sqlSession.delete("delete", account);
 	}
 }

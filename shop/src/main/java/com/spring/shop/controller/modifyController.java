@@ -3,6 +3,7 @@ package com.spring.shop.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -54,12 +55,35 @@ public class modifyController {
 		return "/Mypage/change";
 	}
 	
+	@RequestMapping(value="login.do", method = RequestMethod.POST)
+	public String login(Account account, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+		logger.info("post login");
+		HttpSession session = req.getSession();
+		Account login = service.login(account);
+		
+		if(login == null) {
+			session.setAttribute("account", null);
+			rttr.addFlashAttribute("msg", false);
+		} else {
+			session.setAttribute("account", login);
+		}
+		return "redirect:/index.jsp";
+	}
+	
+	@RequestMapping(value="logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception {
+		logger.info("get logout");
+		session.invalidate();
+		return "redirect:/index.jsp";
+	}
+
+/*
 	@RequestMapping(value="/Mypage/AccountDelete", method = RequestMethod.GET)
 	public void GetDelete() throws Exception {
 	 logger.info("GET delete");
 	}
 	
-	@RequestMapping(value="delete.do", method=RequestMethod.POST)
+	@RequestMapping(value="delete.do", method=RequestMethod.GET)
 	public String PostDelete(HttpSession session, Account account, RedirectAttributes rttr) throws Exception {
 		logger.info("POST delete");
 		
@@ -76,6 +100,11 @@ public class modifyController {
 		service.delete(account);
 		
 		return "redirect:/";
+	}
+*/
+	@RequestMapping("delete.do")
+	public String Dlete() {
+		return "/Mypage/AccountDelete";
 	}
 	
 	@RequestMapping("refer.do")

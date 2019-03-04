@@ -18,7 +18,7 @@
 				<img src="resources/image/logo.JPG">
 			</div>
 			<div class="contentsWrap">
-				<form name="MemberInfoWithdrawalGuide" method="post" action="/member/withdraw.do">
+				<form name="MemberInfoWithdrawalGuide" method="post" action="/Mypage/delete.do">
 					<div class="subConWrap">
 						<h2 class="mainTitle">회원탈퇴</h2>
 						<div class="outStepWrap">
@@ -44,10 +44,10 @@
 						<div class="outLinkBox">
 							<ul>
 							<li>
-								<a href="#">
+								<a>
 								<span class="btnCommonWhite">회원정보수정</span>
 								</a>
-								<a href="#">
+								<a>
 								<span class="btnCommonWhite">비밀번호변경</span>
 								</a>
 							</li>

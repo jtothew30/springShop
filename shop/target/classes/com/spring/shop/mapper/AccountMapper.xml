@@ -23,6 +23,10 @@
 		select id,name,age,gender,email,phone from account where name=#{name}
 	</select>
 	
+	<select id="login" resultType="com.spring.shop.vo.Account">
+		select id,name from account where id=#{id} and pw=#{pw}
+	</select>
+	
 	<update id="update" parameterType="com.spring.shop.vo.Account">
 		update account set pw=#{pw}, email=#{email}, phone=#{phone}
 		where id=#{id}
