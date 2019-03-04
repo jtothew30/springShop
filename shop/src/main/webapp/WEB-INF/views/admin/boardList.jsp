@@ -30,7 +30,7 @@
 				<div class="row collapse postfix-round">
 					<div class="small-6 columns">
 						<form action="boardList.do">
-						<input name="kwd" type="text" placeholder="검색키워드">
+						<input name="kwd" type="text" placeholder="검색키워드" value="${paging.kwd}">
 					</div>
 					<div class="small-6 columns">
 						<input type="submit" class="button postfix" value="Go">

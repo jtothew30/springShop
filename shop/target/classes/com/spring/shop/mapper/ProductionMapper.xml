@@ -81,4 +81,24 @@
         where pb.pbno = #{pbno} and p.pname = #{pname} and p.options = #{options}            			
 		
 	</insert>
+	
+	<update id="updateProduction" parameterType="com.spring.shop.vo.Production">
+		update production
+		set 
+			pname=#{pname}
+			brand=#{brand}
+			inprice=#{inprice}
+			outprice=#{outprice}
+			category1=#{category1}
+			category2=#{category2}
+			category3=#{category3}
+			options=#{options}
+			script=#{script}
+			sales=#{sales}		
+		where pno = #{pno}
+	</update>
+	
+	<delete id="deleteProduction" parameterType="int">
+		delete from production where pno=#{pno}
+	</delete>
 </mapper>

@@ -67,4 +67,14 @@ public class ProductionServiceImp implements ProductionService {
 		productionDao.insertProcontainPnamePno(map);
 	}
 
+	@Override
+	public void updateProduction(Production production) {
+		productionDao.updateProduction(production);
+	}
+
+	@Override
+	public void deleteProduction(int pno) {
+		productionDao.deleteProduction(pno);		
+	}
+
 }

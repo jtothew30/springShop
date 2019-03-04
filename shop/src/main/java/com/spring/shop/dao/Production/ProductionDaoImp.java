@@ -70,6 +70,16 @@ public class ProductionDaoImp implements ProductionDao {
 	public void insertProcontainPnamePno(HashMap<String, Object> map) {
 		sqlSession.insert(ProductionMapper+".insertProcontainPnamePno",map);
 	}
+
+	@Override
+	public void updateProduction(Production production) {
+		sqlSession.update(ProductionMapper+".updateProduction", production);
+	}
+
+	@Override
+	public void deleteProduction(int pno) {
+		sqlSession.insert(ProductionMapper+".deleteProduction",pno);		
+	}
 	
 	
 

@@ -87,22 +87,19 @@
 				<span class="title-bar-title">관리자 페이지</span>
 			</div>
 		</div>
-		<div class="row">
-		<div class="columns">
-			<form action="productList.do">
-			  <div class="grid-container">
-			    <div class="grid-x grid-padding-x">
-			      <div class="medium-6 cell">
-			        <label>제품명 입력
-			          <input type="text" name="kwd">
-			        </label>
-			      </div>			      
-			    </div>
-			  </div>
-			</form>
-			</div>	
-		</div>
-		<div class="row">
+		<div class="row" style="padding-top: 4em; padding-bottom: 0rm; margin-bottom: 0px;">
+			<div class="large-5 columns">
+				<div class="row collapse postfix-round">
+					<div class="small-6 columns">
+						<form action="productList.do">						 
+						<input name="kwd" type="text" placeholder="검색키워드" value="${paging.kwd}">
+					</div>
+					<div class="small-6 columns">
+						<input type="submit" class="button postfix" value="Go">
+						</form>
+					</div>
+				</div>
+			</div>		
 			<div class="columns">
 				<table class="table-expand stack hover">
 					<thead>

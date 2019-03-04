@@ -1,6 +1,7 @@
 package com.spring.shop.vo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author kim
@@ -11,7 +12,9 @@ public class Paging {
 	private String optionKwd;
 	private ArrayList<String> listCate2;
 	private ArrayList<String> listCate3;
-	
+	private String[] chkboxCate2;
+	private String[] chkboxCate3;
+		
 	private int page =1; //현재 페이지 (get)
 	private int totalCount; //row 전체의 수 (get)
 	private int beginPage;  //출력 시작
@@ -108,13 +111,29 @@ public class Paging {
 	public void setListCate3(ArrayList<String> listCate3) {
 		this.listCate3 = listCate3;
 	}
+	
+	
+	public String[] getChkboxCate2() {
+		return chkboxCate2;
+	}
+	public void setChkboxCate2(String[] chkboxCate2) {
+		this.chkboxCate2 = chkboxCate2;
+	}
+	public String[] getChkboxCate3() {
+		return chkboxCate3;
+	}
+	public void setChkboxCate3(String[] chkboxCate3) {
+		this.chkboxCate3 = chkboxCate3;
+	}
 	@Override
 	public String toString() {
 		return "Paging [kwd=" + kwd + ", optionKwd=" + optionKwd + ", listCate2=" + listCate2 + ", listCate3="
-				+ listCate3 + ", page=" + page + ", totalCount=" + totalCount + ", beginPage=" + beginPage
-				+ ", endPage=" + endPage + ", displayRow=" + displayRow + ", displayPage=" + displayPage + ", startNum="
-				+ startNum + ", endNum=" + endNum + ", prev=" + prev + ", next=" + next + "]";
+				+ listCate3 + ", chkboxCate2=" + Arrays.toString(chkboxCate2) + ", chkboxCate3="
+				+ Arrays.toString(chkboxCate3) + ", page=" + page + ", totalCount=" + totalCount + ", beginPage="
+				+ beginPage + ", endPage=" + endPage + ", displayRow=" + displayRow + ", displayPage=" + displayPage
+				+ ", startNum=" + startNum + ", endNum=" + endNum + ", prev=" + prev + ", next=" + next + "]";
 	}
+	
 	
 }//class end
 

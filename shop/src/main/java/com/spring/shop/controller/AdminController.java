@@ -2,7 +2,6 @@ package com.spring.shop.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +46,8 @@ public class AdminController {
 	public String adminMainpage() {
 		return "admin/admin";
 	}
-
+	
+	// 재고관리 - 상품등록 페이지 이동	
 	@RequestMapping("productInsert.do")
 	public String adminInsertPage() {
 		return "admin/productInsert";
@@ -70,15 +71,25 @@ public class AdminController {
 	// 재고관리 - 상품삭제
 	@RequestMapping("deleteProduction.do")
 	public String prductDelete(int pno) {
-		return null;
+		productionService.deleteProduction(pno);
+		return "redirect:productList.do";
+	}
+	// 재고관리 - 상품수정 페이지 이동
+	@RequestMapping("updateProduction.do")
+	public String productEdit(Model model, int pno) {
+		Production pro = productionService.selectProduction(pno);
+		model.addAttribute("pro", pro);
+		return "admin/productEdit";
 	}
 	// 재고관리 - 상품수정
-	@RequestMapping("updateProduction.do")
-	public String productEdit(int pno) {
-		return null;
+	@RequestMapping("productUpdate.do")
+	public ModelAndView productUpdate(Production production) {
+		ModelAndView mav = new ModelAndView("redirect:productList.do");
+		productionService.updateProduction(production);
+		return mav;
 	}
 	
-	//기존등록제품--> 옵션추가등록페이지 이동
+	// 재고관리 - 기존등록제품--> 옵션추가등록페이지 이동
 	@RequestMapping("insertNewOption.do")
 	public ModelAndView insertNewOption(int pno) {
 		ModelAndView mav = new ModelAndView("admin/productInsert");
@@ -86,7 +97,8 @@ public class AdminController {
 		mav.addObject("pro",pro);		
 		return mav;		
 	}		
-		
+	
+	// 재고관리 리스트 출력
 	@RequestMapping("productList.do")
 	public ModelAndView productList(Paging paging, @RequestParam(value="kwd",required=false) String kwd) {
 		ModelAndView mav = new ModelAndView("admin/productList");
@@ -99,9 +111,6 @@ public class AdminController {
 		mav.addObject("list", list);		
 		return mav;
 	}
-	
-	
-
 	// 재고관리 - 재고량 update
 	@RequestMapping("proCountUpdate.do")
 	public ModelAndView proCountUpdate(Production production) {
@@ -267,8 +276,6 @@ public class AdminController {
 		mav.addObject("pb",pb);
 		return mav;		
 	}
-	
-	
 	
 	// 게시글관리 - 글 삭제
 	@RequestMapping("boardDelete.do")

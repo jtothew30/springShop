@@ -17,4 +17,6 @@ public interface ProductionDao {
 	List<Production> selectSearch(Paging paging);
 	int selectSearchCount(String kwd);
 	void insertProcontainPnamePno(HashMap<String, Object> map);
+	void updateProduction(Production production);
+	void deleteProduction(int pno);
 }

@@ -6,8 +6,8 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
-  <link rel="stylesheet" href="resources/css/foundation.css">
-  <link rel="stylesheet" href="resources/css/app.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
 <style type="text/css">
   
 .three-column-footer-contact-form-container {
@@ -263,10 +263,10 @@
     <div class="footer-right" data-equalizer-watch>
       <div class="baseline">
         <img class="thumbnail" src="http://placehold.it/100">
-        <h6>Opening times</h6>
-        <p>Mon - Fri 9:00am - 5:00pm</p>
-        <p>Sat 9:00am - 8:00pm</p>
-        <p>Sun 9:00am - 4:00pm</p>
+        <h6>Index Menu</h6>
+        <p><a href="index.jsp">index</a></p>
+        <p><a href="admin/main.do">Admin</a></p>
+        
         <div class="social">
           <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
           <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
