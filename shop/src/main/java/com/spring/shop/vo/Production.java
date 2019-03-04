@@ -1,6 +1,7 @@
 package com.spring.shop.vo;
 
-public class Production {	
+public class Production {
+	private int rn;
 	private int pno;
 	private String pname;
 	private String brand;
@@ -18,6 +19,12 @@ public class Production {
 	
 	public int getCount() {
 		return count;
+	}
+	public int getRn() {
+		return rn;
+	}
+	public void setRn(int rn) {
+		this.rn = rn;
 	}
 	public void setCount(int count) {
 		this.count = count;

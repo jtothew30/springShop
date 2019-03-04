@@ -20,47 +20,45 @@
 					<h5>관리자 페이지</h5>
 					<p class="lead"><a href="../index.jsp">index</a></p>
 				</div>
-
-				<div class="row small-up-2 medium-up-3 large-up-4">
-					<div class="column">
-						<a href="productInsert.do"> <img src="../resources/foundation-icons/svgs/fi-plus.svg" height="60" width="60"><b>상품등록페이지</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="boardInsert.do"> <img src="../resources/foundation-icons/svgs/fi-page-export.svg" height="65" width="68"><b>상품판매글
-								등록</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="productList.do"> <img src="../resources/foundation-icons/svgs/fi-clipboard-notes.svg" height="65" width="68"><b>재고
-								관리</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="boardList.do"> <img src="../resources/foundation-icons/svgs/fi-wrench.svg" height="65" width="68"><b>판매글
-								관리</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="#"> <img src="../resources/foundation-icons/svgs/fi-graph-bar.svg" height="65" width="68"><b>이용자 통계</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="65" width="68"><b>메인 광고 설정</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="65" width="68"><b>Best상품 배너
-								설정</b>
-						</a>
-					</div>
-					<div class="column">
-						<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="65" width="68"><b>할인 중 상품 설정</b>
-						</a>
-					</div>
-
+				<div class="row column expended">
+					<a href="productInsert.do"> <img src="../resources/foundation-icons/svgs/fi-plus.svg" height="60" width="60"><b>&nbsp;상품 등록</b>
+					</a>
 				</div>
+
+				<div class="row column expended">
+					<a href="boardInsert.do"> <img src="../resources/foundation-icons/svgs/fi-page-export.svg" height="60" width="60"><b>상품판매글
+							등록</b>
+					</a>
+				</div>
+				<div class="row column expended">
+					<a href="productList.do"> <img src="../resources/foundation-icons/svgs/fi-clipboard-notes.svg" height="60" width="60"><b>재고
+							관리</b>
+					</a>
+				</div>
+				<div class="row column expended">
+					<a href="boardList.do"> <img src="../resources/foundation-icons/svgs/fi-wrench.svg" height="60" width="60"><b>판매글
+							관리</b>
+					</a>
+				</div>
+				<div class="row column expended">
+					<a href="#"> <img src="../resources/foundation-icons/svgs/fi-graph-bar.svg" height="60" width="60"><b>이용자 통계</b>
+					</a>
+				</div>
+				<div class="row column expended">
+					<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="60" width="60"><b>메인 광고 설정</b>
+					</a>
+				</div>
+				<div class="row column expended">
+					<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="60" width="60"><b>Best상품 배너설정</b>
+					</a>
+				</div>
+				<div class="row column expended">
+					<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="60" width="60"><b>할인 중 상품 설정</b>
+					</a>
+				</div>
+
 			</div>
+		</div>
 </body>
 
 </html>
