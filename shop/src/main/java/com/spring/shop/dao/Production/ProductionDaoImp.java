@@ -1,6 +1,5 @@
 package com.spring.shop.dao.Production;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +7,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 
 @Repository
@@ -45,42 +43,5 @@ public class ProductionDaoImp implements ProductionDao {
 	public Production selectProductionOne(Production production) {
 		return sqlSession.selectOne(ProductionMapper + ".selectProductForCount", production);
 	}
-
-	@Override
-	public Production selectProduction(int pno) {
-		return sqlSession.selectOne(ProductionMapper + ".selectProductOne", pno);
-	}
-
-	@Override
-	public int selectProductAllNum() {
-		return sqlSession.selectOne(ProductionMapper+".selectProductAllNum");
-	}
-
-	@Override
-	public List<Production> selectSearch(Paging paging) {
-		return sqlSession.selectList(ProductionMapper+".selectSearch", paging);
-	}
-
-	@Override
-	public int selectSearchCount(String kwd) {
-		return sqlSession.selectOne(ProductionMapper+".selectSearchCount", kwd);
-	}
-
-	@Override
-	public void insertProcontainPnamePno(HashMap<String, Object> map) {
-		sqlSession.insert(ProductionMapper+".insertProcontainPnamePno",map);
-	}
-
-	@Override
-	public void updateProduction(Production production) {
-		sqlSession.update(ProductionMapper+".updateProduction", production);
-	}
-
-	@Override
-	public void deleteProduction(int pno) {
-		sqlSession.insert(ProductionMapper+".deleteProduction",pno);		
-	}
-	
-	
 
 }
