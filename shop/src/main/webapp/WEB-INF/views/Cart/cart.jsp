@@ -215,11 +215,11 @@
 				var prolist = JSON.parse(data);
 				//alert(prolist.length);
 				for(var i=0; i<prolist.length; i++){
-					if(prolist[i].pno != pro.pno){
+					//if(prolist[i].pno != pro.pno){
 						console.log("prolist[i].pno : " + prolist[i].pno +"/ pro.pno : " + pro.pno);
 						oplist.push(prolist[i]);
 						str += "<option value=\""+prolist[i].options+"\">"+prolist[i].options+"-재고:"+prolist[i].count+"</option>";
-					}						
+					//}						
 				}
 				//alert(str);
 				$("#selectOption").html(str);
@@ -273,13 +273,15 @@
 			}
 		}
 		
-		
-		
-		
-		$.ajax({
+		var eq = false;
+		if(pro.options == lastpro.options){
+			eq = true;
+		}
+			
+		 $.ajax({
 			type: "POST",
 			url: "changeOption.do",
-			data : {'lastpno' : lastpro.pno, 'pno' : pro.pno, 'price' : pro.outprice, 'count' : count},
+			data : {'lastpno' : lastpro.pno, 'pno' : pro.pno, 'price' : pro.outprice, 'count' : count, 'eq' : eq},
 			success : function(data){				
 				if(data == true){
 					swal("옵션이 변경되었습니다.", "", "success")
@@ -290,7 +292,7 @@
 					swal("이미 장바구니에 있는 옵션을 선택하셨습니다!", "변경처리가 제대로 되지 않았습니다.", "warning");
 				}		
 			}
-		})
+		}) 
 		
 	}
 	

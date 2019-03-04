@@ -122,19 +122,23 @@ public class CartController {
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		int price = Integer.parseInt(request.getParameter("price"));
 		int count = Integer.parseInt(request.getParameter("count"));
+		boolean eq = Boolean.parseBoolean(request.getParameter("eq"));
 		
 		String customer = "testID";
 		
-		List<Cart> mycart = service.getCartList(customer); // for duplicate check
+		System.out.println("eq check : "+ eq);		
 		
-		for(Cart c :mycart) {
-			  if(c.getPno() == pno) {
-				  System.out.println("장바구니 상품과 중복");
-				  return false; 
+		if(!eq) {
+			List<Cart> mycart = service.getCartList(customer); // for duplicate check
+			
+			for(Cart c :mycart) {
+				  if(c.getPno() == pno) {
+					  System.out.println("장바구니 상품과 중복");
+					  return false; 
+				  }
 			  }
-		  }
-		
-		
+		}		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("customer", customer);
 		map.put("lastpno", lastpno);

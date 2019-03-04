@@ -17,7 +17,6 @@ public class Cart {
 	private String category3;
 	
 	
-	
 	public int getPno() {
 		return pno;
 	}
