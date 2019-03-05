@@ -7,5 +7,7 @@ import com.spring.shop.vo.Review;
 
 public interface ReviewService {
 	public List<Production> getOptions(int pbno) throws Exception;
-	public void reviewWirte(Review review) throws Exception;
+	public List<Review> getReviewList(int pbno) throws Exception;
+	public int reviewWirte(Review review) throws Exception;
+	public String getPath(int rno) throws Exception;
 }

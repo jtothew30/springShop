@@ -21,7 +21,17 @@ public class ReviewServiceImp implements ReviewService{
 	}
 	
 	@Override
-	public void reviewWirte(Review review) throws Exception{
-		reviewDao.reviewWirte(review);
+	public List<Review> getReviewList(int pbno) throws Exception{
+		return reviewDao.getReviewList(pbno);
+	}
+	
+	@Override
+	public int reviewWirte(Review review) throws Exception{
+		return reviewDao.reviewWirte(review);
+	}
+	
+	@Override
+	public String getPath(int rno) throws Exception{
+		return reviewDao.getPath(rno);
 	}
 }

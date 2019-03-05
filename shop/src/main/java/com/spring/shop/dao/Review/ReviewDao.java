@@ -6,6 +6,8 @@ import com.spring.shop.vo.Production;
 import com.spring.shop.vo.Review;
 
 public interface ReviewDao {
-	public void reviewWirte(Review review) throws Exception;
+	public int reviewWirte(Review review) throws Exception;
 	public List<Production> getOptions(int pbno) throws Exception;
+	public List<Review> getReviewList(int pbno) throws Exception;
+	public String getPath(int rno) throws Exception;
 }

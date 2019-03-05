@@ -10,11 +10,23 @@
 		 				where pbno=#{pbno} 
 		 				)
   	</select>
+  	
+  	<select id="getReviewList" parameterType="int" resultType="com.spring.shop.vo.Review">
+  		select * from review where pbno = #{pbno}
+  		order by rdate desc 
+  	</select>
   
   
-  	<insert id="reviewWirte" parameterType="com.spring.shop.vo.Review">
-  		insert into review values(seqrev.nextval, #{options}, #{writer}, #{content}, #{path}, #{stars}, #{qna}, sysdate, #{pbno})
+  	<insert id="reviewWirte" parameterType="com.spring.shop.vo.Review" useGeneratedKeys="true">
+  		<selectKey keyProperty="rno" resultType="int" order="AFTER" > 
+  			SELECT seqrev.currval as rno FROM dual 
+  		</selectKey>
+  		insert into review values(seqrev.nextval, #{options}, #{writer}, #{content}, #{path}||seqrev.currval||'-'||#{writer}, #{stars}, #{qna}, sysdate, #{pbno})
   	</insert>
     
+    
+    <select id="getPath" parameterType="int" resultType="string">
+    	select path from review where rno = #{rno}
+    </select> 
   
   </mapper>

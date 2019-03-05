@@ -25,8 +25,21 @@ public class ReviewDaoImp implements ReviewDao{
 	}
 	
 	@Override
-	public void reviewWirte(Review review) {
+	public List<Review> getReviewList(int pbno){
+		List<Review> rlist = sqlSession.selectList(ReviewMapper+".getReviewList", pbno);
+		return rlist;
+	}
+	
+	@Override
+	public int reviewWirte(Review review) {
 		sqlSession.insert(ReviewMapper+".reviewWirte", review);
-		System.out.println("reviewWirte success");
+		System.out.println("review Wirte success, rno : "+ review.getRno());
+		return review.getRno();
+	}
+	
+	@Override
+	public String getPath(int rno) {
+		String path = sqlSession.selectOne(ReviewMapper+".getPath", rno);
+		return path;
 	}
 }
