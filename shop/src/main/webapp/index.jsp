@@ -25,11 +25,11 @@
 	</c:if>
 	
 	<c:if test="${msg == false}">
-		<p style="color:#f00;">로그인에 실패했습니다. ID 또는 PW를 다시 입력해주세요.</p>
+		<p style="color:red;">로그인에 실패했습니다. ID 또는 PW를 다시 입력해주세요.</p>
 	</c:if>
 	
 	<c:if test="${account != null}">
-		<p>${account.name}님 환영합니다.</p>
+		<p>${account.id}님 환영합니다.</p>
 		<a href="logout.do">로그아웃</a>
 	</c:if>
 	
@@ -43,7 +43,7 @@
 	
 	<h1>
 		<a href="main.do">마이페이지</a>
-		<a href="delete.do">회원탈퇴</a>
+		<a href="Mypage/AccountDelete">회원탈퇴</a>
 	</h1>
 	
 	<h1>

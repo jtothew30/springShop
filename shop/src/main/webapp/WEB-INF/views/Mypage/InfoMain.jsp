@@ -23,24 +23,24 @@
 						<div class="memberClass">
 							<div class="mylevel">
 							<img src="resources/image/welcome.JPG">
-							<p class="infoTxt">${account.name}님 <span>환영합니다!</span></p>
+							<p class="infoTxt">${account.id}님 <span>환영합니다!</span></p>
 							</div>
 						</div>
 						<div class="mainMenu">
 							<div class="menuBox infoModify">
-								<a href="change.do?name=${account.name}">
+								<a href="change.do?id=${account.id}">
 									<p class="title">회원정보수정</p>
-									<span class="noti">본인인증, 휴대폰번호 등<br/>내정보를 수정하세요.</span>
+									<span class="noti">Email, 휴대폰번호 등<br/>내정보를 수정하세요.</span>
 								</a>
 							</div>
 							<div id="password" class="menuBox password">
-								<a href="change.do?name=${account.name}">						
+								<a href="change.do?id=${account.id}">						
 									<p class="title">비밀번호변경</p>
 									<span class="noti">주기적인 변경으로<br/>내정보를 보호하세요.</span>
 								</a>
 							</div>
 							<div class="menuBox withdrawal">
-								<a href="change.do?name=${account.name}">
+								<a href="Mypage/AccountDelete?id=${account.id}">
 									<p class="title">회원탈퇴</p>
 									<span class="noti"></span>
 								</a>

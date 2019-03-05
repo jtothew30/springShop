@@ -58,14 +58,17 @@ public class modifyController {
 	@RequestMapping(value="login.do", method = RequestMethod.POST)
 	public String login(Account account, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		logger.info("post login");
+		System.out.println("로그인한ID: " +account.getId());
 		HttpSession session = req.getSession();
 		Account login = service.login(account);
 		
 		if(login == null) {
 			session.setAttribute("account", null);
 			rttr.addFlashAttribute("msg", false);
+			System.out.println("로그인실패");
 		} else {
 			session.setAttribute("account", login);
+			System.out.println("로그인성공");
 		}
 		return "redirect:/index.jsp";
 	}
@@ -77,34 +80,33 @@ public class modifyController {
 		return "redirect:/index.jsp";
 	}
 
-/*
 	@RequestMapping(value="/Mypage/AccountDelete", method = RequestMethod.GET)
 	public void GetDelete() throws Exception {
 	 logger.info("GET delete");
 	}
 	
-	@RequestMapping(value="delete.do", method=RequestMethod.GET)
-	public String PostDelete(HttpSession session, Account account, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value="/Mypage/AccountDelete", method= RequestMethod.POST)
+	public String PostDelete(HttpSession session, Account vo, RedirectAttributes rttr) throws Exception {
 		logger.info("POST delete");
+		Account acc = (Account)session.getAttribute("account");
 		
-		Account member = (Account)session.getAttribute("member");
-		
-		String oldPass = member.getPw();
-		String newPass = account.getPw();
+		String oldPass = acc.getPw();
+		String newPass = vo.getPw();
+		System.out.println("oldpass!!: " + oldPass);
+		System.out.println("newpass!!: " + newPass);
 		
 		if(!(oldPass.equals(newPass))) {
-			rttr.addFlashAttribute("msg",false);
+			rttr.addFlashAttribute("msg", false);
+			System.out.println("oldpass!!: " + oldPass);
+			System.out.println("newpass!!: " + newPass);
+			System.out.println("비밀번호오류");
 			return "redirect:/Mypage/AccountDelete";
-		}
+		} 
 		
-		service.delete(account);
-		
-		return "redirect:/";
-	}
-*/
-	@RequestMapping("delete.do")
-	public String Dlete() {
-		return "/Mypage/AccountDelete";
+			service.delete(vo);
+			session.invalidate();
+			
+		return "redirect:/index.jsp";
 	}
 	
 	@RequestMapping("refer.do")

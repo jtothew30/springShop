@@ -31,7 +31,7 @@
 								<dt>비밀번호</dt>
 								<dd>
 									<div class="styleInput">
-										<input id="memPwd" name="memPwd" type="password" class="iInput" onblur="javascript:fn_checkPassword(this.value);"/>
+										<input id="memPwd" name="memPwd" type="password" class="iInput"/>
 										<span id="conClear" class="delBtn"></span>
 										<p id="errorMsg" name="errorMsg" class="error"></p>
 									</div>
@@ -40,7 +40,7 @@
 						</div>
 						<div class="interBtnArea">
 							<span>
-								<button type="submit" class="btnblue" onclick="javascript:fn_send(); return false;">확인</button>
+								<button type="submit" class="btnblue">확인</button>
 							</span>
 							<span>
 								<input type="button" class="btnWhite" onclick="history.back();" value="취소">

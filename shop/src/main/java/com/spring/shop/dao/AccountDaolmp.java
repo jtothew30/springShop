@@ -38,7 +38,7 @@ public class AccountDaolmp implements AccountDao{
 	}
 	
 	public Account login(Account account) throws Exception {
-		return sqlSession.selectOne("login", account);
+		return sqlSession.selectOne(AccountMapper+".login", account);
 	}
 	
 	public void dbUpdate(Account account) {
@@ -51,16 +51,16 @@ public class AccountDaolmp implements AccountDao{
 	
 	@Override
 	public List<Account> memlist(Account account) {
-		return sqlSession.selectList("select", account);
+		return sqlSession.selectList(AccountMapper+".select", account);
 	}
 	
 	@Override
 	public Account viewmem(String id) {
-		return sqlSession.selectOne("view", id);
+		return sqlSession.selectOne(AccountMapper+".view", id);
 	}
 	
 	@Override
 	public void delete(Account account) throws Exception {
-		sqlSession.delete("delete", account);
+		sqlSession.delete(AccountMapper+".delete", account);
 	}
 }

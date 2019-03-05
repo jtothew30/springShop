@@ -6,19 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>회원탈퇴</title>
-<link rel="stylesheet" href="resources/css/mypage/common.css">
-<link rel="stylesheet" href="resources/css/mypage/snb.css">
-<link rel="stylesheet" href="resources/css/mypage/openid.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/common.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/snb.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/openid.css">
 </head>
 
 <body>
 
 <div id="openIdWrap" align="center">
 			<div class="interparkLogo" align="center">
-				<img src="resources/image/logo.JPG">
+				<img src="${pageContext.request.contextPath}/resources/image/logo.JPG">
 			</div>
 			<div class="contentsWrap">
-				<form name="MemberInfoWithdrawalGuide" method="post" action="/Mypage/delete.do">
+				<form name="MemberInfoWithdrawalGuide" method="post" autocomplete="off">
 					<div class="subConWrap">
 						<h2 class="mainTitle">회원탈퇴</h2>
 						<div class="outStepWrap">
@@ -77,22 +77,14 @@
 							<li class="blGray">상품에 관한 댓글, 답글과 같이 게시판형 서비스가 아닌곳에 등록 된 게시물은 탈퇴후에  자동 삭제 됩니다.</li>
 							</ul>
 						</div>
-						<div class="outCheckBox">
-							<div class="checkStyle">
-							<input type="checkbox" id="outOk" name="outOk" value="Y">
-							<label for="outOk">상기 사항을 모두 확인하였습니다.</label>
-							</div>
-							<p>적립금/혜택 소멸, 재가입 시 복구 불가능,
-							<br>서비스 이용 종료 및 복구 불가능 및
-							<br>기존 아이디 재사용 불가함에 동의 합니다.</p>
-						</div>
 						
 							<p>
-								<label for="id">아이디</label>
+								<label for="id">ID</label>
 								<input type="text" id="id" name="id" value="${account.id}">
 							</p>
+							<br>
 							<p>
-								<label for="pw">패스워드</label>
+								<label for="pw">PW</label>
 								<input type="password" id="pw" name="pw">
 							</p>
 							
@@ -110,7 +102,7 @@
 						</div>
 						</div>
 					</div>
-				</form>
+				</form>		
 			</div>
 		</div>
 

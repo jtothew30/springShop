@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="login" resultType="com.spring.shop.vo.Account">
-		select id,name from account where id=#{id} and pw=#{pw}
+		select id,pw from account where id=#{id} and pw=#{pw}
 	</select>
 	
 	<update id="update" parameterType="com.spring.shop.vo.Account">
