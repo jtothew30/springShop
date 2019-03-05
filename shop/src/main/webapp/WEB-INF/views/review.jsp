@@ -203,6 +203,10 @@
 	      </div>
 	      <!-- body -->
 	      <div class="modal-body">	 
+	      
+	      
+	      
+	      
 	      		<table>
 	      			<tr>
 	      				<td>작 성 자</td>
@@ -226,7 +230,42 @@
 	      				<td>내 용</td>
 	      				<td>	      				
 	      					<!-- 카로셀 들어갈 자리 -->
-	      					
+	      					<div class="fullscreen-image-slider">
+								<div class="orbit" role="region" aria-label="FullScreen Pictures"
+									data-orbit>
+									<ul class="orbit-container">
+										<button class="orbit-previous">
+											<span class="show-for-sr">Previous Slide</span> <span
+												class="nav fa fa-chevron-left fa-3x"></span>
+										</button>
+										<button class="orbit-next">
+											<span class="show-for-sr">Next Slide</span> <span
+												class="nav fa fa-chevron-right fa-3x"></span>
+										</button>
+										<li class="is-active orbit-slide"><img class="orbit-image"
+											src="https://i.imgur.com/16z9ObN.jpg" heigth="200" alt="Space">
+											<figcaption class="orbit-caption">
+												<h1>
+													메인화면 1
+												</h1>
+											</figcaption></li>
+										<li class="orbit-slide"><img class="orbit-image"
+											src="https://i.imgur.com/JD4Caxa.jpg" heigth="200" alt="Space">
+											<figcaption class="orbit-caption">
+												<h1>
+													메인화면 2
+												</h1>
+											</figcaption></li>
+										<li class="orbit-slide"><img class="orbit-image"
+											src="https://i.imgur.com/rsTQbNV.jpg" heigth="200" alt="Space">
+											<figcaption class="orbit-caption">
+												<h1>
+													메인화면 3
+												</h1>
+											</figcaption></li>
+									</ul>
+								</div>
+							</div>
 
 							
 							<!-- 카로셀 끝 -->

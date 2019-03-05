@@ -89,7 +89,7 @@ public class ReviewController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="getImgs.do", method=RequestMethod.POST, )
+	@RequestMapping(value="getImgs.do", method=RequestMethod.POST)
 	public List<String> getImgs(HttpServletRequest request) {
 		System.out.println("getImgs 접근 체크");
 		
