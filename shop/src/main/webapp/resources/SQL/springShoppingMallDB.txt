@@ -1,4 +1,4 @@
-﻿--계정
+--계정
 drop table account; 
 create table account(
 	id varchar2(100) not null,
@@ -194,6 +194,28 @@ create table review(
 	rdate date not null,			--작성날짜
 	pbno number(7) not null,		--상품 게시판 참조
 	primary key(rno)
+);
+commit;
+
+drop sequence seqevt;
+create sequence seqevt
+ start with 1
+ increment by 1;
+commit;
+
+--이벤트 페이지 구성
+drop table event;
+create table event(
+	eno number(7) not null primary key, --이벤트페이지넘버
+	tag varchar2(100) not null, 	--이벤트 이름
+	etitle varchar2(200) not null,  --표시 제목
+	escript varchar2(200) not null, --표시 상세
+	xpath number(5) not null,		--화면표기 x좌표
+	ypath number(5) not null,       --화면표기 y좌표
+	pbno number(7),					--(null가능) 연결 판매글 번호
+	imgpath varchar2(200),          --(null가능) 표시 이미지 경로
+	link varchar2(200),             --(null가능) link 경로
+	flag number(7) not null 		--표기 플래그 넘버(T,F로 0,1사용)
 );
 commit;
 

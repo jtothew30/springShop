@@ -26,4 +26,6 @@ public interface ProBoardDao {
 	List<ProBoard> selectSearchList(Paging paging);
 	void updateBoard(ProBoard proBoard);
 	void deleteProcontain(int pbno);
+	List<ProBoard> selectProboardForCategory(Paging paging);
+	List<ProBoard> selectProBoardAll();
 }

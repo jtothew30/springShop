@@ -45,7 +45,7 @@
 					</a>
 				</div>
 				<div class="row column expended">
-					<a href="#"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="60" width="60"><b>메인 광고 설정</b>
+					<a href="mainEdit.do"> <img src="../resources/foundation-icons/svgs/fi-price-tag.svg" height="60" width="60"><b>메인 광고 설정</b>
 					</a>
 				</div>
 				<div class="row column expended">

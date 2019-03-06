@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class SearchController {
 	private ProBoardService service;
 
 	@RequestMapping("/search.do")
-	public ModelAndView search(Paging paging) {
+	public ModelAndView search(Paging paging ,HttpServletRequest request ) {
 		ModelAndView mav = new ModelAndView("search");
 		
 		logger.info("input"+paging.toString());
@@ -68,13 +69,32 @@ public class SearchController {
 		//logger.info("AA:"+paging.toString());
 		// 검색어 + category검색 + paging --> result
 		List<ProBoard> pbList = service.selectProboardListPaging(paging);
-			
 		
+		
+		// TODO kwd 기반 Only -> 카테고리 출력을 위한
+		List<ProBoard> cateList = service.selectProboardForCategory(paging);
+		
+		//testing====================================================================
+//		String a = pbList.get(0).getPath();
+//		String pri = request.getContextPath();
+//		ArrayList<String> fpaths = new ArrayList<>();
+//		try {
+//			Files.walk(Paths.get(pri+a)).forEach(filePath -> {
+//			    if (Files.isRegularFile(filePath)) {
+//			        fpaths.add(filePath.toString());
+//			    }
+//			});
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		logger.info(fpaths.toString());
+		
+	
 		// 검색기반 카테고리 list
 		ArrayList<String> cate2List = new ArrayList<String>();
 		ArrayList<String> cate3List = new ArrayList<String>();
 		if (pbList != null) {			
-			for (ProBoard proBoard : pbList) {
+			for (ProBoard proBoard : cateList) {
 				if (!cate2List.contains(proBoard.getCategory2())) {
 					cate2List.add(proBoard.getCategory2());
 				}
@@ -82,9 +102,11 @@ public class SearchController {
 					cate3List.add(proBoard.getCategory3());
 			}
 		}
+		//not use
 		String[] chkboxCate2 = cate2List.toArray(new String[0]);
 		String[] chkboxCate3 = cate3List.toArray(new String[0]);
 		
+		//not use
 		paging.setChkboxCate2(chkboxCate2);
 		paging.setChkboxCate3(chkboxCate3);
 		

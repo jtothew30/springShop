@@ -47,25 +47,19 @@
 								class="nav fa fa-chevron-right fa-3x"></span>
 						</button>
 						<li class="is-active orbit-slide"><img class="orbit-image"
-							src="https://i.imgur.com/16z9ObN.jpg" alt="Space">
+							src="${pageContext.request.contextPath}/resources/upload/main/carousel/1.jpg" alt="Space">
 							<figcaption class="orbit-caption">
-								<h1>
-									메인화면 1
-								</h1>
+								
 							</figcaption></li>
 						<li class="orbit-slide"><img class="orbit-image"
-							src="https://i.imgur.com/JD4Caxa.jpg" alt="Space">
+							src="${pageContext.request.contextPath}/resources/upload/main/carousel/2.jpg" alt="Space">
 							<figcaption class="orbit-caption">
-								<h1>
-									메인화면 2
-								</h1>
+								
 							</figcaption></li>
 						<li class="orbit-slide"><img class="orbit-image"
-							src="https://i.imgur.com/rsTQbNV.jpg" alt="Space">
+							src="${pageContext.request.contextPath}/resources/upload/main/carousel/3.jpg" alt="Space">
 							<figcaption class="orbit-caption">
-								<h1>
-									메인화면 3
-								</h1>
+								
 							</figcaption></li>
 					</ul>
 				</div>
@@ -74,6 +68,68 @@
 
 		</div>
 	</div>
+<div class="row column">
+<hr>
+</div>
+	
+<div class="row column">
+  <p class="lead">Trending Planetary Destinations</p>
+</div>
+
+<div class="row small-up-1 medium-up-2 large-up-3">
+<c:forEach items="list" var="list">
+  <div class="column">
+    <div class="callout">
+      <p>---</p>
+      <p><img src="${list.imgpath}"></p>
+      <p class="lead">${list.etitle}</p>
+      <p class="subheader">${list.escript}</p>
+    </div>
+  </div>
+  </c:forEach>
+  <div class="column">
+    <div class="callout">
+      <p>Pegasi B</p>
+      <p><img src="https://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
+      <p class="lead">Copernican Revolution caused an uproar</p>
+      <p class="subheader">Find Earth-like planets life outside the Solar System</p>
+    </div>
+  </div>
+  <div class="column">
+    <div class="callout">
+      <p>Pegasi B</p>
+      <p><img src="https://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
+      <p class="lead">Copernican Revolution caused an uproar</p>
+      <p class="subheader">Find Earth-like planets life outside the Solar System</p>
+    </div>
+  </div>
+  <div class="column">
+    <div class="callout">
+      <p>Pegasi B</p>
+      <p><img src="https://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
+      <p class="lead">Copernican Revolution caused an uproar</p>
+      <p class="subheader">Find Earth-like planets life outside the Solar System</p>
+    </div>
+  </div>
+  <div class="column">
+    <div class="callout">
+      <p>Pegasi B</p>
+      <p><img src="https://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
+      <p class="lead">Copernican Revolution caused an uproar</p>
+      <p class="subheader">Find Earth-like planets life outside the Solar System</p>
+    </div>
+  </div>
+  <div class="column">
+    <div class="callout">
+      <p>Pegasi B</p>
+      <p><img src="https://placehold.it/400x370&text=Pegasi B" alt="image of a planet called Pegasi B"></p>
+      <p class="lead">Copernican Revolution caused an uproar</p>
+      <p class="subheader">Find Earth-like planets life outside the Solar System</p>
+    </div>
+  </div>
+
+</div>
+	
 	</div>
 	<script src="resources/js/vendor/jquery.js"></script>
 	<script src="resources/js/vendor/foundation.js"></script>

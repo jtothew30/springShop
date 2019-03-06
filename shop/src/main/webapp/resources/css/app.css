@@ -204,3 +204,7 @@
 .ecommerce-header-search-exandable input[type=search]:hover {
   background-color: #fefefe;
 }
+body{
+	font-family: '맑은고딕',malgun gothic,'돋움',Dotum,AppleGothic,sans- serif;
+    font-size: 12px;
+}

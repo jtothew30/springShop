@@ -21,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.shop.service.Event.EventService;
 import com.spring.shop.service.ProBoard.ProBoardService;
 import com.spring.shop.service.Production.ProductionService;
+import com.spring.shop.vo.Event;
 import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.ProBoard;
 import com.spring.shop.vo.Production;
@@ -38,7 +40,10 @@ public class AdminController {
 
 	@Inject
 	ProductionService productionService;
-
+	
+	@Inject
+	EventService eventService;
+	
 	@Autowired
 	private ServletContext application;
 
@@ -111,6 +116,7 @@ public class AdminController {
 		mav.addObject("list", list);		
 		return mav;
 	}
+	
 	// 재고관리 - 재고량 update
 	@RequestMapping("proCountUpdate.do")
 	public ModelAndView proCountUpdate(Production production) {
@@ -283,4 +289,60 @@ public class AdminController {
 		proBoardService.deleteProBoard(pbno);
 		return "redirect:boardList.do";		
 	}
+	
+	//===========================================================================
+	
+	// 메인페이지 수정 페이지 이동
+	@RequestMapping("mainEdit.do")
+	public ModelAndView mainEdit() {
+		ModelAndView mav = new ModelAndView("admin/mainEdit");
+		List<ProBoard> list = proBoardService.selectProBoardAll();
+		mav.addObject("list",list);
+		return mav;
+	}
+	
+	// 메인페이지 카로셀이미지 업데이트
+	@RequestMapping("mainUpdate.do")
+	public ModelAndView mainUpdate(MultipartHttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("redirect:/main.do");
+		
+		MultipartFile[] file = new MultipartFile[3];
+		MultipartFile img1 = request.getFile("file1");
+		MultipartFile img2 = request.getFile("file2");
+		MultipartFile img3 = request.getFile("file3");
+		file[0] = img1;
+		file[1] = img2;
+		file[2] = img3;
+		
+		String mainPath = "resources/upload/main/carousel/";
+		String path = application.getRealPath(mainPath);
+		
+		File dir = new File(path);
+		if (!dir.isDirectory()) { dir.mkdirs(); }
+		for(int i=0; i<3; i++) {
+			String originFileName = String.valueOf(i+1)+".jpg";
+	        long fileSize = file[i].getSize(); // 파일 사이즈
+	       
+	        logger.info("originFileName : " + originFileName);
+	        logger.info("fileSize : " + fileSize);
+	        
+	        try {
+	        	file[i].transferTo(new File(path, originFileName));
+	        }catch(IllegalStateException e) {
+	        	e.printStackTrace();
+	        }catch(IOException e) {
+	        	e.printStackTrace();
+	        }
+		}	
+		return mav;
+	}
+	
+	// 메인페이지 이벤트 등록
+	@RequestMapping("mainEventEdit.do")
+	public String mainEventEdit(Event event) {
+		logger.info(event.toString());
+		eventService.insertEvent(event);
+		return "redirect:mainEdit.do";
+	}
+	
 }

@@ -13,6 +13,10 @@
 		 				)
 	</select>
 	
+	<select id="selectProBoardAll" resultType="com.spring.shop.vo.ProBoard">
+		select * from proboard
+	</select>
+	
 	<select id="selectAllCount" parameterType="string" resultType="int">
 		select count(*) from proboard where title like '%'||#{kwd}||'%'	
 	</select>
@@ -134,79 +138,40 @@
 			        select DISTINCT p.pname, p.category1, p.category2, p.category3, c.pbno
 			        from production p left outer join procontain c
 			        on (p.pno = c.pno)
-			        where 1 = 1
-			        <choose>
-			        	<when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
-						     and category2 in
-						    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
-						       #{item}
-						    </foreach>
-					    </when>
-					    <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
-						  	 and category3 in
-						    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
-							    #{item}
-							</foreach>
-					    </when>
-					</choose>
+			        where 1 = 1 			        
+		        	<if test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
+					     and (category2 in
+					    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
+					       #{item}
+					    </foreach>
+					    )
+				    </if>
+				    <if test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
+					  	 and (category3 in
+					    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
+						    #{item}
+						</foreach>
+						)							
+				    </if>					
 			    ) c
 			    where pb.pbno = c.pbno and pb.title like '%'||#{kwd}||'%'
 			    order by pb.pbno desc
 			) pb
 			order by rn
+			
 		) where rn between #{startNum} and #{endNum}
 	</select>
 	
-	<!-- <select id="searchForPaging" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.ProBoard">
-		select * from (
-			select b.*
-			from(
-				select rownum rn, pb.*
-				from (
-					select p.*, pname, path, category1,category2,category3
-					from proboard p, (
-                        select DISTINCT category1, category2, category3, c.*
-                        from production a, procontain c
-                        where a.pname = c.pname
-                        <choose>
-				            <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
-							     and category2 in
-							    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
-							       #{item}
-							    </foreach>
-						    </when>
-						    <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
-							  	 and category3 in
-							    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
-								    #{item}
-								</foreach>
-						    </when>
-						</choose>
-                    ) c
-					where p.pbno = c.pbno
-				) pb
-				where pb.title like '%'||#{kwd}||'%'				
-                order by pbno desc
-			) b
-			order by rn
-		) where rn between #{startNum} and #{endNum}
-	</select> -->
-	<!--	temp
-	 
-	select rownum rn, pb.*
-	from (
+	<select id="selectProboardForCategory" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.ProBoard">
 	    select pb.*, pname, category1, category2, category3 
 	    from proboard pb, (
 	        select DISTINCT p.pname, p.category1, p.category2, p.category3, c.pbno
-	        from production p, procontain c
-	        where p.pno = c.pno
+	        from production p left outer join procontain c
+	        on (p.pno = c.pno)			        
 	    ) c
-	    where pb.pbno = c.pbno
-	    order by pb.pbno desc
-	) pb
-	order by rn
+	    where pb.pbno = c.pbno and pb.title like '%'||#{kwd}||'%'
+	</select>
 	
-	 -->
 	<update id="updateBoard" parameterType="com.spring.shop.vo.ProBoard">
 		update
 			 proboard 

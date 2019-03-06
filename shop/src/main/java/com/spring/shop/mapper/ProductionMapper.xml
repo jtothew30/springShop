@@ -54,7 +54,7 @@
 	
 	<!-- 재고 update -->
 	<update id="updateProductCount" parameterType="com.spring.shop.vo.Production">
-		update prostock set count=#{count} where #{pno} = pno
+		update prostock set count=#{count} where pno = #{pno}
 	</update>
 	
 	<select id="selectSearch" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Production">
@@ -62,7 +62,11 @@
 			select p.* 
 			from (
 				select rownum rn, pr.* 
-				from production pr
+				from (
+					select p.*, count
+					from production p, prostock s
+					where p.pno = s.pno
+				) pr
 				where pname like '%'||#{kwd}||'%'
 				order by pno desc			
 			) p
