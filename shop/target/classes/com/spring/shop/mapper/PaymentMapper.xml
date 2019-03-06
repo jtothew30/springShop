@@ -53,9 +53,20 @@
 		select * from payrequest where payno = #{payno}
 	</select>
 	
+	
 	<update id="updateProstock" parameterType="com.spring.shop.vo.Payrequest">
 		update prostock set count = count - #{count} where pno = #{pno}
 	</update>
+	
+	<update id="updateProduction" parameterType="com.spring.shop.vo.Payrequest">
+		update production set sales = sales + #{count} where pno = #{pno}
+	</update>
+	
+	<update id="updateProboard" parameterType="com.spring.shop.vo.Payrequest">
+		update proboard set totalsales = totalsales + #{count} where pbno = #{pbno}
+	</update>
+	
+	
 	
 	<delete id="deletePayment">
 		delete from payment where customer = #{customer} and status = '결제진행'

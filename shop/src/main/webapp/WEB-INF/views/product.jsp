@@ -259,6 +259,12 @@
 		}
 	}
 	
+	function imgchg(img) {
+		//alert(document.getElementById("img"+img).src);
+		document.getElementById("thumbnail").src = document.getElementById("img"+img).src;
+	}
+	
+	
 	
 	
 	$(document).ready(function() {
@@ -280,67 +286,35 @@
 <body>
 	<c:import url="header.jsp"/>
 
-	<!-- Start Top Bar -->
-	<div class="top-bar">
-		<div class="top-bar-left">
-			<ul class="dropdown menu" data-dropdown-menu="" role="menubar"
-				data-e="n2avhw-e">
-				<li class="menu-text" role="menuitem">Yeti Store</li>
-				<li class="has-submenu is-dropdown-submenu-parent opens-right"
-					role="menuitem" aria-haspopup="true" aria-label="One"><a
-					href="#">One</a>
-					<ul class="submenu menu vertical is-dropdown-submenu first-sub"
-						data-submenu="" role="menu">
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">One</a></li>
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">Two</a></li>
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">Three</a></li>
-					</ul></li>
-				<li role="menuitem"><a href="#">Two</a></li>
-				<li role="menuitem"><a href="#">Three</a></li>
-			</ul>
-		</div>
-		<div class="top-bar-right">
-			<ul class="menu">
-				<li><input type="search" placeholder="Search"></li>
-				<li><button type="button" class="button">Search</button></li>
-			</ul>
-		</div>
-	</div>
-	<!-- End Top Bar -->
+	
 	<br>
 	<!-- You can now combine a row and column if you just need a 12 column row -->
 	<article class="grid-container">
 		<div class="grid-x cell">
-			<nav aria-label="You are here:" role="navigation">
-				<ul class="breadcrumbs">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Features</a></li>
-					<li class="disabled">Gene Splicing</li>
-					<li><span class="show-for-sr">Current: </span> Cloning</li>
-				</ul>
-			</nav>
+			<strong style="font-size:30pt">${proboard.title}</strong>
 		</div>
 		<div class="grid-x grid-margin-x">
 			<div class="medium-6 cell">
-				<img class="thumbnail" src="${pageContext.request.contextPath}/resources/upload/${path}/메인.jpg"
-					width="650" height="350">
+				<img class="thumbnail" id="thumbnail" src="${pageContext.request.contextPath}/resources/upload/${path}/메인.jpg"
+					width="450" height="250">
 				<div class="grid-x grid-padding-x small-up-4">
 					<div class="cell">
-						<img src="${pageContext.request.contextPath}/resources/upload/${path}/1.jpg" width="200"
+						<img onmouseover="imgchg(1)" id="img1" src="${pageContext.request.contextPath}/resources/upload/${path}/메인.jpg" width="200"
 							height="200" align="middle">
 					</div>
 					<div class="cell">
-						<img src="${pageContext.request.contextPath}/resources/upload/${path}/2.jpg" width="200"
+						<img onmouseover="imgchg(2)" id="img2" src="${pageContext.request.contextPath}/resources/upload/${path}/1.jpg" width="200"
+							height="200" align="middle">
+					</div>
+					<div class="cell">
+						<img onmouseover="imgchg(3)" id="img3" src="${pageContext.request.contextPath}/resources/upload/${path}/2.jpg" width="200"
 							height="200" align="middle">
 					</div>
 				</div>
 			</div>
 			<div class="medium-6 large-5 cell large-offset-1">
 				<h3>설명</h3>
-				<p>옵션선택하면 수량 선택 보여주기</p>
+				<p>현재 판매량 : <strong style="color:red; font-size:15pt">${proboard.totalsales}</strong> 개 !!</p>
 				<label>옵션 <select id="selectOption" onchange="selectOption()">
 						<option value="" selected>옵션 선택</option>
 						<c:forEach var="op" items="${prolist}">
@@ -454,63 +428,9 @@
 				</div>
 				<div class="tabs-panel" id="panel4" role="tabpanel"
 					aria-labelledby="panel4-label" aria-hidden="true">
-					<div class="grid-x grid-margin-x medium-up-3 large-up-5">
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-					</div>
+					<h4>QnA</h4>
+					
+					<c:import url="/review/qna.do" />
 				</div>
 			</div>
 		</div>

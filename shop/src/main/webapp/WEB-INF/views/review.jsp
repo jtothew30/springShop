@@ -15,6 +15,18 @@
 		cursor: pointer;
 		background-color: #FFBBBB;
 	}
+	
+	.carousel-item{
+		min-height: 500px;
+	}
+	
+	.carousel-item img{
+		position: absolute;
+		top:0;
+		left:0;
+		width:100%;
+		
+	}
 </style>
 
 
@@ -34,6 +46,8 @@
 			review.path = "${review.path}";
 			review.stars = "${review.stars}";
 			review.rdate = "${review.rdate}";
+			review.good = "${review.good}";
+			review.bad = "${review.bad}";
 			rlist.push(review);
 		</c:forEach>
 		
@@ -50,25 +64,34 @@
 		$("#detailOptions").html(review.options);
 		$("#detailDate").html(review.rdate);
 		$("#detailContent").html(review.content);
+		$("#detailGood").html("<a href=\"#\" id=\"clickgood\" onclick=\"pushReact("+review.rno+", 'good')\">"+review.good+"</a>");
+		$("#detailBad").html("<a href=\"#\" id=\"clickbad\" onclick=\"pushReact("+review.rno+", 'bad')\">"+review.bad+"</a>");
 		
 		$.ajax({
 			type: "POST",
 			url: "../review/getImgs.do",
 			data : {'path' : review.path},
 			success : function(data){
-				var imgstr = "<button class=\"orbit-previous\"><span class=\"show-for-sr\">Previous Slide</span> <span class=\"nav fa fa-chevron-left fa-3x\"></span></button>";
-				imgstr += "<button class=\"orbit-next\"><span class=\"show-for-sr\">Next Slide</span> <span class=\"nav fa fa-chevron-right fa-3x\"></span></button>";
+				var imgstr = "";
+				var indicator = "";
 				for(var i=0; i<data.length; i++){
-					if(i==1){
-						imgstr += "<li class=\"is-active orbit-slide\">";
-						imgstr += "<img class=\"orbit-image\" src=\"${pageContext.request.contextPath}"+review.path+"/"+data[i]+"\" alt=\"Space\"></li>";
+					if(i==0){
+						
+						indicator += "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\""+i+"\" class=\"active\"></li>";
+
+						imgstr += "<div class=\"carousel-item active\">";
+						imgstr += "<img class=\"d-block w-100\" src=\"${pageContext.request.contextPath}"+review.path+"/"+data[i]+"\" width='100' alt=\""+(i+1)+"번째 슬라이드\"></div>";
 					}else{
-						imgstr += "<li class=\"orbit-slide\">";
-						imgstr += "<img class=\"orbit-image\" src=\"${pageContext.request.contextPath}"+review.path+"/"+data[i]+"\" alt=\"Space\"></li>";
+						
+						indicator += "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\""+i+"\"></li>";
+
+					    imgstr += "<div class=\"carousel-item\">";
+						imgstr += "<img class=\"d-block w-100\" src=\"${pageContext.request.contextPath}"+review.path+"/"+data[i]+"\" width='100' alt=\""+(i+1)+"번째 슬라이드\"></div>";				
 					}	
 				}
 				console.log("imgstr check : " + imgstr);
-				//$("#detailImg").html(imgstr);
+				$("#detailIndicators").html(indicator);
+				$("#detailImgs").html(imgstr);
 			}
 		})		
 		
@@ -103,32 +126,76 @@
 			swal("내용을 입력해주세요!", "리뷰 정보가 저장되지 않습니다.", "warning");
 			return;
 		}	
+		
+		 $("#content").val(content.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+		
 		document.review.submit();
 	}	
+	
+	function pushReact(rno, react) {
+		
+		$.ajax({
+			type: "POST",
+			url: "../review/reactCheck.do",
+			data : {'rno' : rno},
+			success : function(data){
+				if(data == true){
+					$.ajax({
+						type: "POST",
+						url: "../review/react.do",
+						data : {'rno' : rno, 'react' : react},
+						success : function(data){
+							if(react == 'good'){
+								$("#clickgood").html(data);
+							}else{
+								$("#clickbad").html(data);
+							}			
+						}
+					})
+				}else{
+					swal("이미 선택하셨습니다.");
+				}			
+			}
+		})		
+	}
 </script>
 
 </head>
 <body>
 	<table>
 		<tr>
-			<th>리뷰 작성자</th> <th>내용</th> <th>별점</th> <th>작성 날짜</th>
+			<th>별점</th> <th>리뷰 작성자</th> <th>내용</th> <th>작성 날짜</th> <th>고객 공감도</th>
 		</tr>
-		<c:forEach var="review" items="${rlist}">
-			<tr class = "reviewList"  onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">
-				<td>${review.writer}</td>
-				<td>${review.content}</td>
-				<td>				
-					<select class="reviewStars">
-					   <option value="1" <c:if test="${review.stars == 1}">selected</c:if>>1</option>
-					   <option value="2" <c:if test="${review.stars == 2}">selected</c:if>>2</option>
-					   <option value="3" <c:if test="${review.stars == 3}">selected</c:if>>3</option>
-					   <option value="4" <c:if test="${review.stars == 4}">selected</c:if>>4</option>
-					   <option value="5" <c:if test="${review.stars == 5}">selected</c:if>>5</option>  
-					 </select>				
-				</td>
-				<td>${review.rdate}</td>
-			</tr>
-		</c:forEach>		
+		<c:choose>
+	    	<c:when test="${empty rlist}">
+	    		<tr>
+				    <td class='tcon pdt9b6l5' height=30 colspan=8 align=center>대상건이 존재하지 않습니다.</td>
+				</tr>
+	    	</c:when>
+    		<c:otherwise>
+    			<c:forEach var="review" items="${rlist}">
+					<tr class = "reviewList">
+						<td onclick="checkDetail(${review.rno})"  data-target="#reviewDetailPop" data-toggle="modal">				
+							<select class="reviewStars">
+							   <option value="1" <c:if test="${review.stars == 1}">selected</c:if>>1</option>
+							   <option value="2" <c:if test="${review.stars == 2}">selected</c:if>>2</option>
+							   <option value="3" <c:if test="${review.stars == 3}">selected</c:if>>3</option>
+							   <option value="4" <c:if test="${review.stars == 4}">selected</c:if>>4</option>
+							   <option value="5" <c:if test="${review.stars == 5}">selected</c:if>>5</option>  
+							 </select>		
+							 <br>
+						</td>
+						<td onclick="checkDetail(${review.rno})"  data-target="#reviewDetailPop" data-toggle="modal">${review.writer}</td>
+						<td onclick="checkDetail(${review.rno})"  data-target="#reviewDetailPop" data-toggle="modal">${review.content}</td>
+						<td onclick="checkDetail(${review.rno})"  data-target="#reviewDetailPop" data-toggle="modal">${review.rdate}</td>
+						<td>
+							<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - <a href="#" id="clickgood" onclick="pushReact(${review.rno}, 'good')">${review.good}</a>&nbsp;&nbsp;
+							<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - <a href="#" id="clickbad" onclick="pushReact(${review.rno}, 'bad')">${review.bad}</a>
+						</td>
+					</tr>
+				</c:forEach>  		
+    		</c:otherwise>
+    	</c:choose>		
 	</table>
 	
 	<input type="button" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성">
@@ -230,47 +297,31 @@
 	      				<td>내 용</td>
 	      				<td>	      				
 	      					<!-- 카로셀 들어갈 자리 -->
-	      					<div class="fullscreen-image-slider">
-								<div class="orbit" role="region" aria-label="FullScreen Pictures"
-									data-orbit>
-									<ul class="orbit-container">
-										<button class="orbit-previous">
-											<span class="show-for-sr">Previous Slide</span> <span
-												class="nav fa fa-chevron-left fa-3x"></span>
-										</button>
-										<button class="orbit-next">
-											<span class="show-for-sr">Next Slide</span> <span
-												class="nav fa fa-chevron-right fa-3x"></span>
-										</button>
-										<li class="is-active orbit-slide"><img class="orbit-image"
-											src="https://i.imgur.com/16z9ObN.jpg" heigth="200" alt="Space">
-											<figcaption class="orbit-caption">
-												<h1>
-													메인화면 1
-												</h1>
-											</figcaption></li>
-										<li class="orbit-slide"><img class="orbit-image"
-											src="https://i.imgur.com/JD4Caxa.jpg" heigth="200" alt="Space">
-											<figcaption class="orbit-caption">
-												<h1>
-													메인화면 2
-												</h1>
-											</figcaption></li>
-										<li class="orbit-slide"><img class="orbit-image"
-											src="https://i.imgur.com/rsTQbNV.jpg" heigth="200" alt="Space">
-											<figcaption class="orbit-caption">
-												<h1>
-													메인화면 3
-												</h1>
-											</figcaption></li>
-									</ul>
-								</div>
-							</div>
-
-							
+							<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+							  <ol class="carousel-indicators" id="detailIndicators">
+							    
+							  </ol>
+							  <div class="carousel-inner" id="detailImgs">
+							    
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">이전</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">다음</span>
+							  </a>
+							</div>	
 							<!-- 카로셀 끝 -->
 	      					<br><br>
 	      					<span id="detailContent"></span>
+	      				</td>
+	      			</tr>
+	      			<tr	align="right">
+	      				<td colspan="2">
+	      					<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - <span id="detailGood"></span>&nbsp;&nbsp;
+							<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - <span id="detailBad"></span> <a href="#" id="clickbad" onclick="pushReact(${review.rno}, 'bad')">${review.bad}</a>
 	      				</td>
 	      			</tr>	      		
 	      		</table>

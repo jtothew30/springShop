@@ -3,7 +3,9 @@ package com.spring.shop.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.shop.service.Review.ReviewService;
 import com.spring.shop.vo.Production;
+import com.spring.shop.vo.Qna;
 import com.spring.shop.vo.Review;
 
 @Controller
@@ -51,6 +54,19 @@ public class ReviewController {
 		return "review";
 	}
 	
+	@RequestMapping("qna.do")
+	public String qna(Model model, HttpServletRequest request) throws Exception{
+		String customer = "testID"; // need to edit for getting login user's id from session later~
+		int pbno = Integer.parseInt(request.getParameter("pbno"));
+		
+		System.out.println("qna.do check pbno:"+pbno);
+		
+		List<Qna> qlist = service.getQnaList(pbno);
+		
+		model.addAttribute("qlist", qlist);
+		return "qna";
+	}
+	
 	@RequestMapping(value = "reviewWirte.do", method = RequestMethod.POST)
 	public String reviewWirte(Model model, Review review, MultipartHttpServletRequest request) throws Exception {
 		
@@ -59,7 +75,6 @@ public class ReviewController {
 		String inputPath = "/resources/upload/review/"+review.getPath();
 		String writer = "testID";	
 		review.setWriter(writer);
-		review.setQna("review");
 		review.setPath(inputPath);
 		
 		System.out.println(review.toString());
@@ -88,6 +103,45 @@ public class ReviewController {
 	}
 	
 	
+	@RequestMapping(value = "qnaWirte.do", method = RequestMethod.POST)
+	public String qnaWirte(Model model, Qna qna, MultipartHttpServletRequest request) throws Exception {
+		
+		List<MultipartFile> filelist = request.getFiles("file");
+		
+		String inputPath = "/resources/upload/qna/"+qna.getPath();
+		String writer = "testID";	
+		qna.setWriter(writer);
+		qna.setPath(inputPath);
+		
+		System.out.println(qna.toString());
+		int qno = service.qnaWirte(qna);
+				
+		String path = application.getRealPath(service.getQnaPath(qno));
+		
+		System.out.println("path:" + path);
+		
+		File dir = new File(path);
+		if (!dir.isDirectory()) { dir.mkdirs(); }
+		for(MultipartFile file : filelist) {
+			String originFileName = file.getOriginalFilename().toLowerCase(); // 원본 파일 명(소문자강제처리)
+	        long fileSize = file.getSize(); // 파일 사이즈
+	       
+	        logger.info("originFileName : " + originFileName);
+	        logger.info("fileSize : " + fileSize);
+	        
+	        try {
+	        	file.transferTo(new File(path, originFileName));
+	        }catch(IllegalStateException e) {
+	        	e.printStackTrace();
+	        }catch(IOException e) {
+	        	e.printStackTrace();
+	        }
+		}	
+		
+		return "redirect:../proboard/product.do?pbno="+qna.getPbno();
+	}
+	
+	
 	@ResponseBody
 	@RequestMapping(value="getImgs.do", method=RequestMethod.POST)
 	public List<String> getImgs(HttpServletRequest request) {
@@ -96,15 +150,58 @@ public class ReviewController {
 		List<String> imgs = new ArrayList<String>();
 		
 		String path = request.getParameter("path");		
-		File[] files = new File(application.getRealPath(path)).listFiles();
-		//If this pathname does not denote a directory, then listFiles() returns null. 
-
-		for (File file : files) {
-		    if (file.isFile()) {
-		    	imgs.add(file.getName());
-		    }
-		}
 		
+		try {
+			File[] files = new File(application.getRealPath(path)).listFiles();
+			//If this pathname does not denote a directory, then listFiles() returns null. 
+
+			for (File file : files) {
+			    if (file.isFile()) {
+			    	imgs.add(file.getName());
+			    }
+			}
+			
+		}catch(Exception e) {
+			logger.info("Exception : " + e);
+		}
+			
 		return imgs;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="reactCheck.do", method=RequestMethod.POST)
+	public boolean reactCheck(HttpServletRequest request) throws Exception {
+		System.out.println("reactCheck 접근 체크");
+		
+		String id = "testID";
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("rno", rno);
+		
+		return service.reactCheck(map);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="react.do", method=RequestMethod.POST)
+	public int react(HttpServletRequest request) throws Exception {
+		System.out.println("react 접근 체크");
+		
+		String id = "testID";
+		int rno = Integer.parseInt(request.getParameter("rno"));
+		String react = request.getParameter("react");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("rno", rno);
+		map.put("react", react);
+		map.put("good", 0);
+		map.put("bad", 0);
+		
+		int result = service.react(map);
+		return result;
 	}
 }
