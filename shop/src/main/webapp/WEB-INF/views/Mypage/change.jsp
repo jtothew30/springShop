@@ -13,7 +13,7 @@
 
 <div id="openIdWrap"> 
 			<div class="contentsWrap">
-				<form name="PasswordCertify" method="post" action="infoChange.do?name=${account.name}">
+				<form name="PasswordCertify" method="post" action="infoChange.do?id=${account.id}">
 					<div class="subConWrap">
 						<h2 class="mainTitle">회원정보수정</h2>
 						<div class="pwTopBox">

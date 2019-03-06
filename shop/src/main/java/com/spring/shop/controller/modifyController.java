@@ -30,9 +30,9 @@ public class modifyController {
 	AccountDao dao;
 	
 	@RequestMapping("infoChange.do")
-	public String InfoChange(String name, Model model) throws Exception {
-		model.addAttribute("dto",service.viewmem(name));
-		logger.info("클릭한 name: " + name);
+	public String InfoChange(String id, Model model) throws Exception {
+		model.addAttribute("dto",service.viewmem(id));
+		logger.info("클릭한 id: " + id);
 		return "/Mypage/InfoChange";
 	}	
 	
@@ -81,30 +81,34 @@ public class modifyController {
 	}
 
 	@RequestMapping(value="/Mypage/AccountDelete", method = RequestMethod.GET)
-	public void GetDelete() throws Exception {
+	public void GetDelete(Account account) throws Exception {
 	 logger.info("GET delete");
+	 System.out.println("시도중인name: " + account.getName());
 	}
 	
 	@RequestMapping(value="/Mypage/AccountDelete", method= RequestMethod.POST)
 	public String PostDelete(HttpSession session, Account vo, RedirectAttributes rttr) throws Exception {
 		logger.info("POST delete");
+		
 		Account acc = (Account)session.getAttribute("account");
 		
+		String oldId = acc.getId();
+		String newId = vo.getId();
 		String oldPass = acc.getPw();
 		String newPass = vo.getPw();
+		
 		System.out.println("oldpass!!: " + oldPass);
 		System.out.println("newpass!!: " + newPass);
 		
-		if(!(oldPass.equals(newPass))) {
+		if(!oldPass.equals(newPass) || !oldId.equals(newId)) {
 			rttr.addFlashAttribute("msg", false);
-			System.out.println("oldpass!!: " + oldPass);
-			System.out.println("newpass!!: " + newPass);
-			System.out.println("비밀번호오류");
 			return "redirect:/Mypage/AccountDelete";
 		} 
 		
-			service.delete(vo);
+			System.out.println("탈퇴한 아이디: " + vo.getId());
+			service.dbDelete(vo);
 			session.invalidate();
+			System.out.println("delete success");
 			
 		return "redirect:/index.jsp";
 	}

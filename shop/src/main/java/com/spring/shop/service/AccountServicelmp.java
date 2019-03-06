@@ -46,7 +46,7 @@ public class AccountServicelmp implements AccountService{
 	}
 	
 	@Override
-	public void delete(Account account) throws Exception {
-		accountDao.delete(account);
+	public void dbDelete(Account account) throws Exception {
+		accountDao.dbDelete(account);
 	}
 }

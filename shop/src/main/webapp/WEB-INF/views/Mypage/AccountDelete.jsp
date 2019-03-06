@@ -89,7 +89,9 @@
 							</p>
 							
 							<c:if test="${msg == false }">
- 								<p>입력한 비밀번호가 잘 못 되었습니다.</p>
+ 								<p>
+ 								입력한 아이디 혹은 비밀번호가 잘 못 되었습니다.
+ 								</p>
 							</c:if>
 						
 						<div class="interBtnArea">

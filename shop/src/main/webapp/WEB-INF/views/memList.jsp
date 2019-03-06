@@ -31,7 +31,7 @@
                         <c:forEach items="${list}" var="account">
                             <tr>
                                 <td>${account.id}</td>
-                                <td><a href="infoChange.do?name=${account.name}">${account.name}</a></td>
+                                <td><a href="infoChange.do?id=${account.id}">${account.name}</a></td>
                                 <td>${account.email}</td>
                                 <td>${account.phone}</td>
                             </tr>
