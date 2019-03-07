@@ -22,8 +22,18 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
+	public List<Payrequest> getMyOrderListPr(String customer) throws Exception{
+		return mypageDao.getMyOrderListPr(customer);
+	}
+	
+	@Override
 	public List<Payment> getMyClaimList(String customer) throws Exception{
 		return mypageDao.getMyClaimList(customer);
+	}
+	
+	@Override
+	public List<Payrequest> getMyClaimListPr(String customer) throws Exception{
+		return mypageDao.getMyClaimListPr(customer);
 	}
 	
 	@Override
@@ -42,7 +52,17 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
+	public List<Payrequest> searchOrderDatePr(Map<String, String> map) throws Exception{
+		return mypageDao.searchOrderDatePr(map);
+	}
+	
+	@Override
 	public List<Payment> searchClaimDate(Map<String, String> map) throws Exception{
 		return mypageDao.searchClaimDate(map);
+	}
+	
+	@Override
+	public List<Payrequest> searchClaimDatePr(Map<String, String> map) throws Exception{
+		return mypageDao.searchClaimDatePr(map);
 	}
 }

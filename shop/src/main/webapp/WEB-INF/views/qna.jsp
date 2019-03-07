@@ -63,7 +63,8 @@
 		$("#detailQnaWriter").html(qna.writer);
 		$("#detailQnaDate").html(qna.qdate);
 		$("#detailQnaContent").html(qna.content);
-		
+		$("#qnaQno").val(qna.qno);
+		console.log("qnaQno : "+ $("#qnaQno").val());
 		$.ajax({
 			type: "POST",
 			url: "../review/getImgs.do",
@@ -103,7 +104,8 @@
 					//$("#controlbtn").html(btn);
 				}
 			}
-		})		
+		})	
+		qnaList(qna.qno);
 	} 
 
 
@@ -119,6 +121,49 @@
 		
 		document.qna.submit();
 	}	
+	
+	function qnaReplyWirte() {
+		var content = $("#qnaReplyWirteContent").val();
+		
+		if(content == "" || content == null){
+			swal("내용을 입력해주세요!", "", "warning");
+			return;
+		}	
+		
+		content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');	
+		var qno = $("#qnaQno").val();
+		
+		$.ajax({
+			type: "POST",
+			url: "../reply/replyWirte.do",
+			data : {'qno' : qno, 'content' : content},
+			success : function(){
+				$("#qnaReplyWirteContent").val("");
+				qnaList(qno);		
+			}
+		})	
+	}
+	
+	function qnaList(qno){
+		$.ajax({
+			type: "POST",
+			url: "../reply/reply.do",
+			data : {'qno' : qno, 'flag' : 'qna'},
+			success : function(data){
+				var rplist = JSON.parse(data);
+				console.log("rplist:"+data+"/ list length : "+rplist.length);
+				var str = "";
+				for(var i=0; i<rplist.length; i++){
+					str += "<tr><td>"+rplist[i].writer+"</td>";
+					str += "<td>"+rplist[i].content+"</td>";
+					str += "<td>"+rplist[i].rpdate+"</td></tr>";
+				}
+				$("#qnaReplyList").html(str);
+			}
+		})
+	}
+	
+	
 </script>
 
 </head>
@@ -230,16 +275,16 @@
 	      				<td>내 용</td>
 	      				<td>	      				
 	      					<!-- 카로셀 들어갈 자리 -->
-							<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+							<div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
 							  <ol class="carousel-indicators" id="detailQnaIndicators">		    
 							  </ol>
 							  <div class="carousel-inner" id="detailQnaImgs"></div>
 							  
-							  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+							  <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
 							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							    <span class="sr-only">이전</span>
 							  </a>
-							  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+							  <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
 							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 							    <span class="sr-only">다음</span>
 							  </a>
@@ -251,6 +296,20 @@
 	      				</td>
 	      			</tr>	      		
 	      		</table>
+	      		<hr>
+	      		<table>
+	      			<thead>
+		      			<tr>
+		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th>
+		      			</tr>
+	      			</thead>
+	      			<tbody id="qnaReplyList">
+	      				
+	      			</tbody>
+	      		</table>
+				<input id="qnaQno" type="hidden" name="qno" value="">
+		 		<textarea id="qnaReplyWirteContent" name="content" cols="60" rows=3 placeholder="댓글" required></textarea>&nbsp;
+		 	 	<input type="button" class="btn btn-success" onclick="qnaReplyWirte()" value="댓글작성">
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">

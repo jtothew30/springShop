@@ -25,11 +25,22 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
+	public List<Payrequest> getMyOrderListPr(String customer){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".getMyOrderListPr", customer);
+		return prlist;
+	}
+	
+	@Override
 	public List<Payment> getMyClaimList(String customer){
 		List<Payment> plist = sqlSession.selectList(MyPageMapper+".getMyClaimList", customer);
 		return plist;
 	}
 	
+	@Override
+	public List<Payrequest> getMyClaimListPr(String customer){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".getMyClaimListPr", customer);
+		return prlist;
+	}
 	
 	@Override
 	public List<Payrequest> getPayrequestList(int payno){
@@ -44,9 +55,21 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
+	public List<Payrequest> searchOrderDatePr(Map<String, String> map){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".searchOrderDatePr", map);
+		return prlist;
+	}
+	
+	@Override
 	public List<Payment> searchClaimDate(Map<String, String> map){
 		List<Payment> plist = sqlSession.selectList(MyPageMapper+".searchClaimDate", map);
 		return plist;
+	}
+	
+	@Override
+	public List<Payrequest> searchClaimDatePr(Map<String, String> map){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".searchClaimDatePr", map);
+		return prlist;
 	}
 	
 	

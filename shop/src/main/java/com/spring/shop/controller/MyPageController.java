@@ -33,7 +33,9 @@ public class MyPageController {
 		String customer = "testID"; // need to edit for getting login user's id from session later~
 		
 		List<Payment> plist = service.getMyOrderList(customer);
+		List<Payrequest> prlist = service.getMyOrderListPr(customer);
 		model.addAttribute("plist", plist);
+		model.addAttribute("prlist", prlist);
 		return "MyPage/myorder";
 	}
 	
@@ -42,7 +44,9 @@ public class MyPageController {
 		String customer = "testID"; // need to edit for getting login user's id from session later~
 		
 		List<Payment> plist = service.getMyClaimList(customer);
+		List<Payrequest> prlist = service.getMyClaimListPr(customer);
 		model.addAttribute("plist", plist);
+		model.addAttribute("prlist", prlist);
 		return "MyPage/myclaim";
 	}
 	
@@ -71,19 +75,16 @@ public class MyPageController {
 		
 		System.out.println("searchDate.do todate:"+todate+"/fromdate:"+fromdate);
 		
-		Map<String, String> map = new HashMap();
+		Map<String, String> map = new HashMap<String, String>();
 		map.put("todate", todate);
 		map.put("fromdate", fromdate);
 		map.put("customer", customer);
 		
 		List<Payment> plist = service.searchOrderDate(map);
-
-		Gson gson = new Gson();
-		String str = gson.toJson(plist);
-		System.out.println(str);
-		
+		List<Payrequest> prlist = service.searchOrderDatePr(map);
 		
 		model.addAttribute("plist", plist);
+		model.addAttribute("prlist", prlist);
 		return "MyPage/myorder";
 	}
 	
@@ -102,13 +103,10 @@ public class MyPageController {
 		map.put("customer", customer);
 		
 		List<Payment> plist = service.searchClaimDate(map);
-
-		Gson gson = new Gson();
-		String str = gson.toJson(plist);
-		System.out.println(str);
-		
+		List<Payrequest> prlist = service.searchClaimDatePr(map);
 		
 		model.addAttribute("plist", plist);
+		model.addAttribute("prlist", prlist);
 		return "MyPage/myclaim";
 	}
 	

@@ -64,9 +64,8 @@
 		$("#detailOptions").html(review.options);
 		$("#detailDate").html(review.rdate);
 		$("#detailContent").html(review.content);
-		$("#detailGood").html("<a href=\"#\" id=\"clickgood\" onclick=\"pushReact("+review.rno+", 'good')\">"+review.good+"</a>");
-		$("#detailBad").html("<a href=\"#\" id=\"clickbad\" onclick=\"pushReact("+review.rno+", 'bad')\">"+review.bad+"</a>");
-		
+		$("#reviewRno").val(review.rno);
+		console.log("reviewRno : "+ $("#reviewRno").val());
 		$.ajax({
 			type: "POST",
 			url: "../review/getImgs.do",
@@ -107,7 +106,7 @@
 		
 		$("#detailStars").html(starsstr);
 		setStars();
-		
+		reviewList(review.rno);
 	}
 
 	function setStars() {
@@ -146,9 +145,9 @@
 						data : {'rno' : rno, 'react' : react},
 						success : function(data){
 							if(react == 'good'){
-								$("#clickgood").html(data);
+								$("#clickgood"+rno).html(data);
 							}else{
-								$("#clickbad").html(data);
+								$("#clickbad"+rno).html(data);
 							}			
 						}
 					})
@@ -158,6 +157,49 @@
 			}
 		})		
 	}
+	
+	
+	function reviewReplyWirte() {
+		var content = $("#reviewReplyWirteContent").val();
+		
+		if(content == "" || content == null){
+			swal("내용을 입력해주세요!", "", "warning");
+			return;
+		}	
+		
+		content = content.replace(/(?:\r\n|\r|\n)/g, '<br />');	
+		var rno = $("#reviewRno").val();
+		
+		$.ajax({
+			type: "POST",
+			url: "../reply/replyWirte.do",
+			data : {'rno' : rno, 'content' : content},
+			success : function(){
+				$("#reviewReplyWirteContent").val("");
+				reviewList(rno);		
+			}
+		})	
+	}
+	
+	function reviewList(rno){
+		$.ajax({
+			type: "POST",
+			url: "../reply/reply.do",
+			data : {'rno' : rno, 'flag' : 'review'},
+			success : function(data){
+				var rplist = JSON.parse(data);
+				console.log("rplist:"+data+"/ list length : "+rplist.length);
+				var str = "";
+				for(var i=0; i<rplist.length; i++){
+					str += "<tr><td>"+rplist[i].writer+"</td>";
+					str += "<td>"+rplist[i].content+"</td>";
+					str += "<td>"+rplist[i].rpdate+"</td></tr>";
+				}
+				$("#reviewReplyList").html(str);
+			}
+		})
+	}
+	
 </script>
 
 </head>
@@ -189,8 +231,8 @@
 						<td onclick="checkDetail(${review.rno})"  data-target="#reviewDetailPop" data-toggle="modal">${review.content}</td>
 						<td onclick="checkDetail(${review.rno})"  data-target="#reviewDetailPop" data-toggle="modal">${review.rdate}</td>
 						<td>
-							<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - <a href="#" id="clickgood" onclick="pushReact(${review.rno}, 'good')">${review.good}</a>&nbsp;&nbsp;
-							<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - <a href="#" id="clickbad" onclick="pushReact(${review.rno}, 'bad')">${review.bad}</a>
+							<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - <a href="javascript:;" id="clickgood${review.rno}" onclick="pushReact(${review.rno}, 'good')">${review.good}</a>&nbsp;&nbsp;
+							<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - <a href="javascript:;" id="clickbad${review.rno}" onclick="pushReact(${review.rno}, 'bad')">${review.bad}</a>
 						</td>
 					</tr>
 				</c:forEach>  		
@@ -270,10 +312,6 @@
 	      </div>
 	      <!-- body -->
 	      <div class="modal-body">	 
-	      
-	      
-	      
-	      
 	      		<table>
 	      			<tr>
 	      				<td>작 성 자</td>
@@ -317,14 +355,23 @@
 	      					<br><br>
 	      					<span id="detailContent"></span>
 	      				</td>
-	      			</tr>
-	      			<tr	align="right">
-	      				<td colspan="2">
-	      					<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - <span id="detailGood"></span>&nbsp;&nbsp;
-							<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - <span id="detailBad"></span> <a href="#" id="clickbad" onclick="pushReact(${review.rno}, 'bad')">${review.bad}</a>
-	      				</td>
-	      			</tr>	      		
+	      			</tr>      		
 	      		</table>
+	      		<hr>
+	      		<table>
+	      			<thead>
+		      			<tr>
+		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th>
+		      			</tr>
+	      			</thead>
+	      			<tbody id="reviewReplyList">
+	      				
+	      			</tbody>
+	      		</table>
+				<input id="reviewRno" type="hidden" name="rno" value="">
+		 		<textarea id="reviewReplyWirteContent" name="content" cols="60" rows=3 placeholder="댓글" required></textarea>&nbsp;
+		 	 	<input type="button" class="btn btn-success" onclick="reviewReplyWirte()" value="댓글작성">
+
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
