@@ -78,9 +78,10 @@
 							</ul>
 						</div>
 						
+							
 							<p>
 								<label for="id">ID</label>
-								<input type="text" id="id" name="id" value="${account.id}">
+								<input type="text" id="id" name="id" value="${account.id}" autofocus="autofocus">
 							</p>
 							<br>
 							<p>

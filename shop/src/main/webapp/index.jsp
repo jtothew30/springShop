@@ -29,12 +29,12 @@
 	</c:if>
 	
 	<c:if test="${account != null}">
-		<p>${account.id}님 환영합니다.</p>
+		<p>${account.name}님 환영합니다.</p>
 		<a href="logout.do">로그아웃</a>
 	</c:if>
 	
 	<h1>
-		<a href="/">home.do</a> <a href="product.do">product.do</a>
+		<a href="home">home.do</a> <a href="product.do">product.do</a>
 	</h1>
 	
 	<h1>

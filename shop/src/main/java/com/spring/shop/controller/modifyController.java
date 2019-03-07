@@ -105,6 +105,7 @@ public class modifyController {
 			return "redirect:/Mypage/AccountDelete";
 		} 
 		
+			System.out.println("Å»ÅğÇÑ ÀÌ¸§: " + vo.getName());
 			System.out.println("Å»ÅğÇÑ ¾ÆÀÌµğ: " + vo.getId());
 			service.dbDelete(vo);
 			session.invalidate();
