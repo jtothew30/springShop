@@ -304,57 +304,77 @@ function checkDetail(rno) {
 	</div>
 	</div>
 	
-	<div class="row column">
-		
-			<div class="media-object-section" style="text-align: center;">
-				<table cellspacing="0" cellpadding="0" width="785" class="tb_myPg02">
-					<col width="40"><col width="40"><col width="80"><col width="50"><col width="30">
-						<thead>
-							<tr class="tb_myPgThB mgt15">
-								<th style="text-align:center;">게시글</th>
-								<th style="text-align:center;">별 점</th>
-								<th style="text-align:center;">고객 공감도</th>
-								<th style="text-align:center;">작성날짜</th>
-								<th>&nbsp;</th>
-							</tr>						
-						</thead>
-						<c:choose>
-					    	<c:when test="${empty rvlist}">
-					    		<tr>
-								    <td class='tcon pdt9b6l5' height=30 colspan=5 align=center>대상건이 존재하지 않습니다.</td>
-								</tr>
-					    	</c:when>
-				    		<c:otherwise>   
-				    		  <c:forEach var="review" items="${rvlist}">
-					          	<tr class="reviewlist">
-					          		<td>
-						          		<a href="../proboard/product.do?pbno=${review.pbno}">
-						          			<img src="${pageContext.request.contextPath}/resources/upload/${review.pbno}/${review.title}/메인.jpg" width="120"><br><br>
-						          			상품 게시글 보기
-						          		</a>
-					          		</td>
-					          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">
-					          			<select class="reviewStars">
-										   <option value="1" <c:if test="${review.stars == 1}">selected</c:if>>1</option>
-										   <option value="2" <c:if test="${review.stars == 2}">selected</c:if>>2</option>
-										   <option value="3" <c:if test="${review.stars == 3}">selected</c:if>>3</option>
-										   <option value="4" <c:if test="${review.stars == 4}">selected</c:if>>4</option>
-										   <option value="5" <c:if test="${review.stars == 5}">selected</c:if>>5</option>  
-										 </select>
-					          		</td>
-					          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">
-										<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - ${review.good}&nbsp;&nbsp;
-										<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - ${review.bad}
-									</td>
-					          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">${review.rdate}</td>
-					          		<td><input type="button" onclick="deleteReview(${review.rno})" value="삭제"></td>
-					          	</tr>
-					          </c:forEach> 
-					    	</c:otherwise>
-				    	</c:choose>
-				</table>
-			</div>	
+	<div class="row column">	
+		<div class="media-object-section" style="text-align: center;">
+			<table cellspacing="0" cellpadding="0" width="785" class="tb_myPg02">
+				<col width="40"><col width="40"><col width="80"><col width="50"><col width="30">
+					<thead>
+						<tr class="tb_myPgThB mgt15">
+							<th style="text-align:center;">게시글</th>
+							<th style="text-align:center;">별 점</th>
+							<th style="text-align:center;">고객 공감도</th>
+							<th style="text-align:center;">작성날짜</th>
+							<th>&nbsp;</th>
+						</tr>						
+					</thead>
+					<c:choose>
+				    	<c:when test="${empty rvlist}">
+				    		<tr>
+							    <td class='tcon pdt9b6l5' height=30 colspan=5 align=center>대상건이 존재하지 않습니다.</td>
+							</tr>
+				    	</c:when>
+			    		<c:otherwise>   
+			    		  <c:forEach var="review" items="${rvlist}">
+				          	<tr class="reviewlist">
+				          		<td>
+					          		<a href="../proboard/product.do?pbno=${review.pbno}">
+					          			<img src="${pageContext.request.contextPath}/resources/upload/${review.pbno}/${review.title}/메인.jpg" width="120"><br><br>
+					          			상품 게시글 보기
+					          		</a>
+				          		</td>
+				          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">
+				          			<select class="reviewStars">
+									   <option value="1" <c:if test="${review.stars == 1}">selected</c:if>>1</option>
+									   <option value="2" <c:if test="${review.stars == 2}">selected</c:if>>2</option>
+									   <option value="3" <c:if test="${review.stars == 3}">selected</c:if>>3</option>
+									   <option value="4" <c:if test="${review.stars == 4}">selected</c:if>>4</option>
+									   <option value="5" <c:if test="${review.stars == 5}">selected</c:if>>5</option>  
+									 </select>
+				          		</td>
+				          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">
+									<img src="${pageContext.request.contextPath}/resources/image/good.png">공감해요 - ${review.good}&nbsp;&nbsp;
+									<img src="${pageContext.request.contextPath}/resources/image/bad.png">별로에요 - ${review.bad}
+								</td>
+				          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">${review.rdate}</td>
+				          		<td><input type="button" onclick="deleteReview(${review.rno})" value="삭제"></td>
+				          	</tr>
+				          </c:forEach>
+				    	</c:otherwise>
+			    	</c:choose>
+			</table>
+			<!-- pageing template -->
+		      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
+		        <li class="pagination-previous disabled">Previous
+					<span class="show-for-sr">page</span></li>
+		        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+		          <c:choose>
+		            <c:when test="${paging.page==index}">
+		              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
+		            </c:when>
+		            <c:otherwise>
+		              <li><a class="pagination-pointed-button" href="myreview.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+		            </c:otherwise>
+		          </c:choose>
+		        </c:forEach>        
+		        <li class="pagination-next disabled">Next
+		            <span class="show-for-sr">page</span></li>
+		      </ul>
+		    <!-- pageing template --> 	
+		</div>	
 	</div>
+	
+	
+      
 
 
 	<div class="modal fade" id="reviewDetailPop" tabindex="-1" role="dialog">

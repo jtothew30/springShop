@@ -13,9 +13,16 @@ public class Review {
 	private int bad;
 	
 	private String title;
+	private int rn;
 	
 	
 	
+	public int getRn() {
+		return rn;
+	}
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
 	public String getTitle() {
 		return title;
 	}

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.google.gson.Gson;
 import com.spring.shop.service.MyPage.MyPageService;
 import com.spring.shop.service.Review.ReviewService;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
 import com.spring.shop.vo.Qna;
@@ -66,11 +67,17 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myreview.do")
-	public String myreview(Model model) throws Exception{
+	public String myreview(Paging paging, Model model) throws Exception{
 		String writer = "testID"; // need to edit for getting login user's id from session later~
 		
-		List<Review> rvlist = service.getMyReviewList(writer);
+		paging.setCustomer(writer);
+		paging.setTotalCount(service.countMyReview(writer));
+		
+		logger.info(paging.toString()+"td:"+paging.getTodate()+"/fd:"+paging.getFromdate());
+		
+		List<Review> rvlist = service.getMyReviewList(paging);
 		model.addAttribute("rvlist", rvlist);
+		model.addAttribute("paging", paging);
 		return "MyPage/myreview";
 	}
 	

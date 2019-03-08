@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
 import com.spring.shop.vo.Qna;
@@ -45,9 +46,15 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
-	public List<Review> getMyReviewList(String writer){
-		List<Review> rvlist = sqlSession.selectList(MyPageMapper+".getMyReviewList", writer);
+	public List<Review> getMyReviewList(Paging paging){
+		List<Review> rvlist = sqlSession.selectList(MyPageMapper+".getMyReviewList", paging);
 		return rvlist;
+	}
+	
+	@Override
+	public int countMyReview(String writer) {
+		int count = sqlSession.selectOne(MyPageMapper+".countMyReview", writer);
+		return count;
 	}
 	
 	@Override

@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.spring.shop.dao.MyPage.MyPageDao;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
 import com.spring.shop.vo.Qna;
@@ -39,8 +40,13 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
-	public List<Review> getMyReviewList(String writer) throws Exception{
-		return mypageDao.getMyReviewList(writer);
+	public List<Review> getMyReviewList(Paging paging) throws Exception{
+		return mypageDao.getMyReviewList(paging);
+	}
+	
+	@Override
+	public int countMyReview(String writer) throws Exception{
+		return mypageDao.countMyReview(writer);
 	}
 	
 	@Override

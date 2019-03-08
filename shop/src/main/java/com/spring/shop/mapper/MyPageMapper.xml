@@ -35,12 +35,29 @@
 	order by payno desc 
   	</select>
   	
-  	<select id="getMyReviewList" parameterType="string" resultType="com.spring.shop.vo.Review">
-  		select r.*, pb.title from review r 
+  	<select id="getMyReviewList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Review">
+  		
+  		select * from (select rownum rn, r.* from (select r.*, pb.title from review r 
+												   inner join proboard pb 
+												   on r.pbno = pb.pbno 
+												   where writer = #{customer} 
+												   order by rdate desc) r 
+						) 
+		where rn between #{startNum} and #{endNum} 
+		order by rn
+  		
+  		<!-- select r.*, pb.title from review r 
 		inner join proboard pb 
 		on r.pbno = pb.pbno 
 		where writer = #{writer} 
-		order by rdate desc
+		order by rdate desc -->
+  	</select>
+  	
+  	<select id="countMyReview" parameterType="string" resultType="int">		
+		select count(*) from review r 
+		inner join proboard pb 
+		on r.pbno = pb.pbno 
+		where writer = #{writer} 
   	</select>
   	
   	<select id="getMyQnaList" parameterType="string" resultType="com.spring.shop.vo.Qna">
