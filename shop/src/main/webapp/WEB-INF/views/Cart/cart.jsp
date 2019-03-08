@@ -308,33 +308,42 @@
 				<th>&nbsp;</th> <th>&nbsp;</th> <th style="text-align:center;">장바구니 상품</th> <th style="text-align:center;">가격/수량</th> <th style="text-align:center;">합 계</th>
 			</tr>
 			</thead>
-		<c:forEach var="cart" items="${cartlist}">
-			<tr align="center">
-				<td width="3%">
-					<input type="checkbox" class="chk" onclick="chkChange()" value="${cart.pno}">
-				</td>
-				<td width="17%">
-					<img src="${pageContext.request.contextPath}/resources/upload/${cart.pbno}/${cart.pname}/메인.jpg">
-				</td>
-				<td width="40%">
-					<strong style="font-size:15pt;">${cart.pname}</strong> - ${cart.options}<br><br>
-					상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${cart.pbno}">${cart.title}</a>
-				</td>
-				<td width="20%">
-					${cart.price} 원 / ${cart.count} 개<br>
-					<input type="button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})" value="변경"> 
-				</td>
-				<td width="20%">
-					합계 : <span id="price${cart.pno}">${cart.count * cart.price}</span> 원&nbsp;&nbsp;
-					<input type="button" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
-				</td>
-				
-			</tr>
-		</c:forEach>
-			<tr align="center">
-				<td colspan="3" width="30%" style="font-size:17pt; font-weight:900;">주문금액 : <span id="selTotalPrice">0</span> 원&nbsp;&nbsp;ㅡ&nbsp;&nbsp;할인금액 : 0 원</td>
-				<td colspan="2" width="70%" style="font-size:17pt; font-weight:900;">총 결제예정금액 : <span id="finalPrice">0</span> 원</td>
-			</tr>
+
+			<c:choose>
+		    	<c:when test="${empty cartlist}">
+		    		<tr>
+					    <td class='tcon pdt9b6l5' height=30 colspan=5 align=center>대상건이 존재하지 않습니다.</td>
+					</tr>
+		    	</c:when>
+	    		<c:otherwise>
+		    		<c:forEach var="cart" items="${cartlist}">
+					<tr align="center">
+						<td width="3%">
+							<input type="checkbox" class="chk" onclick="chkChange()" value="${cart.pno}">
+						</td>
+						<td width="17%">
+							<img src="${pageContext.request.contextPath}/resources/upload/${cart.pbno}/${cart.pname}/메인.jpg">
+						</td>
+						<td width="40%">
+							<strong style="font-size:15pt;">${cart.pname}</strong> - ${cart.options}<br><br>
+							상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${cart.pbno}">${cart.title}</a>
+						</td>
+						<td width="20%">
+							${cart.price} 원 / ${cart.count} 개<br>
+							<input type="button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})" value="변경"> 
+						</td>
+						<td width="20%">
+							합계 : <span id="price${cart.pno}">${cart.count * cart.price}</span> 원&nbsp;&nbsp;
+							<input type="button" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
+						</td>				
+					</tr>
+					</c:forEach>
+					<tr align="center">
+						<td colspan="3" width="30%" style="font-size:17pt; font-weight:900;">주문금액 : <span id="selTotalPrice">0</span> 원&nbsp;&nbsp;ㅡ&nbsp;&nbsp;할인금액 : 0 원</td>
+						<td colspan="2" width="70%" style="font-size:17pt; font-weight:900;">총 결제예정금액 : <span id="finalPrice">0</span> 원</td>
+					</tr>
+	    		</c:otherwise>
+    		</c:choose>	
 		</table>
 	</div>
 	<input type="button" onclick="selPayRequest()" value="선택상품주문">

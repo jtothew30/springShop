@@ -9,6 +9,11 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 
 <style type="text/css">
@@ -27,6 +32,7 @@
 	var payment;
 	var todate;
 	var fromdate;
+	var prlist;
 
 	function checkDetail(payno) {
 		$.ajax({
@@ -91,6 +97,19 @@
 
 
 	$(function() {
+		prlist = new Array();
+		<c:forEach var="pr" items="${prlist}">
+			var json = new Object();
+			json.reqno = "${pr.reqno}"
+			json.pbno = "${pr.pbno}"
+			json.path = "${pr.path}"
+			json.title = "${pr.title}"	
+			json.options = "${pr.options}"
+			prlist.push(json);
+		</c:forEach>
+		
+		
+		
 		var date = new Date(); 
 		var year = date.getFullYear(); 
 		var month = new String(date.getMonth()+1); 
@@ -118,6 +137,35 @@
 	  });
 	});
 	
+	
+	
+	function reviewRequest(reqno) {
+		var preq = new Object();
+		for(var i=0; i<prlist.length; i++){
+			if(reqno == prlist[i].reqno){
+				preq = prlist[i];
+				break;
+			}
+		}
+
+		$("#hiddenpbno").val(preq.pbno);
+		$("#hiddenpath").val(preq.pbno+preq.title+"/");
+		$("#hiddenoptions").val(preq.options);
+		$("#selectOption").html(preq.options);
+	}
+	
+	function reviewWirte() {
+		var content = $("#content").val();
+		
+		if(content == "" || content == null){
+			swal("내용을 입력해주세요!", "리뷰 정보가 저장되지 않습니다.", "warning");
+			return;
+		}	
+		
+		 $("#content").val(content.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+		
+		document.review.submit();
+	}
 	
 </script>
 
@@ -149,6 +197,9 @@
 						</td>
 						<td class="buttonWrap">
 							<a href="#" class="periodButton" onclick="searchDate()"><em style="font-size:20pt">조회하기</em></a>
+						</td>
+						<td class="buttonWrap">
+							<a href="myorder.do" class="periodButton"><em style="font-size:20pt">전체보기</em></a>
 						</td>
 					</tr>
 				</table>
@@ -248,7 +299,7 @@
 						          		<td>${pr.price}</td>
 						          		<td>${pr.count * pr.price}</td>
 						          		<td>${pr.status}</td>
-						          		<td><input type="button" onclick="" value="리뷰 남기기"></td>
+						          		<td><input type="button" onclick="reviewRequest(${pr.reqno})" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성"></td>
 						          	</tr>
 						          </c:forEach> 
 						    	</c:otherwise>
@@ -262,7 +313,7 @@
 	
 	
 	
-<div class="modal fade" id="layerpop" tabindex="-1" role="dialog">
+	<div class="modal fade" id="layerpop" tabindex="-1" role="dialog">
 	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	      <!-- header -->
@@ -288,6 +339,59 @@
 	    </div>
 	  </div>
 	</div>
+	
+	
+	
+	<div class="modal fade" id="reviewWritePop" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header">
+	        <!-- header title -->
+	        <h4 class="modal-title">리뷰 남기기</h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">	 
+	      	<form name="review"  method="post" action="reviewWriteInMyorder.do" enctype="multipart/form-data">  		
+	      		<input type="hidden" id="hiddenpbno" name="pbno" value="">
+	      		<input type="hidden" id="hiddenpath" name="path" value="">
+	      		<input type="hidden" id="hiddenoptions" name="options" value="">
+	      		<table>
+	      			<tr>
+	      				<td>구매한 옵션</td>
+	      				<td id="selectOption"></td>
+	      			</tr>
+	      			<tr>
+	      				<td>별 점</td>
+	      				<td>
+	      					 <select id="selectStars" name="stars">
+							   <option value="1">1</option>
+							   <option value="2">2</option>
+							   <option value="3">3</option>
+							   <option value="4">4</option>
+							   <option value="5">5</option>  
+							 </select>
+	      				</td>
+	      			</tr>
+	      			<tr>
+	      				<td>첨부파일</td>
+	      				<td><input multiple="multiple" type="file" name="file" /></td>
+	      			</tr>
+	      			<tr>
+	      				<td>내용</td>
+	      				<td><textarea id="content" name="content" rows="2" required></textarea></td>
+	      			</tr>	      		
+	      		</table>
+      		</form>   
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -296,8 +400,14 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+<script type="text/javascript">
+	$(function() {
+	    $('#selectStars').barrating({
+	      theme: 'fontawesome-stars'
+	    });
+	  });
+</script>
 </body>
 </html>

@@ -17,6 +17,8 @@
 		<a href="cart/cart.do">장바구니</a>	<br>
 		<a href="mypage/myorder.do">마이페이지 - 주문/배송 정보</a>	<br>	
 		<a href="mypage/myclaim.do">마이페이지 - 취소/반품/교환 정보</a>		<br>
+		<a href="mypage/myreview.do">마이페이지 - 내 상품 리뷰</a>		<br>
+		<a href="mypage/myqna.do">마이페이지 - 내 Q&A</a>		<br>
 	</h1>
 </body>
 </html>

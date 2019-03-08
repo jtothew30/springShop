@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.spring.shop.dao.MyPage.MyPageDao;
 import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
+import com.spring.shop.vo.Qna;
+import com.spring.shop.vo.Review;
 
 @Service("MyPageService")
 public class MyPageServiceImp implements MyPageService{
@@ -34,6 +36,16 @@ public class MyPageServiceImp implements MyPageService{
 	@Override
 	public List<Payrequest> getMyClaimListPr(String customer) throws Exception{
 		return mypageDao.getMyClaimListPr(customer);
+	}
+	
+	@Override
+	public List<Review> getMyReviewList(String writer) throws Exception{
+		return mypageDao.getMyReviewList(writer);
+	}
+	
+	@Override
+	public List<Qna> getMyQnaList(String writer) throws Exception{
+		return mypageDao.getMyQnaList(writer);
 	}
 	
 	@Override
@@ -65,4 +77,20 @@ public class MyPageServiceImp implements MyPageService{
 	public List<Payrequest> searchClaimDatePr(Map<String, String> map) throws Exception{
 		return mypageDao.searchClaimDatePr(map);
 	}
+	
+	@Override
+	public List<Review> searchReviewDate(Map<String, String> map) throws Exception{
+		return mypageDao.searchReviewDate(map);
+	}
+	
+	@Override
+	public List<Qna> searchQnaDate(Map<String, String> map) throws Exception{
+		return mypageDao.searchQnaDate(map);
+	}
+	
+	@Override
+	public void deleteReview(int rno) throws Exception{
+		mypageDao.deleteReview(rno);
+	}
+
 }

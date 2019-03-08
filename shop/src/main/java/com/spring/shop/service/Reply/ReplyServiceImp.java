@@ -26,4 +26,14 @@ public class ReplyServiceImp implements ReplyService {
 	public void replyWirte(Reply reply) throws Exception {
 		replyDao.replyWirte(reply);
 	}
+	
+	@Override
+	public void replyEdit(Reply reply) throws Exception{
+		replyDao.replyEdit(reply);
+	}
+	
+	@Override
+	public void replyDelete(int rpno) throws Exception{
+		replyDao.replyDelete(rpno);
+	}
 }

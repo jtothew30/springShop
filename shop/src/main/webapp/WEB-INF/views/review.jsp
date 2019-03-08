@@ -65,7 +65,6 @@
 		$("#detailDate").html(review.rdate);
 		$("#detailContent").html(review.content);
 		$("#reviewRno").val(review.rno);
-		console.log("reviewRno : "+ $("#reviewRno").val());
 		$.ajax({
 			type: "POST",
 			url: "../review/getImgs.do",
@@ -88,7 +87,6 @@
 						imgstr += "<img class=\"d-block w-100\" src=\"${pageContext.request.contextPath}"+review.path+"/"+data[i]+"\" width='100' alt=\""+(i+1)+"번째 슬라이드\"></div>";				
 					}	
 				}
-				console.log("imgstr check : " + imgstr);
 				$("#detailIndicators").html(indicator);
 				$("#detailImgs").html(imgstr);
 			}
@@ -188,14 +186,48 @@
 			data : {'rno' : rno, 'flag' : 'review'},
 			success : function(data){
 				var rplist = JSON.parse(data);
-				console.log("rplist:"+data+"/ list length : "+rplist.length);
 				var str = "";
 				for(var i=0; i<rplist.length; i++){
 					str += "<tr><td>"+rplist[i].writer+"</td>";
-					str += "<td>"+rplist[i].content+"</td>";
-					str += "<td>"+rplist[i].rpdate+"</td></tr>";
+					str += "<td id=\"reviewReplyContent"+rplist[i].rpno+"\">"+rplist[i].content+"</td>";
+					str += "<td>"+rplist[i].rpdate+"</td>";
+					str += "<td id=\"rbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"reviewReplyEdit("+rplist[i].rpno+","+rno+")\" value=\"수정\">&nbsp;";
+					str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"reviewReplyDelete("+rplist[i].rpno+","+rno+")\" value=\"삭제\"></td></tr>";
 				}
 				$("#reviewReplyList").html(str);
+			}
+		})
+	}
+	
+	function reviewReplyEdit(rpno, rno, content) {
+		$("#reviewReplyContent"+rpno).html(
+		  "<input type='text' id='edit"+rpno+"' value='' required>"	
+		);
+		$("#rbt"+rpno).html(
+			"<input type='button' class='btn btn-success' onclick=\"reviewEditSave("+rpno+","+rno+")\" value='완료'>&nbsp;"+
+			"<input type='button' class='btn btn-danger' onclick=\"reviewList("+rno+")\" value='취소'>"
+		);
+	}
+	
+	function reviewEditSave(rpno, rno) {
+		var content = $("#edit"+rpno).val();
+		$.ajax({
+			type: "POST",
+			url: "../reply/replyEdit.do",
+			data : {'rpno' : rpno, 'content' : content},
+			success : function(){
+				reviewList(rno);
+			}
+		})
+	}
+	
+	function reviewReplyDelete(rpno, rno) {
+		$.ajax({
+			type: "POST",
+			url: "../reply/replyDelete.do",
+			data : {'rpno' : rpno},
+			success : function(){
+				reviewList(rno);
 			}
 		})
 	}
@@ -361,7 +393,7 @@
 	      		<table>
 	      			<thead>
 		      			<tr>
-		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th>
+		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th> <th>&nbsp;</th>
 		      			</tr>
 	      			</thead>
 	      			<tbody id="reviewReplyList">
@@ -403,10 +435,6 @@
 	      theme: 'fontawesome-stars',
 	      readonly: 'true'
 	    });
-	  });
-	
-	$(function() {
-	    
 	  });
 </script>
 

@@ -27,7 +27,7 @@ public class ReplyController {
 	private ReplyService service;
 	
 	@ResponseBody
-	@RequestMapping(value="reply.do", method=RequestMethod.POST)
+	@RequestMapping(value="reply.do", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String replyPage(HttpServletRequest request) throws Exception{
 		System.out.println("replyPage ccc");
 		
@@ -81,4 +81,33 @@ public class ReplyController {
 		
 		service.replyWirte(reply);
 	}	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="replyEdit.do", method=RequestMethod.POST)
+	public void replyEdit(HttpServletRequest request) throws Exception{
+		System.out.println("replyEdit check");
+		
+		Reply reply = new Reply();
+		
+		int rpno = Integer.parseInt(request.getParameter("rpno"));
+		String content = request.getParameter("content");
+		
+		reply.setRpno(rpno);
+		reply.setContent(content);	
+		
+		service.replyEdit(reply);
+	}	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="replyDelete.do", method=RequestMethod.POST)
+	public void replyDelete(HttpServletRequest request) throws Exception{
+		System.out.println("replyDelete check");
+	
+		int rpno = Integer.parseInt(request.getParameter("rpno"));
+		
+		service.replyDelete(rpno);
+	}
+	
 }

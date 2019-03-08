@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.Payment;
 import com.spring.shop.vo.Payrequest;
+import com.spring.shop.vo.Qna;
+import com.spring.shop.vo.Review;
 
 @Repository
 public class MyPageDaoImp implements MyPageDao{
@@ -43,6 +45,18 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
+	public List<Review> getMyReviewList(String writer){
+		List<Review> rvlist = sqlSession.selectList(MyPageMapper+".getMyReviewList", writer);
+		return rvlist;
+	}
+	
+	@Override
+	public List<Qna> getMyQnaList(String writer){
+		List<Qna> qlist = sqlSession.selectList(MyPageMapper+".getMyQnaList", writer);
+		return qlist;
+	}
+	
+	@Override
 	public List<Payrequest> getPayrequestList(int payno){
 		List<Payrequest> preqlist = sqlSession.selectList(MyPageMapper+".getPayrequestList", payno);
 		return preqlist;
@@ -72,6 +86,18 @@ public class MyPageDaoImp implements MyPageDao{
 		return prlist;
 	}
 	
+	@Override
+	public List<Review> searchReviewDate(Map<String, String> map){
+		List<Review> rvlist = sqlSession.selectList(MyPageMapper+".searchReviewDate", map);
+		return rvlist;
+	}
+	
+	@Override
+	public List<Qna> searchQnaDate(Map<String, String> map){
+		List<Qna> qlist = sqlSession.selectList(MyPageMapper+".searchQnaDate", map);
+		return qlist;
+	}
+	
 	
 	@Override
 	public void cancelReq(int payno) {
@@ -79,4 +105,12 @@ public class MyPageDaoImp implements MyPageDao{
 		sqlSession.update(MyPageMapper+".cancePay", payno);
 		System.out.println("cancelReq success");
 	}
+	
+	@Override
+	public void deleteReview(int rno) {
+		sqlSession.delete(MyPageMapper+".deleteReviewReply", rno);
+		sqlSession.delete(MyPageMapper+".deleteReview", rno);
+		System.out.println("deleteReview success");
+	}
+	
 }

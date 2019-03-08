@@ -14,5 +14,13 @@
   		insert into reply values(seqrpl.nextval, #{writer}, #{content}, sysdate, #{flag}, #{no})
   	</insert>
   
+
+  	<update id="replyEdit" parameterType="com.spring.shop.vo.Reply">
+  		update reply set content = #{content} where rpno = #{rpno}
+  	</update>
+  	
+  	<delete id="replyDelete" parameterType="int">
+  		delete from reply where rpno = #{rpno} 
+  	</delete>
   
   </mapper>

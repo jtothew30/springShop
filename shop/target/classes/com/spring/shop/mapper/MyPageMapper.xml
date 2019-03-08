@@ -9,8 +9,8 @@
   	</select>
   	
   	<select id="getMyOrderListPr" parameterType="string" resultType="com.spring.shop.vo.Payrequest">
-  	select p.*, pb.path from proboard pb 
-  	left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
+  	select p.*, pb.path, pb.title from proboard pb 
+  	inner join (select pr.*, p.pname, p.options from payrequest pr  		 
   					 left outer join production p 
   					 on pr.pno = p.pno 
 					 where customer = #{customer} and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료') 
@@ -25,8 +25,8 @@
   	</select>
   	
   	<select id="getMyClaimListPr" parameterType="string" resultType="com.spring.shop.vo.Payrequest">
-  	select p.*, pb.path from proboard pb 
-  	left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
+  	select p.*, pb.path, pb.title from proboard pb 
+  	inner join (select pr.*, p.pname, p.options from payrequest pr  		 
   					 left outer join production p 
   					 on pr.pno = p.pno 
 					 where customer = #{customer} and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환') 
@@ -35,7 +35,21 @@
 	order by payno desc 
   	</select>
   	
+  	<select id="getMyReviewList" parameterType="string" resultType="com.spring.shop.vo.Review">
+  		select r.*, pb.title from review r 
+		inner join proboard pb 
+		on r.pbno = pb.pbno 
+		where writer = #{writer} 
+		order by rdate desc
+  	</select>
   	
+  	<select id="getMyQnaList" parameterType="string" resultType="com.spring.shop.vo.Qna">
+  		select q.*, pb.title from qna q 
+		inner join proboard pb 
+		on q.pbno = pb.pbno 
+		where writer = #{writer} 
+		order by qdate desc
+  	</select>
   	
   	
   	<select id="getPayrequestList" parameterType="int" resultType="com.spring.shop.vo.Payrequest">
@@ -60,7 +74,7 @@
   	<select id="searchOrderDatePr" parameterType="map" resultType="com.spring.shop.vo.Payrequest">
   		<![CDATA[
   		select p.* from payment py 
-		left outer join (select p.*, pb.path from proboard pb 
+		inner join (select p.*, pb.path, pb.title from proboard pb 
 						 left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
 			  							  left outer join production p 
 			  							  on pr.pno = p.pno 
@@ -87,7 +101,7 @@
     <select id="searchClaimDatePr" parameterType="map" resultType="com.spring.shop.vo.Payrequest">
   		<![CDATA[
   		select p.* from payment py 
-		left outer join (select p.*, pb.path from proboard pb 
+		inner join (select p.*, pb.path, pb.title from proboard pb 
 						 left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
 			  							  left outer join production p 
 			  							  on pr.pno = p.pno 
@@ -101,6 +115,29 @@
 		order by p.payno desc 
   		]]> 
   	</select>
+  	
+  	
+  	<select id="searchReviewDate" parameterType="map" resultType="com.spring.shop.vo.Review">
+  		<![CDATA[
+  		select r.*, pb.title from review r 
+		inner join proboard pb 
+		on r.pbno = pb.pbno 
+		where writer = #{writer} 
+		and (rdate >= to_date(#{todate}) and rdate <= to_date(#{fromdate})+1) 
+		order by rdate desc
+  		]]> 
+  	</select>
+  	
+  	<select id="searchQnaDate" parameterType="map" resultType="com.spring.shop.vo.Qna">
+  		<![CDATA[
+  		select q.*, pb.title from qna q 
+		inner join proboard pb 
+		on q.pbno = pb.pbno 
+		where writer = #{writer} 
+		and (qdate >= to_date(#{todate}) and qdate <= to_date(#{fromdate})+1) 
+		order by qdate desc
+  		]]> 
+  	</select>
     
     
     <update id="cancePay" parameterType="int">
@@ -111,6 +148,14 @@
     	update payrequest set status = '취소진행중' where payno = #{payno}
     </update>
     
+    
+    <delete id="deleteReview" parameterType="int">
+    	delete from review where rno = #{rno}
+    </delete>
+    
+    <delete id="deleteReviewReply" parameterType="int">
+    	delete from reply where flag = 'review' and no = #{rno}
+    </delete>
     
   
   </mapper>

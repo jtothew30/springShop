@@ -28,4 +28,16 @@ public class ReplyDaoImp implements ReplyDao {
 		sqlSession.insert(ReplyMapper+".replyWirte", reply);
 		System.out.println("replyWirte success");
 	}
+	
+	@Override
+	public void replyEdit(Reply reply) {
+		sqlSession.update(ReplyMapper+".replyEdit", reply);
+		System.out.println("replyEdit success");
+	}
+	
+	@Override
+	public void replyDelete(int rpno) {
+		sqlSession.delete(ReplyMapper+".replyDelete", rpno);
+		System.out.println("replyDelete success");
+	}
 }

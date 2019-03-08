@@ -253,8 +253,6 @@ commit;
 
 
 
-
-
 set linesize 15000
 col id for a10
 col pw for a10
