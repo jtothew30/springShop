@@ -91,7 +91,7 @@
 	
 	function searchDate(){
 		//alert(todate+"~"+fromdate);
-		location.href = "searchOrderDate.do?todate="+todate+"&fromdate="+fromdate;
+		location.href = "myorder.do?todate="+todate+"&fromdate="+fromdate;
 	}
 	
 
@@ -110,31 +110,50 @@
 		
 		
 		
-		var date = new Date(); 
-		var year = date.getFullYear(); 
-		var month = new String(date.getMonth()+1); 
-		var day = new String(date.getDate()); 
-
-		if(month.length == 1){ 
-		  month = "0" + month; 
-		} 
-		if(day.length == 1){ 
-		  day = "0" + day; 
+		if( "${paging.todate}" == "" ||  "${paging.todate}" == null){
+			var date = new Date(); 
+			var year = date.getFullYear(); 
+			var month = new String(date.getMonth()+1); 
+			var day = new String(date.getDate()); 
+		
+			if(month.length == 1){ 
+			  month = "0" + month; 
+			} 
+			if(day.length == 1){ 
+			  day = "0" + day; 
+			}
+		
+			todate = year+"-"+month+"-"+day;
+			fromdate = year+"-"+month+"-"+day;
+			
+			$('input[name="daterange"]').daterangepicker({
+				  showDropdowns: true,
+				  endDate: moment().startOf('hour'),
+				  maxDate: moment().startOf('hour'),
+				  locale: {
+				      format: 'YYYY-MM-DD'
+				    }
+			  }, function(start, end, label) {
+			    todate = start.format('YYYY-MM-DD');
+			    fromdate = end.format('YYYY-MM-DD');
+			  });
+		}else{
+			todate = "${paging.todate}";
+			fromdate = "${paging.fromdate}";
+			
+			$('input[name="daterange"]').daterangepicker({
+				  showDropdowns: true,
+				  startDate : todate,
+				  endDate: fromdate,
+				  maxDate: moment().startOf('hour'),
+				  locale: {
+				      format: 'YYYY-MM-DD'
+				    }
+			  }, function(start, end, label) {
+			    todate = start.format('YYYY-MM-DD');
+			    fromdate = end.format('YYYY-MM-DD');
+			  });
 		}
-
-		todate = year+"-"+month+"-"+day;
-		fromdate = year+"-"+month+"-"+day;
-	  $('input[name="daterange"]').daterangepicker({
-		  showDropdowns: true,
-		  endDate: moment().startOf('hour'),
-		  maxDate: moment().startOf('hour'),
-		  locale: {
-		      format: 'YYYY-MM-DD'
-		    }
-	  }, function(start, end, label) {
-	    todate = start.format('YYYY-MM-DD');
-	    fromdate = end.format('YYYY-MM-DD');
-	  });
 	});
 	
 	
@@ -258,7 +277,25 @@
 								          </c:forEach> 
 								    	</c:otherwise>
 							    	</c:choose>
-							</table>	
+							</table>
+							<!-- pageing template -->
+						      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
+						        <li class="pagination-previous disabled">Previous
+									<span class="show-for-sr">page</span></li>
+						        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+						          <c:choose>
+						            <c:when test="${paging.page==index}">
+						              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
+						            </c:when>
+						            <c:otherwise>
+						              <li><a class="pagination-pointed-button" href="myorder.do?page=${index}&todate=${paging.todate}&fromdate=${paging.fromdate}" aria-label="Page ${index}">${index}</a></li>
+						            </c:otherwise>
+						          </c:choose>
+						        </c:forEach>        
+						        <li class="pagination-next disabled">Next
+						            <span class="show-for-sr">page</span></li>
+						      </ul>
+						    <!-- pageing template -->	
 						</div>
 					</div>
 				</div>
@@ -305,6 +342,24 @@
 						    	</c:otherwise>
 					    	</c:choose>
 					</table>	
+					<!-- pageing template -->
+				      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
+				        <li class="pagination-previous disabled">Previous
+							<span class="show-for-sr">page</span></li>
+				        <c:forEach begin="${paging2.beginPage}" end="${paging2.endPage}" var="index">
+				          <c:choose>
+				            <c:when test="${paging2.page==index}">
+				              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
+				            </c:when>
+				            <c:otherwise>
+				              <li><a class="pagination-pointed-button" href="myorder.do?page=${index}&todate=${paging2.todate}&fromdate=${paging2.fromdate}" aria-label="Page ${index}">${index}</a></li>
+				            </c:otherwise>
+				          </c:choose>
+				        </c:forEach>        
+				        <li class="pagination-next disabled">Next
+				            <span class="show-for-sr">page</span></li>
+				      </ul>
+				    <!-- pageing template -->	
 				</div>
 			</div>
 		</div>

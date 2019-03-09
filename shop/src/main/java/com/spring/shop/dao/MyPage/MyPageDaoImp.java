@@ -34,16 +34,41 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
-	public List<Payment> getMyClaimList(String customer){
-		List<Payment> plist = sqlSession.selectList(MyPageMapper+".getMyClaimList", customer);
+	public List<Payment> getMyClaimList(Paging paging){
+		List<Payment> plist = sqlSession.selectList(MyPageMapper+".getMyClaimList", paging);
 		return plist;
 	}
 	
 	@Override
-	public List<Payrequest> getMyClaimListPr(String customer){
-		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".getMyClaimListPr", customer);
+	public List<Payrequest> getMyClaimListPr(Paging paging){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".getMyClaimListPr", paging);
 		return prlist;
 	}
+	
+	@Override
+	public int countMyClaim(String customer) {
+		int count = sqlSession.selectOne(MyPageMapper+".countMyClaim", customer);
+		return count;
+	}
+	
+	@Override
+	public int countMyClaimPr(String customer) {
+		int count = sqlSession.selectOne(MyPageMapper+".countMyClaimPr", customer);
+		return count;
+	}
+	
+	@Override
+	public int countSearchMyClaim(Paging paging) {
+		int count = sqlSession.selectOne(MyPageMapper+".countSearchMyClaim", paging);
+		return count;
+	}
+	
+	@Override
+	public int countSearchMyClaimPr(Paging paging) {
+		int count = sqlSession.selectOne(MyPageMapper+".countSearchMyClaimPr", paging);
+		return count;
+	}
+	
 	
 	@Override
 	public List<Review> getMyReviewList(Paging paging){
@@ -58,8 +83,26 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
-	public List<Qna> getMyQnaList(String writer){
-		List<Qna> qlist = sqlSession.selectList(MyPageMapper+".getMyQnaList", writer);
+	public int countSearchMyReview(Paging paging) {
+		int count = sqlSession.selectOne(MyPageMapper+".countSearchMyReview", paging);
+		return count;
+	}
+	
+	@Override
+	public int countMyQna(String writer) {
+		int count = sqlSession.selectOne(MyPageMapper+".countMyQna", writer);
+		return count;
+	}
+	
+	@Override
+	public int countSearchMyQna(Paging paging) {
+		int count = sqlSession.selectOne(MyPageMapper+".countSearchMyQna", paging);
+		return count;
+	}
+	
+	@Override
+	public List<Qna> getMyQnaList(Paging paging){
+		List<Qna> qlist = sqlSession.selectList(MyPageMapper+".getMyQnaList", paging);
 		return qlist;
 	}
 	
@@ -82,26 +125,26 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
-	public List<Payment> searchClaimDate(Map<String, String> map){
-		List<Payment> plist = sqlSession.selectList(MyPageMapper+".searchClaimDate", map);
+	public List<Payment> searchClaimDate(Paging paging){
+		List<Payment> plist = sqlSession.selectList(MyPageMapper+".searchClaimDate", paging);
 		return plist;
 	}
 	
 	@Override
-	public List<Payrequest> searchClaimDatePr(Map<String, String> map){
-		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".searchClaimDatePr", map);
+	public List<Payrequest> searchClaimDatePr(Paging paging){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".searchClaimDatePr", paging);
 		return prlist;
 	}
 	
 	@Override
-	public List<Review> searchReviewDate(Map<String, String> map){
-		List<Review> rvlist = sqlSession.selectList(MyPageMapper+".searchReviewDate", map);
+	public List<Review> searchReviewDate(Paging paging){
+		List<Review> rvlist = sqlSession.selectList(MyPageMapper+".searchReviewDate", paging);
 		return rvlist;
 	}
 	
 	@Override
-	public List<Qna> searchQnaDate(Map<String, String> map){
-		List<Qna> qlist = sqlSession.selectList(MyPageMapper+".searchQnaDate", map);
+	public List<Qna> searchQnaDate(Paging paging){
+		List<Qna> qlist = sqlSession.selectList(MyPageMapper+".searchQnaDate", paging);
 		return qlist;
 	}
 	

@@ -37,36 +37,58 @@
 
 
 <script>
+	var todate;
+	var fromdate;
+	
 	$(function() {
-		var date = new Date(); 
-		var year = date.getFullYear(); 
-		var month = new String(date.getMonth()+1); 
-		var day = new String(date.getDate()); 
-	
-		if(month.length == 1){ 
-		  month = "0" + month; 
-		} 
-		if(day.length == 1){ 
-		  day = "0" + day; 
+		if( "${paging.todate}" == "" ||  "${paging.todate}" == null){
+			var date = new Date(); 
+			var year = date.getFullYear(); 
+			var month = new String(date.getMonth()+1); 
+			var day = new String(date.getDate()); 
+		
+			if(month.length == 1){ 
+			  month = "0" + month; 
+			} 
+			if(day.length == 1){ 
+			  day = "0" + day; 
+			}
+		
+			todate = year+"-"+month+"-"+day;
+			fromdate = year+"-"+month+"-"+day;
+			
+			$('input[name="daterange"]').daterangepicker({
+				  showDropdowns: true,
+				  endDate: moment().startOf('hour'),
+				  maxDate: moment().startOf('hour'),
+				  locale: {
+				      format: 'YYYY-MM-DD'
+				    }
+			  }, function(start, end, label) {
+			    todate = start.format('YYYY-MM-DD');
+			    fromdate = end.format('YYYY-MM-DD');
+			  });
+		}else{
+			todate = "${paging.todate}";
+			fromdate = "${paging.fromdate}";
+			
+			$('input[name="daterange"]').daterangepicker({
+				  showDropdowns: true,
+				  startDate : todate,
+				  endDate: fromdate,
+				  maxDate: moment().startOf('hour'),
+				  locale: {
+				      format: 'YYYY-MM-DD'
+				    }
+			  }, function(start, end, label) {
+			    todate = start.format('YYYY-MM-DD');
+			    fromdate = end.format('YYYY-MM-DD');
+			  });
 		}
-	
-		todate = year+"-"+month+"-"+day;
-		fromdate = year+"-"+month+"-"+day;
-	  $('input[name="daterange"]').daterangepicker({
-		  showDropdowns: true,
-		  endDate: moment().startOf('hour'),
-		  maxDate: moment().startOf('hour'),
-		  locale: {
-		      format: 'YYYY-MM-DD'
-		    }
-	  }, function(start, end, label) {
-	    todate = start.format('YYYY-MM-DD');
-	    fromdate = end.format('YYYY-MM-DD');
-	  });
 	});
 	
 	function searchDate(){
-		location.href = "searchReviewDate.do?todate="+todate+"&fromdate="+fromdate;
+		location.href = "myreview.do?todate="+todate+"&fromdate="+fromdate;
 	}
 	
 	
@@ -362,7 +384,7 @@ function checkDetail(rno) {
 		              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
 		            </c:when>
 		            <c:otherwise>
-		              <li><a class="pagination-pointed-button" href="myreview.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+		              <li><a class="pagination-pointed-button" href="myreview.do?page=${index}&todate=${paging.todate}&fromdate=${paging.fromdate}" aria-label="Page ${index}">${index}</a></li>
 		            </c:otherwise>
 		          </c:choose>
 		        </c:forEach>        

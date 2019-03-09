@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.shop.service.Review.ReviewService;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 import com.spring.shop.vo.Qna;
 import com.spring.shop.vo.Review;
@@ -40,17 +41,19 @@ public class ReviewController {
 	private ServletContext application;
 	
 	@RequestMapping("review.do")
-	public String review(Model model, HttpServletRequest request) throws Exception{
+	public String review(Model model, Paging paging, HttpServletRequest request) throws Exception{
 		String customer = "testID"; // need to edit for getting login user's id from session later~
+		
 		int pbno = Integer.parseInt(request.getParameter("pbno"));
 		
 		System.out.println("review.do check pbno:"+pbno);
 		
-		List<Production> prolist = service.getOptions(pbno);
 		List<Review> rlist = service.getReviewList(pbno);
 		
+		List<Production> prolist = service.getOptions(pbno);
 		model.addAttribute("prolist", prolist);
 		model.addAttribute("rlist", rlist);
+		model.addAttribute("paging", paging);
 		return "review";
 	}
 	

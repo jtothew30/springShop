@@ -30,13 +30,33 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
-	public List<Payment> getMyClaimList(String customer) throws Exception{
-		return mypageDao.getMyClaimList(customer);
+	public List<Payment> getMyClaimList(Paging paging) throws Exception{
+		return mypageDao.getMyClaimList(paging);
 	}
 	
 	@Override
-	public List<Payrequest> getMyClaimListPr(String customer) throws Exception{
-		return mypageDao.getMyClaimListPr(customer);
+	public List<Payrequest> getMyClaimListPr(Paging paging) throws Exception{
+		return mypageDao.getMyClaimListPr(paging);
+	}
+	
+	@Override
+	public int countMyClaim(String customer) throws Exception{
+		return mypageDao.countMyClaim(customer);
+	}
+	
+	@Override
+	public int countMyClaimPr(String customer) throws Exception{
+		return mypageDao.countMyClaimPr(customer);
+	}
+	
+	@Override
+	public int countSearchMyClaim(Paging paging) throws Exception{
+		return mypageDao.countSearchMyClaim(paging);
+	}
+	
+	@Override
+	public int countSearchMyClaimPr(Paging paging) throws Exception{
+		return mypageDao.countSearchMyClaimPr(paging);
 	}
 	
 	@Override
@@ -50,8 +70,23 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
-	public List<Qna> getMyQnaList(String writer) throws Exception{
-		return mypageDao.getMyQnaList(writer);
+	public List<Qna> getMyQnaList(Paging paging) throws Exception{
+		return mypageDao.getMyQnaList(paging);
+	}
+	
+	@Override
+	public int countSearchMyReview(Paging paging) throws Exception{
+		return mypageDao.countSearchMyReview(paging);
+	}
+	
+	@Override
+	public int countMyQna(String writer) throws Exception{
+		return mypageDao.countMyQna(writer);
+	}
+	
+	@Override
+	public int countSearchMyQna(Paging paging) throws Exception{
+		return mypageDao.countSearchMyQna(paging);
 	}
 	
 	@Override
@@ -75,23 +110,23 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
-	public List<Payment> searchClaimDate(Map<String, String> map) throws Exception{
-		return mypageDao.searchClaimDate(map);
+	public List<Payment> searchClaimDate(Paging paging) throws Exception{
+		return mypageDao.searchClaimDate(paging);
 	}
 	
 	@Override
-	public List<Payrequest> searchClaimDatePr(Map<String, String> map) throws Exception{
-		return mypageDao.searchClaimDatePr(map);
+	public List<Payrequest> searchClaimDatePr(Paging paging) throws Exception{
+		return mypageDao.searchClaimDatePr(paging);
 	}
 	
 	@Override
-	public List<Review> searchReviewDate(Map<String, String> map) throws Exception{
-		return mypageDao.searchReviewDate(map);
+	public List<Review> searchReviewDate(Paging paging) throws Exception{
+		return mypageDao.searchReviewDate(paging);
 	}
 	
 	@Override
-	public List<Qna> searchQnaDate(Map<String, String> map) throws Exception{
-		return mypageDao.searchQnaDate(map);
+	public List<Qna> searchQnaDate(Paging paging) throws Exception{
+		return mypageDao.searchQnaDate(paging);
 	}
 	
 	@Override

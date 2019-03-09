@@ -2,6 +2,7 @@ package com.spring.shop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,37 +57,77 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myclaim.do")
-	public String myclaim(Model model) throws Exception{
+	public String myclaim(Paging paging, Model model) throws Exception{
 		String customer = "testID"; // need to edit for getting login user's id from session later~
+		paging.setCustomer(customer);
 		
-		List<Payment> plist = service.getMyClaimList(customer);
-		List<Payrequest> prlist = service.getMyClaimListPr(customer);
+		Paging paging2 = paging;
+		
+		List<Payment> plist = new ArrayList<>();
+		List<Payrequest> prlist = new ArrayList<>();
+		
+		if(paging.getTodate() == null || paging.getTodate().equals("")) {
+			logger.info("default");
+			paging.setTotalCount(service.countMyClaim(customer));
+			paging2.setTotalCount(service.countMyClaimPr(customer));
+			plist = service.getMyClaimList(paging);
+			prlist = service.getMyClaimListPr(paging2);		
+		}else {
+			logger.info("searchdate");
+			paging.setTotalCount(service.countSearchMyClaim(paging));
+			paging2.setTotalCount(service.countSearchMyClaimPr(paging2));
+			plist = service.searchClaimDate(paging);		
+			prlist = service.searchClaimDatePr(paging2);
+		}
+
 		model.addAttribute("plist", plist);
 		model.addAttribute("prlist", prlist);
+		model.addAttribute("paging", paging);
+		model.addAttribute("paging2", paging2);
 		return "MyPage/myclaim";
 	}
 	
 	@RequestMapping(value="myreview.do")
 	public String myreview(Paging paging, Model model) throws Exception{
-		String writer = "testID"; // need to edit for getting login user's id from session later~
-		
+		String writer = "testID"; // need to edit for getting login user's id from session later~		
 		paging.setCustomer(writer);
-		paging.setTotalCount(service.countMyReview(writer));
 		
-		logger.info(paging.toString()+"td:"+paging.getTodate()+"/fd:"+paging.getFromdate());
+		List<Review> rvlist = new ArrayList<Review>();	
+		if(paging.getTodate() == null || paging.getTodate().equals("")) {
+			logger.info("default");
+			paging.setTotalCount(service.countMyReview(writer));
+			rvlist = service.getMyReviewList(paging);
+		}else {
+			logger.info("searchdate");
+			paging.setTotalCount(service.countSearchMyReview(paging));
+			rvlist = service.searchReviewDate(paging);
+		}
 		
-		List<Review> rvlist = service.getMyReviewList(paging);
 		model.addAttribute("rvlist", rvlist);
 		model.addAttribute("paging", paging);
 		return "MyPage/myreview";
 	}
 	
 	@RequestMapping(value="myqna.do")
-	public String myqna(Model model) throws Exception{
+	public String myqna(Paging paging, Model model) throws Exception{
 		String writer = "testID"; // need to edit for getting login user's id from session later~
+		paging.setCustomer(writer);
 		
-		List<Qna> qlist = service.getMyQnaList(writer);
+		logger.info("td:"+paging.getTodate()+"/fd:"+paging.getFromdate());
+		
+		List<Qna> qlist = new ArrayList<Qna>();
+		if(paging.getTodate() == null || paging.getTodate().equals("")) {
+			logger.info("default");
+			paging.setTotalCount(service.countMyQna(writer));
+			qlist = service.getMyQnaList(paging);
+		}else {
+			logger.info("searchdate");
+			paging.setTotalCount(service.countSearchMyQna(paging));
+			qlist = service.searchQnaDate(paging);
+		}
+					
 		model.addAttribute("qlist", qlist);
+		model.addAttribute("paging", paging);
 		return "MyPage/myqna";
 	}
 	
@@ -127,67 +168,6 @@ public class MyPageController {
 		model.addAttribute("prlist", prlist);
 		return "MyPage/myorder";
 	}
-	
-	
-	@RequestMapping(value="searchClaimDate.do", method=RequestMethod.GET)
-	public String searchClaimDate(Model model,HttpServletRequest request) throws Exception{
-		String todate = request.getParameter("todate");
-		String fromdate = request.getParameter("fromdate");
-		String customer = "testID"; // need to edit for getting login user's id from session later~
-		
-		System.out.println("searchClaimDate.do todate:"+todate+"/fromdate:"+fromdate);
-		
-		Map<String, String> map = new HashMap();
-		map.put("todate", todate);
-		map.put("fromdate", fromdate);
-		map.put("customer", customer);
-		
-		List<Payment> plist = service.searchClaimDate(map);
-		List<Payrequest> prlist = service.searchClaimDatePr(map);
-		
-		model.addAttribute("plist", plist);
-		model.addAttribute("prlist", prlist);
-		return "MyPage/myclaim";
-	}
-	
-	
-	@RequestMapping(value="searchReviewDate.do", method=RequestMethod.GET)
-	public String searchReviewDate(Model model,HttpServletRequest request) throws Exception{
-		String todate = request.getParameter("todate");
-		String fromdate = request.getParameter("fromdate");
-		String writer = "testID"; // need to edit for getting login user's id from session later~
-		
-		System.out.println("searchReviewDate.do todate:"+todate+"/fromdate:"+fromdate);
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("todate", todate);
-		map.put("fromdate", fromdate);
-		map.put("writer", writer);
-		
-		List<Review> rvlist = service.searchReviewDate(map);
-		model.addAttribute("rvlist", rvlist);
-		return "MyPage/myreview";
-	}
-	
-	
-	@RequestMapping(value="searchQnaDate.do", method=RequestMethod.GET)
-	public String searchQnaDate(Model model,HttpServletRequest request) throws Exception{
-		String todate = request.getParameter("todate");
-		String fromdate = request.getParameter("fromdate");
-		String writer = "testID"; // need to edit for getting login user's id from session later~
-		
-		System.out.println("searchQnaDate.do todate:"+todate+"/fromdate:"+fromdate);
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("todate", todate);
-		map.put("fromdate", fromdate);
-		map.put("writer", writer);
-
-		List<Qna> qlist = service.searchQnaDate(map);
-		model.addAttribute("qlist", qlist);
-		return "MyPage/myqna";
-	}
-	
 	
 	
 	@ResponseBody

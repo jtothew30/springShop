@@ -18,6 +18,7 @@ public class Paging {
 	private String todate;
 	private String fromdate;
 	private String customer;
+	private int pbno;
 	
 		
 	private int page =1; //현재 페이지 (get)
@@ -147,6 +148,12 @@ public class Paging {
 	}
 	public void setCustomer(String customer) {
 		this.customer = customer;
+	}
+	public int getPbno() {
+		return pbno;
+	}
+	public void setPbno(int pbno) {
+		this.pbno = pbno;
 	}
 	@Override
 	public String toString() {
