@@ -281,7 +281,7 @@
               <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
             </c:when>
             <c:otherwise>
-              <li><a class="pagination-pointed-button" href="review.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+              <li><a class="pagination-pointed-button" id="paging-focus" href="../proboard/product.do?pbno=${pbno}&pageR=${index}&tabs=review" aria-label="Page ${index}">${index}</a></li>
             </c:otherwise>
           </c:choose>
         </c:forEach>        

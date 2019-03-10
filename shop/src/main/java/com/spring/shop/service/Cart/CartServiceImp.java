@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.shop.dao.Cart.CartDao;
 import com.spring.shop.vo.Cart;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 
 @Service("CartService")
@@ -22,8 +23,18 @@ public class CartServiceImp implements CartService{
 	}
 	
 	@Override
-	public List<Cart> getCartList(String customer) throws Exception{
-		return cartDao.getCartList(customer);
+	public List<Cart> getTotalCartList(String customer) throws Exception{
+		return cartDao.getTotalCartList(customer);
+	}
+	
+	@Override
+	public List<Cart> getCartList(Paging paging) throws Exception{
+		return cartDao.getCartList(paging);
+	}
+	
+	@Override
+	public int countCartList(String customer) throws Exception{
+		return cartDao.countCartList(customer);
 	}
 	
 	@Override

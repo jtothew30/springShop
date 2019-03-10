@@ -57,7 +57,7 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myclaim.do")
-	public String myclaim(Paging paging, Model model) throws Exception{
+	public String myclaim(Paging paging, Model model, HttpServletRequest request) throws Exception{
 		String customer = "testID"; // need to edit for getting login user's id from session later~
 		paging.setCustomer(customer);
 		

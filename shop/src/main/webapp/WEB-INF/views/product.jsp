@@ -27,6 +27,38 @@
 	var total;
 	
 	$(function(){
+		tabs = "${tabs}";
+		if(tabs == 'review'){
+			$("#li1").removeClass('is-active');
+			$("#panel1-label").attr('aria-selected','false');
+			$("#panel1-label").attr('tabindex','-1');
+			
+			$("#li2").addClass('is-active');
+			$("#panel3-label").attr('aria-selected','true');
+			$("#panel3-label").attr('tabindex','0');
+			
+			$("#panel1").removeClass('is-active');
+			$("#panel1").attr('aria-hidden','true');
+			
+			$("#panel3").addClass('is-active');
+			$("#panel3").removeAttribute('aria-hidden');
+		}else if(tabs == 'qna'){
+			$("#li1").removeClass('is-active');
+			$("#panel1-label").attr('aria-selected','false');
+			$("#panel1-label").attr('tabindex','-1');
+			
+			$("#li3").addClass('is-active');
+			$("#panel4-label").attr('aria-selected','true');
+			$("#panel4-label").attr('tabindex','0');
+			
+			$("#panel1").removeClass('is-active');
+			$("#panel1").attr('aria-hidden','true');
+			
+			$("#panel4").addClass('is-active');
+			$("#panel4").removeAttribute('aria-hidden');
+		}
+		
+		
 		prolist = new Array();
 		seloplist = new Array();
 		stocklist = new Array();
@@ -338,14 +370,48 @@
 			<hr>
 			<div style="text-align: center">
 			<ul class="tabs" data-tabs="" id="example-tabs" role="tablist" data-e="af0r5m-e">
-				<li class="tabs-title is-active" role="presentation" >
+				<li class="tabs-title is-active" id="li1" role="presentation" >
 				<a href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" id="panel1-label" tabindex="0">상품상세</a></li>
 				<li class="tabs-title" role="presentation">
 				<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
-				<li class="tabs-title" role="presentation">
+				<li class="tabs-title" id="li2" role="presentation">
 				<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
-				<li class="tabs-title" role="presentation">
+				<li class="tabs-title" id="li3" role="presentation">
 				<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+			<%-- <c:choose>
+				<c:when test="${tabs eq '' || empty tabs}">
+					<li class="tabs-title is-active" role="presentation" >
+					<a href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" id="panel1-label" tabindex="0">상품상세</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+				</c:when>
+				<c:when test="${tabs eq 'review'}">
+					<li class="tabs-title" role="presentation" >
+					<a href="#panel1" role="tab" aria-controls="panel1"  aria-selected="false" id="panel1-label" tabindex="-1">상품상세</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
+					<li class="tabs-title  is-active" role="presentation">
+					<a href="#panel3" aria-selected="true" role="tab" aria-controls="panel3" id="panel3-label" tabindex="0">상품리뷰</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+				</c:when>
+				<c:when test="${tabs eq 'qna'}">
+					<li class="tabs-title" role="presentation" >
+					<a href="#panel1" role="tab" aria-controls="panel1" aria-selected="false" id="panel1-label" tabindex="-1">상품상세</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
+					<li class="tabs-title is-active" role="presentation">
+					<a href="#panel4"  aria-selected="true" role="tab" aria-controls="panel4" id="panel4-label" tabindex="0">Q&A</a></li>
+				</c:when>		
+			</c:choose>
+			 --%>
+			
 			</ul>
 			</div>
 			<div class="tabs-content" data-tabs-content="example-tabs">

@@ -27,6 +27,10 @@ public class ProBoardController {
 	@RequestMapping("product.do")
 	public String product(Model model, HttpServletRequest request) throws Exception {
 		int pbno = Integer.parseInt(request.getParameter("pbno"));	
+		String tabs = request.getParameter("tabs");
+		if(tabs == null || tabs.equals(""))
+			tabs = "";
+		
 		List<Production> prolist = service.getprolist(pbno);
 		
 		String path = pbno+"/"+prolist.get(0).getPname();
@@ -42,6 +46,7 @@ public class ProBoardController {
 		model.addAttribute("path", path);
 		model.addAttribute("pbno", pbno);
 		model.addAttribute("proboard", proboard);
+		model.addAttribute("tabs", tabs);
 		return "product";		
 	}
 	

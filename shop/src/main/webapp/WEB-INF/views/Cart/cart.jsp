@@ -345,6 +345,24 @@
 	    		</c:otherwise>
     		</c:choose>	
 		</table>
+		<!-- pageing template -->
+	      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
+	        <li class="pagination-previous disabled">Previous
+				<span class="show-for-sr">page</span></li>
+	        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+	          <c:choose>
+	            <c:when test="${paging.page==index}">
+	              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
+	            </c:when>
+	            <c:otherwise>
+	              <li><a class="pagination-pointed-button" id="paging-focus" href="cart.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+	            </c:otherwise>
+	          </c:choose>
+	        </c:forEach>        
+	        <li class="pagination-next disabled">Next
+	            <span class="show-for-sr">page</span></li>
+	      </ul>
+	    <!-- pageing template -->
 	</div>
 	<input type="button" onclick="selPayRequest()" value="선택상품주문">
 	<input type="button" onclick="allPayRequest()" value="전체주문">

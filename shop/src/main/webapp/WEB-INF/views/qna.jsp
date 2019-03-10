@@ -225,6 +225,24 @@
     		</c:otherwise>
     	</c:choose>	 	
 	</table>
+	<!-- pageing template -->
+      <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
+        <li class="pagination-previous disabled">Previous
+			<span class="show-for-sr">page</span></li>
+        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
+          <c:choose>
+            <c:when test="${paging.page==index}">
+              <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
+            </c:when>
+            <c:otherwise>
+              <li><a class="pagination-pointed-button" id="paging-focus" href="../proboard/product.do?pbno=${pbno}&pageQ=${index}&tabs=qna" aria-label="Page ${index}">${index}</a></li>
+            </c:otherwise>
+          </c:choose>
+        </c:forEach>        
+        <li class="pagination-next disabled">Next
+            <span class="show-for-sr">page</span></li>
+      </ul>
+    <!-- pageing template -->
 	
 	<input type="button" data-target="#qnaWritePop" data-toggle="modal" value="문의하기">
 	

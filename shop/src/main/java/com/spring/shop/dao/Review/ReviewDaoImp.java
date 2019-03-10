@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 import com.spring.shop.vo.Qna;
 import com.spring.shop.vo.Review;
@@ -27,15 +28,27 @@ public class ReviewDaoImp implements ReviewDao{
 	}
 	
 	@Override
-	public List<Review> getReviewList(int pbno){
-		List<Review> rlist = sqlSession.selectList(ReviewMapper+".getReviewList", pbno);
+	public List<Review> getReviewList(Paging paging){
+		List<Review> rlist = sqlSession.selectList(ReviewMapper+".getReviewList", paging);
 		return rlist;
 	}
 	
 	@Override
-	public List<Qna> getQnaList(int pbno){
-		List<Qna> qlist = sqlSession.selectList(ReviewMapper+".getQnaList", pbno);
+	public int countReviewList(int pbno) {
+		int count = sqlSession.selectOne(ReviewMapper+".countReviewList", pbno);
+		return count;
+	}
+	
+	@Override
+	public List<Qna> getQnaList(Paging paging){
+		List<Qna> qlist = sqlSession.selectList(ReviewMapper+".getQnaList", paging);
 		return qlist;
+	}
+	
+	@Override
+	public int countQnaList(int pbno) {
+		int count = sqlSession.selectOne(ReviewMapper+".countQnaList", pbno);
+		return count;
 	}
 	
 	@Override

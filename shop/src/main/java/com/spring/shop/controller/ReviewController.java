@@ -42,15 +42,17 @@ public class ReviewController {
 	
 	@RequestMapping("review.do")
 	public String review(Model model, Paging paging, HttpServletRequest request) throws Exception{
-		String customer = "testID"; // need to edit for getting login user's id from session later~
+		System.out.println("review.do check pbno:"+paging.getPbno());
 		
-		int pbno = Integer.parseInt(request.getParameter("pbno"));
+		String page = request.getParameter("pageR");
+		if(page != null) {
+			paging.setPage(Integer.parseInt(page));
+		}
 		
-		System.out.println("review.do check pbno:"+pbno);
+		paging.setTotalCount(service.countReviewList(paging.getPbno()));	
+		List<Review> rlist = service.getReviewList(paging);
 		
-		List<Review> rlist = service.getReviewList(pbno);
-		
-		List<Production> prolist = service.getOptions(pbno);
+		List<Production> prolist = service.getOptions(paging.getPbno());
 		model.addAttribute("prolist", prolist);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("paging", paging);
@@ -58,15 +60,19 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("qna.do")
-	public String qna(Model model, HttpServletRequest request) throws Exception{
-		String customer = "testID"; // need to edit for getting login user's id from session later~
-		int pbno = Integer.parseInt(request.getParameter("pbno"));
+	public String qna(Model model, Paging paging, HttpServletRequest request) throws Exception{		
+		System.out.println("qna.do check pbno:"+paging.getPbno());
 		
-		System.out.println("qna.do check pbno:"+pbno);
+		String page = request.getParameter("pageQ");
+		if(page != null) {
+			paging.setPage(Integer.parseInt(page));
+		}
 		
-		List<Qna> qlist = service.getQnaList(pbno);
+		paging.setTotalCount(service.countQnaList(paging.getPbno()));	
+		List<Qna> qlist = service.getQnaList(paging);
 		
 		model.addAttribute("qlist", qlist);
+		model.addAttribute("paging", paging);
 		return "qna";
 	}
 	

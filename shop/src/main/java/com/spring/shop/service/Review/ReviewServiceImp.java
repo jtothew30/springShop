@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.spring.shop.dao.Review.ReviewDao;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 import com.spring.shop.vo.Qna;
 import com.spring.shop.vo.Review;
@@ -23,13 +24,23 @@ public class ReviewServiceImp implements ReviewService{
 	}
 	
 	@Override
-	public List<Review> getReviewList(int pbno) throws Exception{
-		return reviewDao.getReviewList(pbno);
+	public List<Review> getReviewList(Paging paging) throws Exception{
+		return reviewDao.getReviewList(paging);
 	}
 	
 	@Override
-	public List<Qna> getQnaList(int pbno) throws Exception{
-		return reviewDao.getQnaList(pbno);
+	public int countReviewList(int pbno) throws Exception{
+		return reviewDao.countReviewList(pbno);
+	}
+	
+	@Override
+	public List<Qna> getQnaList(Paging paging) throws Exception{
+		return reviewDao.getQnaList(paging);
+	}
+	
+	@Override
+	public int countQnaList(int pbno) throws Exception{
+		return reviewDao.countQnaList(pbno);
 	}
 	
 	@Override
