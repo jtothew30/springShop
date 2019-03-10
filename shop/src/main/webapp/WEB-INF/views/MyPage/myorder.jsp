@@ -47,7 +47,7 @@
 			$("#panel1-label").attr('tabindex','0');
 			
 			$("#panel1").addClass('is-active');
-			$("#panel1").removeAttribute('aria-hidden');			
+			$("#panel1").removeAttr('aria-hidden');			
 		}else if(tabs == 'payrequest'){
 			$("#li1").removeClass('is-active');
 			$("#panel1-label").attr('aria-selected','false');
@@ -61,7 +61,7 @@
 			$("#panel1").attr('aria-hidden','true');
 			
 			$("#panel2").addClass('is-active');
-			$("#panel2").removeAttribute('aria-hidden');
+			$("#panel2").removeAttr('aria-hidden');
 		}
 		
 		

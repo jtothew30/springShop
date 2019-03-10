@@ -41,7 +41,7 @@
 			$("#panel1").attr('aria-hidden','true');
 			
 			$("#panel3").addClass('is-active');
-			$("#panel3").removeAttribute('aria-hidden');
+			$("#panel3").removeAttr('aria-hidden');
 		}else if(tabs == 'qna'){
 			$("#li1").removeClass('is-active');
 			$("#panel1-label").attr('aria-selected','false');
@@ -55,13 +55,13 @@
 			$("#panel1").attr('aria-hidden','true');
 			
 			$("#panel4").addClass('is-active');
-			$("#panel4").removeAttribute('aria-hidden');
+			$("#panel4").removeAttr('aria-hidden');
 		}else{
 			$("#li1").addClass('is-active');
 			$("#panel1-label").attr('aria-selected','true');
 			$("#panel1-label").attr('tabindex','0');
 			$("#panel1").addClass('is-active');
-			$("#panel1").removeAttribute('aria-hidden');
+			$("#panel1").removeAttr('aria-hidden');
 		}
 		
 		
