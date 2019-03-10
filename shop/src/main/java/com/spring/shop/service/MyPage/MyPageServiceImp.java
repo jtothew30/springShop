@@ -20,13 +20,33 @@ public class MyPageServiceImp implements MyPageService{
 	MyPageDao mypageDao;
 	
 	@Override
-	public List<Payment> getMyOrderList(String customer) throws Exception{
-		return mypageDao.getMyOrderList(customer);
+	public List<Payment> getMyOrderList(Paging paging) throws Exception{
+		return mypageDao.getMyOrderList(paging);
 	}
 	
 	@Override
-	public List<Payrequest> getMyOrderListPr(String customer) throws Exception{
-		return mypageDao.getMyOrderListPr(customer);
+	public List<Payrequest> getMyOrderListPr(Paging paging) throws Exception{
+		return mypageDao.getMyOrderListPr(paging);
+	}
+	
+	@Override
+	public int countMyOrder(String customer) throws Exception{
+		return mypageDao.countMyOrder(customer);
+	}
+	
+	@Override
+	public int countMyOrderPr(String customer) throws Exception{
+		return mypageDao.countMyOrderPr(customer);
+	}
+	
+	@Override
+	public int countSearchMyOrder(Paging paging) throws Exception{
+		return mypageDao.countSearchMyOrder(paging);
+	}
+	
+	@Override
+	public int countSearchMyOrderPr(Paging paging) throws Exception{
+		return mypageDao.countSearchMyOrderPr(paging);
 	}
 	
 	@Override
@@ -100,13 +120,13 @@ public class MyPageServiceImp implements MyPageService{
 	}
 	
 	@Override
-	public List<Payment> searchOrderDate(Map<String, String> map) throws Exception{
-		return mypageDao.searchOrderDate(map);
+	public List<Payment> searchOrderDate(Paging paging) throws Exception{
+		return mypageDao.searchOrderDate(paging);
 	}
 	
 	@Override
-	public List<Payrequest> searchOrderDatePr(Map<String, String> map) throws Exception{
-		return mypageDao.searchOrderDatePr(map);
+	public List<Payrequest> searchOrderDatePr(Paging paging) throws Exception{
+		return mypageDao.searchOrderDatePr(paging);
 	}
 	
 	@Override

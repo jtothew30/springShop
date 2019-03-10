@@ -22,15 +22,39 @@ public class MyPageDaoImp implements MyPageDao{
 	private final static String MyPageMapper = "com.spring.shop.mapper.MyPageMapper";
 	
 	@Override
-	public List<Payment> getMyOrderList(String customer){
-		List<Payment> plist = sqlSession.selectList(MyPageMapper+".getMyOrderList", customer);
+	public List<Payment> getMyOrderList(Paging paging){
+		List<Payment> plist = sqlSession.selectList(MyPageMapper+".getMyOrderList", paging);
 		return plist;
 	}
 	
 	@Override
-	public List<Payrequest> getMyOrderListPr(String customer){
-		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".getMyOrderListPr", customer);
+	public List<Payrequest> getMyOrderListPr(Paging paging){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".getMyOrderListPr", paging);
 		return prlist;
+	}
+	
+	@Override
+	public int countMyOrder(String customer) {
+		int count = sqlSession.selectOne(MyPageMapper+".countMyOrder", customer);
+		return count;
+	}
+	
+	@Override
+	public int countMyOrderPr(String customer) {
+		int count = sqlSession.selectOne(MyPageMapper+".countMyOrderPr", customer);
+		return count;
+	}
+	
+	@Override
+	public int countSearchMyOrder(Paging paging) {
+		int count = sqlSession.selectOne(MyPageMapper+".countSearchMyOrder", paging);
+		return count;
+	}
+	
+	@Override
+	public int countSearchMyOrderPr(Paging paging) {
+		int count = sqlSession.selectOne(MyPageMapper+".countSearchMyOrderPr", paging);
+		return count;
 	}
 	
 	@Override
@@ -113,14 +137,14 @@ public class MyPageDaoImp implements MyPageDao{
 	}
 	
 	@Override
-	public List<Payment> searchOrderDate(Map<String, String> map){
-		List<Payment> plist = sqlSession.selectList(MyPageMapper+".searchOrderDate", map);
+	public List<Payment> searchOrderDate(Paging paging){
+		List<Payment> plist = sqlSession.selectList(MyPageMapper+".searchOrderDate", paging);
 		return plist;
 	}
 	
 	@Override
-	public List<Payrequest> searchOrderDatePr(Map<String, String> map){
-		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".searchOrderDatePr", map);
+	public List<Payrequest> searchOrderDatePr(Paging paging){
+		List<Payrequest> prlist = sqlSession.selectList(MyPageMapper+".searchOrderDatePr", paging);
 		return prlist;
 	}
 	

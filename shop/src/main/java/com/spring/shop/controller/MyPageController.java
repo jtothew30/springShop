@@ -46,45 +46,162 @@ public class MyPageController {
 	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	
 	@RequestMapping(value="myorder.do")
-	public String myOrder(Model model) throws Exception{
-		String customer = "testID"; // need to edit for getting login user's id from session later~
+	public String myOrder(Model model, HttpServletRequest request) throws Exception{
+		String tabs = request.getParameter("tabs");
+		if(tabs == null || tabs.equals(""))
+			tabs = "";
 		
-		List<Payment> plist = service.getMyOrderList(customer);
-		List<Payrequest> prlist = service.getMyOrderListPr(customer);
-		model.addAttribute("plist", plist);
-		model.addAttribute("prlist", prlist);
+		
+		String todate = request.getParameter("todate");
+		String fromdate = request.getParameter("fromdate");
+		
+		if(todate == null || todate.equals("") || fromdate == null || fromdate.equals("")) {
+			todate = "";
+			fromdate = "";
+		}
+		
+		model.addAttribute("tabs", tabs);
+		model.addAttribute("todate", todate);
+		model.addAttribute("fromdate", fromdate);
 		return "MyPage/myorder";
 	}
 	
-	@RequestMapping(value="myclaim.do")
-	public String myclaim(Paging paging, Model model, HttpServletRequest request) throws Exception{
-		String customer = "testID"; // need to edit for getting login user's id from session later~
+	@RequestMapping(value="myorderPayment.do")
+	public String myorderPayment(Model model, Paging paging, HttpServletRequest request) throws Exception{
+		String customer = "testID";
 		paging.setCustomer(customer);
 		
-		Paging paging2 = paging;
+		String page = request.getParameter("pagePy");
+		if(page != null) {
+			paging.setPage(Integer.parseInt(page));
+		}
+		
 		
 		List<Payment> plist = new ArrayList<>();
+		
+		if(paging.getTodate() == null || paging.getTodate().equals("")) {
+			logger.info("default");
+			paging.setTotalCount(service.countMyOrder(customer));			
+			plist = service.getMyOrderList(paging);
+			
+		}else {
+			logger.info("searchdate");
+			paging.setTotalCount(service.countSearchMyOrder(paging));			
+			plist = service.searchOrderDate(paging);					
+		}
+		
+		model.addAttribute("plist", plist);
+		model.addAttribute("paging", paging);
+		return "MyPage/myorderPayment";
+	}
+	
+	@RequestMapping(value="myorderPayrequest.do")
+	public String myorderPayrequest(Model model, Paging paging, HttpServletRequest request) throws Exception{
+		String customer = "testID";
+		paging.setCustomer(customer);
+		
+		String page = request.getParameter("pagePr");
+		if(page != null) {
+			paging.setPage(Integer.parseInt(page));
+		}
+		
 		List<Payrequest> prlist = new ArrayList<>();
 		
 		if(paging.getTodate() == null || paging.getTodate().equals("")) {
 			logger.info("default");
-			paging.setTotalCount(service.countMyClaim(customer));
-			paging2.setTotalCount(service.countMyClaimPr(customer));
-			plist = service.getMyClaimList(paging);
-			prlist = service.getMyClaimListPr(paging2);		
+			paging.setTotalCount(service.countMyOrderPr(customer));		
+			prlist = service.getMyOrderListPr(paging);		
+			
 		}else {
 			logger.info("searchdate");
-			paging.setTotalCount(service.countSearchMyClaim(paging));
-			paging2.setTotalCount(service.countSearchMyClaimPr(paging2));
-			plist = service.searchClaimDate(paging);		
-			prlist = service.searchClaimDatePr(paging2);
+			paging.setTotalCount(service.countSearchMyClaimPr(paging));
+			prlist = service.searchOrderDatePr(paging);			
 		}
-
-		model.addAttribute("plist", plist);
-		model.addAttribute("prlist", prlist);
-		model.addAttribute("paging", paging);
-		model.addAttribute("paging2", paging2);
+		
+		model.addAttribute("plist", prlist);
+		model.addAttribute("paging", paging);	
+		return "MyPage/myorderPayrequest";
+	}
+	
+	
+	
+	@RequestMapping(value="myclaim.do")
+	public String myclaim(Model model, HttpServletRequest request) throws Exception{
+		String tabs = request.getParameter("tabs");
+		if(tabs == null || tabs.equals(""))
+			tabs = "";
+		
+		
+		String todate = request.getParameter("todate");
+		String fromdate = request.getParameter("fromdate");
+		
+		if(todate == null || todate.equals("") || fromdate == null || fromdate.equals("")) {
+			todate = "";
+			fromdate = "";
+		}
+		
+		model.addAttribute("tabs", tabs);
+		model.addAttribute("todate", todate);
+		model.addAttribute("fromdate", fromdate);	
 		return "MyPage/myclaim";
+	}
+	
+	
+	@RequestMapping(value="myclaimPayment.do")
+	public String myclaimPayment(Model model, Paging paging, HttpServletRequest request) throws Exception{
+		String customer = "testID";
+		paging.setCustomer(customer);
+		
+		String page = request.getParameter("pagePy");
+		if(page != null) {
+			paging.setPage(Integer.parseInt(page));
+		}
+		
+		
+		List<Payment> plist = new ArrayList<>();
+		
+		if(paging.getTodate() == null || paging.getTodate().equals("")) {
+			logger.info("default");
+			paging.setTotalCount(service.countMyClaim(customer));			
+			plist = service.getMyClaimList(paging);
+			
+		}else {
+			logger.info("searchdate");
+			paging.setTotalCount(service.countSearchMyClaim(paging));			
+			plist = service.searchClaimDate(paging);					
+		}
+		
+		model.addAttribute("plist", plist);
+		model.addAttribute("paging", paging);
+		return "MyPage/myclaimPayment";
+	}
+	
+	@RequestMapping(value="myclaimPayrequest.do")
+	public String myclaimPayrequest(Model model, Paging paging, HttpServletRequest request) throws Exception{
+		String customer = "testID";
+		paging.setCustomer(customer);
+		
+		String page = request.getParameter("pagePr");
+		if(page != null) {
+			paging.setPage(Integer.parseInt(page));
+		}
+		
+		List<Payrequest> prlist = new ArrayList<>();
+		
+		if(paging.getTodate() == null || paging.getTodate().equals("")) {
+			logger.info("default");
+			paging.setTotalCount(service.countMyClaimPr(customer));		
+			prlist = service.getMyClaimListPr(paging);		
+			
+		}else {
+			logger.info("searchdate");
+			paging.setTotalCount(service.countSearchMyClaimPr(paging));
+			prlist = service.searchClaimDatePr(paging);			
+		}
+		
+		model.addAttribute("prlist", prlist);
+		model.addAttribute("paging", paging);	
+		return "MyPage/myclaimPayrequest";
 	}
 	
 	@RequestMapping(value="myreview.do")
@@ -145,28 +262,6 @@ public class MyPageController {
 		System.out.println(str);
 		
 		return str;
-	}
-	
-	
-	@RequestMapping(value="searchOrderDate.do", method=RequestMethod.GET)
-	public String searchOrderDate(Model model,HttpServletRequest request) throws Exception{
-		String todate = request.getParameter("todate");
-		String fromdate = request.getParameter("fromdate");
-		String customer = "testID"; // need to edit for getting login user's id from session later~
-		
-		System.out.println("searchDate.do todate:"+todate+"/fromdate:"+fromdate);
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("todate", todate);
-		map.put("fromdate", fromdate);
-		map.put("customer", customer);
-		
-		List<Payment> plist = service.searchOrderDate(map);
-		List<Payrequest> prlist = service.searchOrderDatePr(map);
-		
-		model.addAttribute("plist", plist);
-		model.addAttribute("prlist", prlist);
-		return "MyPage/myorder";
 	}
 	
 	
