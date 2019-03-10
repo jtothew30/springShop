@@ -56,6 +56,12 @@
 			
 			$("#panel4").addClass('is-active');
 			$("#panel4").removeAttribute('aria-hidden');
+		}else{
+			$("#li1").addClass('is-active');
+			$("#panel1-label").attr('aria-selected','true');
+			$("#panel1-label").attr('tabindex','0');
+			$("#panel1").addClass('is-active');
+			$("#panel1").removeAttribute('aria-hidden');
 		}
 		
 		
@@ -370,8 +376,8 @@
 			<hr>
 			<div style="text-align: center">
 			<ul class="tabs" data-tabs="" id="example-tabs" role="tablist" data-e="af0r5m-e">
-				<li class="tabs-title is-active" id="li1" role="presentation" >
-				<a href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" id="panel1-label" tabindex="0">상품상세</a></li>
+				<li class="tabs-title" id="li1" role="presentation" >
+				<a href="#panel1" role="tab" aria-controls="panel1" aria-selected="false" id="panel1-label" tabindex="-1">상품상세</a></li>
 				<li class="tabs-title" role="presentation">
 				<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
 				<li class="tabs-title" id="li2" role="presentation">
@@ -415,8 +421,8 @@
 			</ul>
 			</div>
 			<div class="tabs-content" data-tabs-content="example-tabs">
-				<div class="tabs-panel is-active" id="panel1" role="tabpanel"
-					aria-labelledby="panel1-label">
+				<div class="tabs-panel" id="panel1" role="tabpanel"
+					aria-labelledby="panel1-label" aria-hidden="true">
 					<div class="media-object stack-for-small">
 						<div class="media-object-section" style="text-align: center">
 							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단1.jpg" width="100%" align="middle">
