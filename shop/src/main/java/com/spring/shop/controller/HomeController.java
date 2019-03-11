@@ -1,15 +1,22 @@
 package com.spring.shop.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.spring.shop.service.Event.EventService;
+import com.spring.shop.vo.Event;
 
 /**
  * Handles requests for the application home page.
@@ -36,14 +43,37 @@ public class HomeController {
 		return "home";
 	}
 	
+	@Autowired
+	private EventService eventService;
+	
 	@RequestMapping("product.do")
 	public String product() {
 		return "product";
 		
 	}
 	@RequestMapping("main.do")
-	public String main() {
-		return "main";
+	public ModelAndView main() {
+		ModelAndView mav = new ModelAndView("main");
+		// 전체 이벤트 list
+		List<Event> list = eventService.selectEventAll();
+		
+		// 이벤트 tag list & flag ==1
+		List<Event> list2 = eventService.selectEventTagFlag();
+		ArrayList<String> tagList = new ArrayList<String>();
+		for (Event e : list2) {
+			tagList.add(e.getTag());
+		}
+//		String[] tagList = new String[list2.size()];
+//		for (int i = 0; i < list2.size(); i++) {
+//			tagList[i] = list2.get(i).getTag();
+//		}
+		
+		//logger.info(tagList.toString());
+		//logger.info(list.toString());
+		
+		mav.addObject("tagList",tagList);
+		mav.addObject("list",list);
+		return mav;
 		
 	}
 	

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.EventMapper">
+  
+  	<!-- TODO UPDATE 기존꺼 지우고 insert or update -->    
+    <!-- TODO delete -->   
+    <select id="selectEventAll" resultType="com.spring.shop.vo.Event">
+    	select * from event
+    </select>
+    
+    <insert id="insertEvent" parameterType="com.spring.shop.vo.Event">
+    	insert into event(eno, tag, etitle, escript, xpath, ypath, pbno, imgpath, link, flag)
+    	values(
+    		seqevt.nextval,
+    		#{tag},
+    		#{etitle, jdbcType=VARCHAR},
+    		#{escript, jdbcType=VARCHAR},
+    		#{xpath ,jdbcType=NUMERIC},
+    		#{ypath, jdbcType=NUMERIC},
+    		#{pbno, jdbcType=NUMERIC},
+    		#{imgpath, jdbcType=VARCHAR},
+    		#{link, jdbcType=VARCHAR},
+    		#{flag, jdbcType=NUMERIC}
+    	)
+    </insert>
+  	
+  	<select id="selectEventTagFlag" resultType="com.spring.shop.vo.Event">
+  		select DISTINCT tag from event where flag = 1
+  	</select>
+  	
+  </mapper>

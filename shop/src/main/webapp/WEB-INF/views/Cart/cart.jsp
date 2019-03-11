@@ -7,6 +7,7 @@
 <!-- Bootstrap core CSS -->
 <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript">
@@ -300,7 +301,9 @@
 </script>
 </head>
 <body>
-	
+
+<c:import url="../header.jsp" />
+	<div style="margin: 0% 10%;">
 	<div class="chkclass">
 		<table>	
 			<thead>
@@ -330,11 +333,11 @@
 						</td>
 						<td width="20%">
 							${cart.price} 원 / ${cart.count} 개<br>
-							<input type="button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})" value="변경"> 
+							<button type="button" class="hollow button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})">변경</button> 
 						</td>
 						<td width="20%">
 							합계 : <span id="price${cart.pno}">${cart.count * cart.price}</span> 원&nbsp;&nbsp;
-							<input type="button" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
+							<input type="button" class="hollow button alert" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
 						</td>				
 					</tr>
 					</c:forEach>
@@ -364,8 +367,8 @@
 	      </ul>
 	    <!-- pageing template -->
 	</div>
-	<input type="button" onclick="selPayRequest()" value="선택상품주문">
-	<input type="button" onclick="allPayRequest()" value="전체주문">
+	<input type="button" class="button primary" onclick="selPayRequest()" value="선택상품주문">
+	<input type="button" class="button secondary" onclick="allPayRequest()" value="전체주문">
 	
 	
 	
@@ -415,13 +418,13 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="changeOption()">변경 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="changeOption()">변경 완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-	
+	</div>
 	
 	
 	
@@ -433,5 +436,6 @@
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<c:import url="../footer.jsp" />
 </body>
 </html>

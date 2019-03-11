@@ -18,4 +18,24 @@ public class AddressServiceImp implements AddressService {
 	public List<Address> getAddressList(String customer) throws Exception{
 		return addressDao.getAddressList(customer);
 	}
+	
+	@Override
+	public void registAddr(Address address) throws Exception{
+		addressDao.registAddr(address);
+	}
+	
+	@Override
+	public boolean checkBase(String customer) throws Exception{
+		return addressDao.checkBase(customer);
+	}
+	
+	@Override
+	public void deleteAddr(int addrno) throws Exception{
+		addressDao.deleteAddr(addrno);
+	}
+	
+	@Override
+	public void setBase(Address address) throws Exception{
+		addressDao.setBase(address);
+	}
 }

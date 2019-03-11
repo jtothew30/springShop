@@ -1,283 +1,220 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
 <html>
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
+<title>Home</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/app.css">
 <style type="text/css">
-  
-.three-column-footer-contact-form-container {
-  background-color: #8a8a8a;
+
+.ecommerce-footer {
+  background-color: #fefefe;
+  padding: 70px 20px 40px 20px;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form {
-  max-width: 75rem;
-  margin-right: auto;
-  margin-left: auto;
-  color: #e6e6e6;
-  padding: 3.75rem 0;
+.ecommerce-footer-links h5 {
+  color: #0a0a0a;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form::before, .three-column-footer-contact-form-container .three-column-footer-contact-form::after {
-  display: table;
-  content: ' ';
-  -webkit-flex-basis: 0;
-      -ms-flex-preferred-size: 0;
-          flex-basis: 0;
-  -webkit-order: 1;
-      -ms-flex-order: 1;
-          order: 1;
+.ecommerce-footer-links .menu > li > a {
+  line-height: 1.5em;
+  padding: 0.5rem 0rem;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form::after {
-  clear: both;
+.ecommerce-footer-links a {
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.5s ease;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form a {
-  color: #e6e6e6;
+.ecommerce-footer-links a:hover {
+  color: #0a0a0a;
+  transition: all 0.5s ease;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left {
-  width: 100%;
-  float: left;
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
-  display: table;
+.ecommerce-footer-links .more-categories {
+  margin-top: 2rem;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left .baseline {
-  display: table-cell;
-  vertical-align: bottom;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left .contact-details p {
-  font-size: 0.8rem;
-  margin-bottom: 0;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left .input-group {
-  padding: 2rem 0 0 0;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left .input-group input {
-  border-bottom: 2px solid #cacaca;
-}
-
-@media print, screen and (min-width: 40em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left {
-    padding-right: 0.9375rem;
-    padding-left: 0.9375rem;
+@media screen and (max-width: 39.9375em) {
+  .ecommerce-footer-links .more-categories {
+    margin-top: 2rem;
   }
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left:last-child:not(:first-child) {
-  float: right;
-}
-
-@media print, screen and (min-width: 64em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left {
-    width: 25%;
-    float: left;
-    padding-right: 0.625rem;
-    padding-left: 0.625rem;
+@media screen and (max-width: 63.9375em) {
+  .ecommerce-footer-links .ecommerce-footer-links-block {
+    margin-bottom: 3rem;
   }
 }
 
-@media print, screen and (min-width: 64em) and (min-width: 40em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left {
-    padding-right: 0.9375rem;
-    padding-left: 0.9375rem;
+.ecommerce-footer-bottom-bar {
+  border-top: 1px solid #e6e6e6;
+  margin-top: 40px;
+  padding-bottom: 80px;
+  padding-top: 30px;
+}
+
+.ecommerce-footer-bottom-bar .menu > li > a {
+  line-height: 1.2em;
+  padding: 10px 0;
+}
+
+.ecommerce-footer-bottom-bar a {
+  color: #8a8a8a;
+  font-size: 0.9rem;
+  transition: all 0.5s ease;
+}
+
+.ecommerce-footer-bottom-bar a:hover {
+  color: #0a0a0a;
+  transition: all 0.5s ease;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .ecommerce-footer-bottom-bar ul {
+    text-align: center;
   }
 }
 
-@media print, screen and (min-width: 64em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-left:last-child:not(:first-child) {
-    float: right;
+.ecommerce-footer-bottom-bar li {
+  display: inline;
+}
+
+.ecommerce-footer-bottom-bar .bottom-links {
+  margin-top: 0.65rem;
+  margin-left: 0;
+}
+
+.ecommerce-footer-bottom-bar .bottom-links li {
+  padding-right: 2rem;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .ecommerce-footer-bottom-bar .bottom-links li {
+    text-align: center;
   }
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center {
-  text-align: left;
-  width: 100%;
-  float: left;
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
-  display: table;
+.ecommerce-footer-bottom-bar .ecommerce-footer-logomark {
+  text-align: center;
 }
 
-@media print, screen and (min-width: 40em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center {
-    padding-right: 0.9375rem;
-    padding-left: 0.9375rem;
+@media screen and (max-width: 39.9375em) {
+  .ecommerce-footer-bottom-bar .ecommerce-footer-logomark {
+    padding-top: 1rem;
+    margin-bottom: 1rem;
   }
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center:last-child:not(:first-child) {
-  float: right;
-}
-
-@media print, screen and (min-width: 64em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center {
-    width: 33.33333%;
-    float: left;
-    padding-right: 0.625rem;
-    padding-left: 0.625rem;
-    position: relative;
-    left: 8.33333%;
-  }
-}
-
-@media print, screen and (min-width: 64em) and (min-width: 40em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center {
-    padding-right: 0.9375rem;
-    padding-left: 0.9375rem;
-  }
-}
-
-@media print, screen and (min-width: 64em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center:last-child:not(:first-child) {
-    float: right;
-  }
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .baseline {
-  display: table-cell;
-  vertical-align: bottom;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .input-group {
-  padding: 0.5rem 0 0 0;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .input-group input {
-  border-bottom: 2px solid #cacaca;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-center .input-group textarea {
-  border-bottom: 2px solid #cacaca;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right {
+.ecommerce-footer-bottom-bar .bottom-copyright {
+  color: #8a8a8a;
+  font-size: 0.9rem;
+  line-height: 1.2em;
+  padding-top: 1rem;
   text-align: right;
-  width: 100%;
-  float: left;
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
-  display: table;
 }
 
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right .baseline {
-  display: table-cell;
-  vertical-align: bottom;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right h2 {
-  color: #fefefe;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right p {
-  font-size: 0.8rem;
-  margin-bottom: 0;
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right .fa {
-  padding: 1rem 0 1rem 0.2rem;
-}
-
-@media print, screen and (min-width: 40em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right {
-    padding-right: 0.9375rem;
-    padding-left: 0.9375rem;
-  }
-}
-
-.three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right:last-child:not(:first-child) {
-  float: right;
-}
-
-@media print, screen and (min-width: 64em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right {
-    width: 25%;
-    float: left;
-    padding-right: 0.625rem;
-    padding-left: 0.625rem;
-  }
-}
-
-@media print, screen and (min-width: 64em) and (min-width: 40em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right {
-    padding-right: 0.9375rem;
-    padding-left: 0.9375rem;
-  }
-}
-
-@media print, screen and (min-width: 64em) {
-  .three-column-footer-contact-form-container .three-column-footer-contact-form .footer-right:last-child:not(:first-child) {
-    float: right;
+@media screen and (max-width: 39.9375em) {
+  .ecommerce-footer-bottom-bar .bottom-copyright {
+    text-align: center;
   }
 }
 
 
 </style>
-  
+
 </head>
 
-<body>
-<div style="margin: 0% 0%;">
-<div class="three-column-footer-contact-form-container">
-  <footer class="three-column-footer-contact-form" data-equalizer data-equalize-by-row="true">
-    <div class="footer-left" data-equalizer-watch>
-      <div class="baseline">
-        <div class="contact-details">
-          <h6>Contact details</h6>
-          <p><i class="fa fa-phone fa-lg" aria-hidden="true"></i> 01234 567890</p>
-          <p><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Contact us</a></p>
-          <p><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> Street, City, County, Country</p>
-        </div>
-        <div class="newsletter">
-          <div class="input-group">
-            <h6>Sign up for our newsletter</h6><p>
-            <input class="input-group-field" type="email" placeholder="Email address">
-          </div>
-          <a class="button expanded" href="#">Submit</a>
-        </div>
-      </div>
-     </div>
-    <div class="footer-center" data-equalizer-watch>
-      <div class="baseline">
-        <div class="newsletter">
-          <h6>Contact form</h6>
-          <div class="input-group">
-            <p><input class="input-group-field" type="text" placeholder="Name"><p>
-            <input class="input-group-field" type="email" placeholder="Email address"><p>
-            <textarea placeholder="Message"></textarea><p>
-          </div>
-          <a class="button expanded" href="#">Submit</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-right" data-equalizer-watch>
-      <div class="baseline">
-        <img class="thumbnail" src="http://placehold.it/100">
-        <h6>Index Menu</h6>
-        <p><a href="index.jsp">index</a></p>
-        <p><a href="admin/main.do">Admin</a></p>
-        
-        <div class="social">
-          <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i>
-          <i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i>
-          <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"></i>
-          <i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i>
-        </div>
-      </div>
-    </div>
-  </footer>
-</div>
-</div>
-</body>
+<footer>
+	<hr>
+	<div style="margin: 0% 0%;">
+		<div class="ecommerce-footer" style="background-color: #575757; color:white; ">
+			<div class="ecommerce-footer-links row">
+				<div class="small-8 medium-8 large-4 columns">
+					<div class="row ecommerce-footer-links-block" >
+						<div class="small-4 medium-4 large-4 columns">
+							<h5>Categories</h5>
+							<ul class="menu vertical">
+								<li><a href="#">Category 1</a></li>
+								<li><a href="#">Category 2</a></li>
+								<li><a href="#">Category 3</a></li>
+								<li><a href="#">Category 4</a></li>
+								<li><a href="#">Category 5</a></li>
+							</ul>
+						</div>						
+						<div class="small-4 medium-4 large-4 columns">
+							<h5>Help</h5>
+							<ul class="menu vertical">
+								<li><a href="${pageContext.request.contextPath}/index.jsp">index</a></li>
+								<li><a href="#">Return Policy</a></li>
+								<li><a href="#">Shipping &amp; Delivery</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="small-14 medium-14 large-7 columns">
+					<div class="row">
+						<div class="small-5 medium-5 large-4 columns">
+							<h5>My Account</h5>
+							<ul class="menu vertical">
+								<li><a href="${pageContext.request.contextPath}/signUp/signUp.do">회원가입</a></li>
+								<li><a href="${pageContext.request.contextPath}/cart/cart.do">내 장바구니</a></li>
+								<li><a href="${pageContext.request.contextPath}/account/mymain.do">마이페이지</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myorder.do">-주문/배송정보</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myclaim.do">-취소/반품/교환정보</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myreview.do">-내상품리뷰</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myqna.do">-내Q&A</a></li>
+							</ul>
+						</div>
+						<div class="small-3 medium-3 large-4 columns">
+							<h5>About</h5>
+							<ul class="menu vertical">
+								<li><a href="#">Company</a></li>
+								<li><a href="#">Store Locator</a></li>
+								<li><a href="#">Team</a></li>
+								<li><a href="#">Support</a></li>
+								<li><a href="#">Contact</a></li>
+								<li><a href="#">Career</a></li>
+							</ul>
+						</div>
+						<div class="small-4 medium-4 large-4 columns">
+							<h5>Admin</h5>
+							<ul class="menu vertical">
+								<li><a href="${pageContext.request.contextPath}/admin/memberList.do">사용자관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/productList.do">제품관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/boardList.do">판매글관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/mainEdit.do">메인페이지설정</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ecommerce-footer-bottom-bar row">
+				<div class="small-12 medium-5 columns">
+					<ul class="bottom-links">
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms &amp; Conditions</a></li>
+					</ul>
+				</div>
+				<div class="small-12 medium-2 columns ecommerce-footer-logomark">
+					<img src="https://placehold.it/50x50" />
+				</div>
+				<div class="small-12 medium-5 columns">
+					<div class="bottom-copyright">
+						<span>©2019 Company Name. All rights reserved.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
 
 </html>

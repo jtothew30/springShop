@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +83,11 @@ public class ReviewController {
 		List<MultipartFile> filelist = request.getFiles("file");
 		
 		String inputPath = "/resources/upload/review/"+review.getPath();
-		String writer = "testID";	
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+				
 		review.setWriter(writer);
 		review.setPath(inputPath);
 		
@@ -118,7 +123,11 @@ public class ReviewController {
 		List<MultipartFile> filelist = request.getFiles("file");
 		
 		String inputPath = "/resources/upload/qna/"+qna.getPath();
-		String writer = "testID";	
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+				
 		qna.setWriter(writer);
 		qna.setPath(inputPath);
 		
@@ -183,7 +192,11 @@ public class ReviewController {
 	public boolean reactCheck(HttpServletRequest request) throws Exception {
 		System.out.println("reactCheck 접근 체크");
 		
-		String id = "testID";
+		HttpSession session = request.getSession();	
+		String id = "";
+		if(session.getAttribute("account") != null)
+			id = (String)session.getAttribute("account");
+			
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -199,7 +212,11 @@ public class ReviewController {
 	public int react(HttpServletRequest request) throws Exception {
 		System.out.println("react 접근 체크");
 		
-		String id = "testID";
+		HttpSession session = request.getSession();	
+		String id = "";
+		if(session.getAttribute("account") != null)
+			id = (String)session.getAttribute("account");
+			
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		String react = request.getParameter("react");
 		

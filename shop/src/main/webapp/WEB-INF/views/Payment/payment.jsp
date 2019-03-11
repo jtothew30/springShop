@@ -40,10 +40,10 @@
 		}else{
 			$("#recipient").html("<input type='text' id='newrecipient' required>");
 			$("#phone").html("<input type='text' id='newphone' placeholder='xxx-xxxx-xxxx' required>");
-			$("#memo").html("<input type='text' id='newmemo'>");
+			$("#memo").html("<input type='text' id='newmemo'><input type='button' class=\"hollow button\" data-target=\"#registAddr\" data-toggle=\"modal\" value='새 배송지 등록'>");
 			
 			var str = "";
-			str += "<input type='button' onclick=\"execPostCode();\" value='우편번호 찾기'>"
+			str += "<input type='button' class=\"hollow button\" onclick=\"execPostCode();\" value='우편번호 찾기'>"
 			str += "<br><br><div class='form-group'><input class='form-control' style='top: 5px;' placeholder='도로명 주소' name='addr1' id='addr1' type='text' readonly='readonly' /></div>";   
 			str += "<div class='form-group'><input class='form-control' placeholder='상세주소' name='addr2' id='addr2' type='text' required /></div>";
 				
@@ -84,8 +84,119 @@
 		document.getElementById("newphone").value = phone;
 	}
 	
+	function registAddr() {
+		var recipient = $("#newrecipient").val();
+		var addr1 = $("#addr1").val();
+		var addr2 = $("#addr2").val();
+		var phone = $("#newphone").val();
+		var addrname = $("#newAddrName").val();
+				
+		if(addrname == '' || addrname == null){
+			swal('배송지 이름을 입력해주세요!','','warning');	
+			return;
+		}
+		
+		if(recipient == '' || recipient == null){
+			swal('받으시는 분을 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("newrecipient").focus();
+			});		
+			return;
+		}
+		
+		if(addr1 == '' || addr1 == null){
+			swal('주소를 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("addr1").focus();
+			});		
+			return;
+		}
+		
+		if(addr2 == '' || addr2 == null){
+			swal('상세 주소를 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("addr2").focus();
+			});		
+			return;
+		}
+		
+		if(phone == '' || phone == null){
+			swal('연락처를 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("phone").focus();
+			});		
+			return;
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "registAddr.do",
+			data: {'addrname' : addrname, 'recipient' : recipient, 'addr1' : addr1, 'addr2' : addr2, 'phone' : phone},
+			success : function(){
+				swal("새 배송지가 등록되었습니다.","", "success")
+				.then((value) => {
+				  location.reload();
+				});
+			}
+		}) 	
+	}
 	
 	
+	function deleteAddr(addrno) {
+		swal("해당 배송지를 삭제하시겠습니까?", "", "warning", {
+			  buttons: {				    
+			    catch: {
+			      text: "예",
+			      value: "catch",
+			    },
+			    cancel: "아니오",
+			  },
+			})
+			.then((value) => {
+			  switch (value) {					 
+			    case "catch":
+			    	$.ajax({
+						type: "POST",
+						data: {'addrno' : addrno},
+						url: "deleteAddr.do",
+						success : function(){
+							location.reload();
+						}
+					})    	
+			      break;					 
+			    default:
+			    	break;
+			  }
+			});
+	}
+	
+	function setBase(addrno) {
+		swal("기본 배송지로 지정하시겠습니까?", {
+			  buttons: {				    
+			    catch: {
+			      text: "예",
+			      value: "catch",
+			    },
+			    cancel: "아니오",
+			  },
+			})
+			.then((value) => {
+			  switch (value) {					 
+			    case "catch":
+			    	$.ajax({
+						type: "POST",
+						data: {'addrno' : addrno},
+						url: "setBase.do",
+						success : function(){
+							location.reload();
+						}
+					})    	
+			      break;					 
+			    default:
+			    	break;
+			  }
+			});
+	}
 	
 	function execPostCode() {
         new daum.Postcode({
@@ -210,8 +321,8 @@
 				}
 			], */
 			user_info: {
-				username: "${customer}",
-				email: "${email}",
+				username: "${account.id}",
+				email: "${account.email}",
 				addr: addr1+" "+addr2,
 				phone: phone
 			},
@@ -379,7 +490,7 @@
 				<input type="radio" name="seladdr" value="type" onclick="changeSelectAddr()">직접입력
 			</th>
 			<th>
-				<button class="btn btn-default" data-target="#layerpop" data-toggle="modal">배달지목록확인</button><br/>
+				<button class="hollow button" data-target="#layerpop" data-toggle="modal">배달지목록확인</button><br/>
 					
 			</th>
 		</tr>
@@ -388,7 +499,7 @@
 				<table>
 					<tr>
 						<td width="20%">주문자</td>
-						<td width="80%">${customer}</td>
+						<td width="80%">${account.id}</td>
 					</tr>
 					
 					<c:choose>
@@ -436,8 +547,8 @@
 	</div>
 	
 	<br><br><br>
-	<input type="button" onclick="pay()" value="결제하기"> 
-	<input type="button" onclick="cancel()" value="취소"> 
+	<input type="button" style="font-size:24pt; padding-top:7pt; padding-bottom:7pt" class="hollow button success" onclick="pay()" value="결제 하기"> 
+	<input type="button" style="font-size:14pt;" class="hollow button alert" onclick="cancel()" value="취소"> 
 	<br><br><br>
 	
 	
@@ -454,7 +565,11 @@
 	           <table>
 	           		<thead>
 	           			<tr>
-	           				<th>선택</th> <th>배송지 이름</th> <th>주 소</th> <th>받는 사람</th> <th>연락처</th>
+	           				<th style="text-align:center">배송지 이름</th> 
+	           				<th style="text-align:center">주 소</th> 
+	           				<th style="text-align:center">받는 사람</th> 
+	           				<th style="text-align:center">연락처</th>
+	           				<th>&nbsp;</th>
 	           			</tr>
 	           		</thead>
 	           		<tbody>
@@ -466,12 +581,19 @@
 					    	</c:when>
 				    		<c:otherwise>   
 					    		<c:forEach var="addr" items="${addrlist}">
-					    			<tr>
-					    				<td><input type="radio" name="addrRadio" value="${addr.addrno}"></td>
-					    				<td><span id="selName${addr.addrno}">${addr.addrname}</span> <c:if test="${addr.base == 'true'}">(기본)</c:if> </td>
-					    				<td><span id="selAddr1${addr.addrno}">${addr.addr1}</span> <span id="selAddr2${addr.addrno}">${addr.addr2}</span></td>
+					    			<tr align="center">
+					    				<td>
+						    				<input type="radio" name="addrRadio" value="${addr.addrno}">
+						    				<span id="selName${addr.addrno}">${addr.addrname}</span>
+						    				<c:choose>
+						    					<c:when test="${addr.base == 'true'}"><br><strong style="color:red">(기본)</strong></c:when>
+						    					<c:otherwise><br><input type="button" class="hollow button tiny" onclick="setBase(${addr.addrno})" value="기본으로"></c:otherwise>					    				
+						    				</c:choose>
+					    				</td>
+					    				<td><span id="selAddr1${addr.addrno}">${addr.addr1}</span><br><span id="selAddr2${addr.addrno}">${addr.addr2}</span></td>
 					    				<td><span id="selRecipient${addr.addrno}">${addr.recipient}</span></td>
 					    				<td><span id="selPhone${addr.addrno}">${addr.phone}</span></td>
+					    				<td><input type="button" class="button alert" onclick="deleteAddr(${addr.addrno})" value="삭제"></td>
 					    			</tr>
 					    		</c:forEach>
 			    		    </c:otherwise>
@@ -481,8 +603,31 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selAddr()">선택완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="selAddr()">선택완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+	<div class="modal fade" id="registAddr" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header">
+	        <!-- header title -->
+	        <h4 class="modal-title">새 배송지 등록</h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+	           	배송지 이름 <input type="text" id="newAddrName">
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="registAddr()">등록하기</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
 	  </div>

@@ -133,7 +133,7 @@
 			addops += "<div class='small-5 cell'><label for='middle-label' class='middle'>"+seloplist[i].options+"</label></div>";
 			addops += "<div class='small-2 cell'><input type='number' name='count' id='count"+seloplist[i].pno+"' min='1' value='1' onInput=\"changeCount("+seloplist[i].pno+","+seloplist[i].outprice+")\" placeholder='수량'></div>";
 			addops += "<div class='small-5 cell'><label for='middle-label' class='middle'>&nbsp;&nbsp;&nbsp;<span id='price"+seloplist[i].pno+"'>"+seloplist[i].outprice+"</span>원&nbsp;&nbsp;&nbsp;";
-			addops += "<input type='button' onclick=\"opCancel("+seloplist[i].pno+")\" value='취소'></label></div>"
+			addops += "<button type='button' class=\"btn btn-danger\" onclick=\"opCancel("+seloplist[i].pno+")\" >취소</button></label></div>"
 		}
 		$("#showOption").html(addops);
 	}

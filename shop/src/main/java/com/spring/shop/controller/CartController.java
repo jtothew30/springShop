@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,12 @@ public class CartController {
 	
 	
 	@RequestMapping(value="cart.do")
-	public String cart(Model model, Paging paging) throws Exception{
-		String customer = "testID"; // need to edit for getting login user's id from session later~
+	public String cart(Model model, Paging paging, HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+		
 		paging.setCustomer(customer);		
 		paging.setTotalCount(service.countCartList(customer));		
 		List<Cart> cartlist = service.getCartList(paging);
@@ -54,7 +59,11 @@ public class CartController {
 		System.out.println("addCart 집입 체크, pbno : " + pbno);
 		
 		
-		String customer = "testID";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+		
 		List<Cart> mycart = service.getTotalCartList(customer); // for duplicate check
 		
 		
@@ -95,7 +104,10 @@ public class CartController {
 	@RequestMapping(value="deleteCart.do", method=RequestMethod.POST)
 	public void deleteCart(HttpServletRequest request) throws Exception{		
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		String customer = "testID";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
 		
 		Cart cart = new Cart();
 		cart.setPno(pno);
@@ -128,9 +140,10 @@ public class CartController {
 		int count = Integer.parseInt(request.getParameter("count"));
 		boolean eq = Boolean.parseBoolean(request.getParameter("eq"));
 		
-		String customer = "testID";
-		
-		System.out.println("eq check : "+ eq);		
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
 		
 		if(!eq) {
 			List<Cart> mycart = service.getTotalCartList(customer); // for duplicate check

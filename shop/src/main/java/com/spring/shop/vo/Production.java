@@ -16,6 +16,7 @@ public class Production {
 	private int count; // 1. 재고 -> procontain TABLE
 					   // 2. production count for payment or adding in cart
 					   // 충돌사항 없는지 check / view에서 주의할것
+	
 	public int getCount() {
 		return count;
 	}

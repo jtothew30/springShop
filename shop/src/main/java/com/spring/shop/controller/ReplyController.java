@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,11 @@ public class ReplyController {
 		
 		Reply reply = new Reply();
 		
-		String writer = "testID";
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
 		String rno = request.getParameter("rno");
 		String qno = request.getParameter("qno");
 		String content = request.getParameter("content");

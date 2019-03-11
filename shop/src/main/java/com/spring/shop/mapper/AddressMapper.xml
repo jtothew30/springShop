@@ -7,4 +7,25 @@
 	<select id="getAddressList" resultType="com.spring.shop.vo.Address" parameterType="string">
 	     select * from address where customer = #{customer} order by usedate desc
 	</select>
+	
+	<insert id="registAddr" parameterType="com.spring.shop.vo.Address">
+		insert into address values(seqaddr.nextval, #{customer}, #{addrname}, #{recipient}, #{base}, #{addr1}, #{addr2}, #{phone}, sysdate)
+	</insert>
+	
+	<select id="checkBase" parameterType="string" resultType="int">
+		select count(*) from address where customer = #{customer} and base = 'true'
+	</select>
+	
+	<delete id="deleteAddr" parameterType="int">
+		delete from address where addrno = #{addrno}
+	</delete>
+	
+	<update id="setBaseFalse" parameterType="string">
+		update address set base = 'false' where customer = #{customer} and base = 'true'
+	</update>
+	
+	<update id="setBaseTrue" parameterType="int">
+		update address set base = 'true' where addrno = #{addrno}
+	</update>
+	
 </mapper>

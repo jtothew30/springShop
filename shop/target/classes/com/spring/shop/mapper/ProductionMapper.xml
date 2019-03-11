@@ -59,19 +59,19 @@
 	
 	<select id="selectSearch" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Production">
 		select * from(
-         select p.* 
-         from (
-            select rownum rn, pr.* 
-            from (
-               select p.*, count
-               from production p, prostock s
-               where p.pno = s.pno
-            ) pr
-            where pname like '%'||#{kwd}||'%'
-            order by pno desc         
-         ) p
-         order by rn
-      ) where rn between #{startNum} and #{endNum}
+			select p.* 
+			from (
+				select rownum rn, pr.* 
+				from (
+					select p.*, count
+					from production p, prostock s
+					where p.pno = s.pno
+				) pr
+				where pname like '%'||#{kwd}||'%'
+				order by pno desc			
+			) p
+			order by rn
+		) where rn between #{startNum} and #{endNum}
 	</select>
 	
 	<select id="selectSearchCount" parameterType="string" resultType="int">

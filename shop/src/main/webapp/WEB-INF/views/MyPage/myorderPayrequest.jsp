@@ -113,7 +113,7 @@
 		          		<td>${pr.price}</td>
 		          		<td>${pr.count * pr.price}</td>
 		          		<td>${pr.status}</td>
-		          		<td><input type="button" onclick="reviewRequest(${pr.reqno})" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성"></td>
+		          		<td><input type="button" class="hollow button" onclick="reviewRequest(${pr.reqno})" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성"></td>
 		          	</tr>
 		          </c:forEach> 
 		    	</c:otherwise>
@@ -123,9 +123,9 @@
       <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
         <li class="pagination-previous disabled">Previous
 			<span class="show-for-sr">page</span></li>
-        <c:forEach begin="${paging2.beginPage}" end="${paging2.endPage}" var="index">
+        <c:forEach begin="${paging.beginPage}" end="${paging.endPage}" var="index">
           <c:choose>
-            <c:when test="${paging2.page==index}">
+            <c:when test="${paging.page==index}">
               <li class="current"><span class="show-for-sr">You're on page</span> ${index}</li>
             </c:when>
             <c:otherwise>
@@ -182,8 +182,8 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>

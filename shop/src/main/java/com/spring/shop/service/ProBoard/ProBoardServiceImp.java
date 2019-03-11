@@ -91,4 +91,14 @@ public class ProBoardServiceImp implements ProBoardService{
 	public void deleteProcontain(int pbno) {
 		proboardDao.deleteProcontain(pbno);
 	}
+
+	@Override
+	public List<ProBoard> selectProboardForCategory(Paging paging) {
+		return proboardDao.selectProboardForCategory(paging);
+	}
+
+	@Override
+	public List<ProBoard> selectProBoardAll() {
+		return proboardDao.selectProBoardAll();
+	}
 }
