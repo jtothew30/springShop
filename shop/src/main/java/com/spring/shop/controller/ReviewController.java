@@ -108,7 +108,7 @@ public class ReviewController {
 	        }
 		}	
 		
-		return "redirect:../proboard/product.do?pbno="+review.getPbno();
+		return "redirect:../proboard/product.do?pbno="+review.getPbno()+"&tabs=review";
 	}
 	
 	
@@ -147,7 +147,7 @@ public class ReviewController {
 	        }
 		}	
 		
-		return "redirect:../proboard/product.do?pbno="+qna.getPbno();
+		return "redirect:../proboard/product.do?pbno="+qna.getPbno()+"&tabs=qna";
 	}
 	
 	

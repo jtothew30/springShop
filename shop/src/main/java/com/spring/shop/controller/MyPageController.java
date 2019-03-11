@@ -306,7 +306,7 @@ public class MyPageController {
 	        }
 		}	
 		
-		return "redirect:myorder.do";
+		return "redirect:myorder.do?tabs=payrequest";
 	}
 	
 	@RequestMapping(value = "reviewWriteInMyclaim.do", method = RequestMethod.POST)
@@ -341,7 +341,7 @@ public class MyPageController {
 	        }
 		}	
 		
-		return "redirect:myclaim.do";
+		return "redirect:myclaim.do?tabs=payrequest";
 	}
 	
 	@ResponseBody
