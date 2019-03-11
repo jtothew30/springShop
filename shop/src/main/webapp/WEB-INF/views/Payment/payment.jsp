@@ -346,7 +346,7 @@
 		<c:forEach var="preq" items="${preqlist}">
 			<tr align="center">
 				<td width="20%">
-					<img src="${pageContext.request.contextPath}/resources/upload/${preq.category1}/${preq.category2}/${preq.category3}/${preq.pname}/메인.jpg">
+					<img src="${pageContext.request.contextPath}/resources/upload/${preq.pbno}/${preq.pname}/메인.jpg">
 				</td>
 				<td width="40%">
 					<strong style="font-size:15pt;">${preq.pname}</strong> - ${preq.options}<br><br>

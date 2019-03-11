@@ -54,8 +54,11 @@ public class PaymentDaoImp implements PaymentDao {
 		List<Payrequest> preqlist = sqlSession.selectList(PaymentMapper+".getPreq", payment.getPayno());
 		
 		for(Payrequest preq : preqlist) {
-			sqlSession.update(PaymentMapper+".updateProstock", preq);
+			sqlSession.update(PaymentMapper+".updateProstock", preq);	//재고
+			sqlSession.update(PaymentMapper+".updateProduction", preq); //상품 판매량
+			sqlSession.update(PaymentMapper+".updateProboard", preq);	//판매글의 총 판매량
 		}	
+		
 		System.out.println("payment success");
 	}
 	

@@ -1,6 +1,7 @@
 package com.spring.shop.vo;
 
 public class Account {
+	private int rn;
 	private String id;
 	private String pw;
 	private String name;
@@ -10,6 +11,12 @@ public class Account {
 	private String phone;
 	private String adate;
 	
+	public int getRn() {
+		return rn;
+	}
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
 	public String getId() {
 		return id;
 	}

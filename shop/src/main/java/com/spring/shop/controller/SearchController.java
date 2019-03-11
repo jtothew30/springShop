@@ -30,7 +30,7 @@ public class SearchController {
 	public ModelAndView search(Paging paging ,HttpServletRequest request ) {
 		ModelAndView mav = new ModelAndView("search");
 		
-		logger.info("input"+paging.toString());
+		//logger.info("input"+paging.toString());
 		
 		//   items = {"listCate2":["",""], "listCate3":["","","",""]};
 		if(paging.getOptionKwd()!= null) {			
@@ -58,7 +58,7 @@ public class SearchController {
 			paging.setListCate3(arr3);
 		}
 		//logger.info(paging.toString());
-		logger.info("검색조건:"+paging.getKwd()+","+paging.getListCate2()+","+paging.getListCate3());
+		//logger.info("검색조건:"+paging.getKwd()+","+paging.getListCate2()+","+paging.getListCate3());
 		// 검색어 All counting --> for paging setting
 		int allCount = service.getAllCount(paging);
 		
@@ -113,7 +113,7 @@ public class SearchController {
 		Gson gson = new Gson();
 		String arr = gson.toJson(paging.getOptionKwd());
 		paging.setOptionKwd(arr);
-		logger.info("optionKwd:"+arr);
+		//logger.info("optionKwd:"+arr);
 		mav.addObject("paging", paging);
 		mav.addObject("cate2List", cate2List);
 		mav.addObject("cate3List", cate3List);

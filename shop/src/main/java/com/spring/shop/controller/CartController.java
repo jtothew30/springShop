@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.spring.shop.service.Cart.CartService;
 import com.spring.shop.vo.Cart;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 
 @Controller
@@ -33,11 +34,14 @@ public class CartController {
 	
 	
 	@RequestMapping(value="cart.do")
-	public String cart(Model model) throws Exception{
+	public String cart(Model model, Paging paging) throws Exception{
 		String customer = "testID"; // need to edit for getting login user's id from session later~
+		paging.setCustomer(customer);		
+		paging.setTotalCount(service.countCartList(customer));		
+		List<Cart> cartlist = service.getCartList(paging);
 		
-		List<Cart> cartlist = service.getCartList(customer);
 		model.addAttribute("cartlist", cartlist);
+		model.addAttribute("paging", paging);
 		return "Cart/cart";
 	}
 	
@@ -51,7 +55,7 @@ public class CartController {
 		
 		
 		String customer = "testID";
-		List<Cart> mycart = service.getCartList(customer); // for duplicate check
+		List<Cart> mycart = service.getTotalCartList(customer); // for duplicate check
 		
 		
 		Gson gson = new Gson();		
@@ -129,7 +133,7 @@ public class CartController {
 		System.out.println("eq check : "+ eq);		
 		
 		if(!eq) {
-			List<Cart> mycart = service.getCartList(customer); // for duplicate check
+			List<Cart> mycart = service.getTotalCartList(customer); // for duplicate check
 			
 			for(Cart c :mycart) {
 				  if(c.getPno() == pno) {

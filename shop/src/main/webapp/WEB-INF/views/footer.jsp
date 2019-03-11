@@ -29,7 +29,7 @@
 }
 
 .ecommerce-footer-links a {
-  color: #707070;
+  color: #ffffff;
   font-size: 1rem;
   transition: all 0.5s ease;
 }
@@ -136,10 +136,10 @@
 <footer>
 	<hr>
 	<div style="margin: 0% 0%;">
-		<div class="ecommerce-footer">
+		<div class="ecommerce-footer" style="background-color: #575757; color:white; ">
 			<div class="ecommerce-footer-links row">
-				<div class="small-12 medium-12 large-6 columns">
-					<div class="row ecommerce-footer-links-block">
+				<div class="small-8 medium-8 large-4 columns">
+					<div class="row ecommerce-footer-links-block" >
 						<div class="small-4 medium-4 large-4 columns">
 							<h5>Categories</h5>
 							<ul class="menu vertical">
@@ -149,38 +149,32 @@
 								<li><a href="#">Category 4</a></li>
 								<li><a href="#">Category 5</a></li>
 							</ul>
-						</div>
-						<div class="small-4 medium-4 large-4 columns more-categories">
-							<ul class="menu vertical">
-								<li><a href="#">Category 6</a></li>
-								<li><a href="#">Category 7</a></li>
-								<li><a href="#">Category 8</a></li>
-								<li><a href="#">Category 9</a></li>
-								<li><a href="#">Category 10</a></li>
-							</ul>
-						</div>
+						</div>						
 						<div class="small-4 medium-4 large-4 columns">
 							<h5>Help</h5>
 							<ul class="menu vertical">
-								<li><a href="index.jsp">index</a></li>
+								<li><a href="${pageContext.request.contextPath}/index.jsp">index</a></li>
 								<li><a href="#">Return Policy</a></li>
 								<li><a href="#">Shipping &amp; Delivery</a></li>
 							</ul>
 						</div>
 					</div>
-
 				</div>
-				<div class="small-12 medium-12 large-6 columns">
+				<div class="small-14 medium-14 large-7 columns">
 					<div class="row">
-						<div class="small-4 medium-4 large-4 columns">
+						<div class="small-5 medium-5 large-4 columns">
 							<h5>My Account</h5>
 							<ul class="menu vertical">
-								<li><a href="#">Sign In</a></li>
-								<li><a href="#">Order Status</a></li>
-								<li><a href="#">My Wishlist</a></li>
+								<li><a href="${pageContext.request.contextPath}/signUp/signUp.do">회원가입</a></li>
+								<li><a href="${pageContext.request.contextPath}/cart/cart.do">내 장바구니</a></li>
+								<li><a href="${pageContext.request.contextPath}/account/mymain.do">마이페이지</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myorder.do">-주문/배송정보</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myclaim.do">-취소/반품/교환정보</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myreview.do">-내상품리뷰</a></li>
+								<li><a href="${pageContext.request.contextPath}/mypage/myqna.do">-내Q&A</a></li>
 							</ul>
 						</div>
-						<div class="small-4 medium-4 large-4 columns">
+						<div class="small-3 medium-3 large-4 columns">
 							<h5>About</h5>
 							<ul class="menu vertical">
 								<li><a href="#">Company</a></li>
@@ -194,10 +188,10 @@
 						<div class="small-4 medium-4 large-4 columns">
 							<h5>Admin</h5>
 							<ul class="menu vertical">
-								<li><a href="#">사용자관리</a></li>
-								<li><a href="admin/productList.do">제품관리</a></li>
-								<li><a href="admin/boardList.do">판매글관리</a></li>
-								<li><a href="admin/mainEdit.do">메인페이지설정</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/memberList.do">사용자관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/productList.do">제품관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/boardList.do">판매글관리</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/mainEdit.do">메인페이지설정</a></li>
 							</ul>
 						</div>
 					</div>

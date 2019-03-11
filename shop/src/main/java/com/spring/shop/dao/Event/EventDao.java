@@ -6,6 +6,6 @@ import com.spring.shop.vo.Event;
 
 public interface EventDao {
 	List<Event> selectEventAll();
-
-	void insertEvent(Event event); 
+	void insertEvent(Event event);
+	List<Event> selectEventTagFlag(); 
 }

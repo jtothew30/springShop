@@ -14,6 +14,12 @@ public class Paging {
 	private ArrayList<String> listCate3;
 	private String[] chkboxCate2;
 	private String[] chkboxCate3;
+	
+	private String todate;
+	private String fromdate;
+	private String customer;
+	private int pbno;
+	
 		
 	private int page =1; //현재 페이지 (get)
 	private int totalCount; //row 전체의 수 (get)
@@ -124,6 +130,30 @@ public class Paging {
 	}
 	public void setChkboxCate3(String[] chkboxCate3) {
 		this.chkboxCate3 = chkboxCate3;
+	}
+	public String getTodate() {
+		return todate;
+	}
+	public void setTodate(String todate) {
+		this.todate = todate;
+	}
+	public String getFromdate() {
+		return fromdate;
+	}
+	public void setFromdate(String fromdate) {
+		this.fromdate = fromdate;
+	}
+	public String getCustomer() {
+		return customer;
+	}
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+	public int getPbno() {
+		return pbno;
+	}
+	public void setPbno(int pbno) {
+		this.pbno = pbno;
 	}
 	@Override
 	public String toString() {

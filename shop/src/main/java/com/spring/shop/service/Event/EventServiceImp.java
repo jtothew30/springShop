@@ -25,4 +25,9 @@ public class EventServiceImp implements EventService{
 		eventDao.insertEvent(event);
 	}
 
+	@Override
+	public List<Event> selectEventTagFlag() {
+		return eventDao.selectEventTagFlag();
+	}
+
 }

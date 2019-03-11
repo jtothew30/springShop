@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -7,6 +7,10 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>[signUp.jsp]</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/foundation-icons/foundation-icons.css">
 <!-- Bootstrap core CSS -->
 <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,6 +23,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/clean-blog.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/signUp_check.js"></script> 
 </head>
+<c:import url="../header.jsp" />
 <body>
     <div class="container">
 	  <div class="row">
@@ -101,6 +106,7 @@
 
    
 </body>
+<c:import url="../footer.jsp" />
 </html>
 
 

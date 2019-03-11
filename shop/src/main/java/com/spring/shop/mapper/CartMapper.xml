@@ -8,8 +8,24 @@
 		insert into cart values(#{pno}, #{pbno}, #{customer}, #{count}, #{price}, sysdate)
 	</insert>
 	
-	<select id="getCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">
-		<!-- select * from cart where customer = #{customer} order by cartdate desc -->
+	<select id="getCartList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Cart">
+		select * from 
+			(select rownum rn, q.* from
+				(select c.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select c.*, pb.title from cart c 
+											left outer join proboard pb 
+											on c.pbno = pb.pbno 
+											where customer = #{customer} 
+											) c 
+				left outer join production p 
+				on c.pno = p.pno 
+				order by cartdate desc
+			) q 
+		)
+		where rn between #{startNum} and #{endNum} 
+		order by rn
+	</select>
+	
+	<select id="getTotalCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">				
 		select c.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select c.*, pb.title from cart c 
 									left outer join proboard pb 
 									on c.pbno = pb.pbno 
@@ -17,7 +33,11 @@
 									) c 
 		left outer join production p 
 		on c.pno = p.pno 
-		order by cartdate desc
+		order by cartdate desc	
+	</select>
+	
+	<select id="countCartList" parameterType="string" resultType="int">
+		select count(*) from cart where customer = #{customer} 
 	</select>
 	
 	
@@ -29,9 +49,9 @@
 		select p.*, ps.count from production p 
 		left outer join prostock ps 
 		on p.pno=ps.pno 
-		where p.pname = (select pname from procontain 
-				 		 where pbno=#{pbno} 
-						)
+		where p.pno in (select pno from procontain 
+		 				where pbno=#{pbno}
+		 				)
 	</select>
 	
 	<update id="changeOption" parameterType="map">

@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.spring.shop.vo.Cart;
+import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.Production;
 
 @Repository
@@ -28,11 +29,22 @@ public class CartDaoImp implements CartDao {
 	}
 	
 	@Override
-	public List<Cart> getCartList(String customer){
-		System.out.println("daoimp getCartList 진입 check");
-		List<Cart> cartlist = sqlSession.selectList(CartMapper+".getCartList", customer);
+	public List<Cart> getTotalCartList(String customer){
+		List<Cart> cartlist = sqlSession.selectList(CartMapper+".getTotalCartList", customer);
+		return cartlist;
+	}
+	
+	@Override
+	public List<Cart> getCartList(Paging paging){
+		List<Cart> cartlist = sqlSession.selectList(CartMapper+".getCartList", paging);
 		System.out.println("daoimp getCartList check : " + cartlist.size());
 		return cartlist;
+	}
+	
+	@Override
+	public int countCartList(String customer) {
+		int count = sqlSession.selectOne(CartMapper+".countCartList", customer);
+		return count;
 	}
 	
 	@Override

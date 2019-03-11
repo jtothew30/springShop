@@ -27,6 +27,44 @@
 	var total;
 	
 	$(function(){
+		tabs = "${tabs}";
+		if(tabs == 'review'){
+			$("#li1").removeClass('is-active');
+			$("#panel1-label").attr('aria-selected','false');
+			$("#panel1-label").attr('tabindex','-1');
+			
+			$("#li2").addClass('is-active');
+			$("#panel3-label").attr('aria-selected','true');
+			$("#panel3-label").attr('tabindex','0');
+			
+			$("#panel1").removeClass('is-active');
+			$("#panel1").attr('aria-hidden','true');
+			
+			$("#panel3").addClass('is-active');
+			$("#panel3").removeAttr('aria-hidden');
+		}else if(tabs == 'qna'){
+			$("#li1").removeClass('is-active');
+			$("#panel1-label").attr('aria-selected','false');
+			$("#panel1-label").attr('tabindex','-1');
+			
+			$("#li3").addClass('is-active');
+			$("#panel4-label").attr('aria-selected','true');
+			$("#panel4-label").attr('tabindex','0');
+			
+			$("#panel1").removeClass('is-active');
+			$("#panel1").attr('aria-hidden','true');
+			
+			$("#panel4").addClass('is-active');
+			$("#panel4").removeAttr('aria-hidden');
+		}else{
+			$("#li1").addClass('is-active');
+			$("#panel1-label").attr('aria-selected','true');
+			$("#panel1-label").attr('tabindex','0');
+			$("#panel1").addClass('is-active');
+			$("#panel1").removeAttr('aria-hidden');
+		}
+		
+		
 		prolist = new Array();
 		seloplist = new Array();
 		stocklist = new Array();
@@ -259,6 +297,12 @@
 		}
 	}
 	
+	function imgchg(img) {
+		//alert(document.getElementById("img"+img).src);
+		document.getElementById("thumbnail").src = document.getElementById("img"+img).src;
+	}
+	
+	
 	
 	
 	$(document).ready(function() {
@@ -280,67 +324,35 @@
 <body>
 	<c:import url="header.jsp"/>
 
-	<!-- Start Top Bar -->
-	<div class="top-bar">
-		<div class="top-bar-left">
-			<ul class="dropdown menu" data-dropdown-menu="" role="menubar"
-				data-e="n2avhw-e">
-				<li class="menu-text" role="menuitem">Yeti Store</li>
-				<li class="has-submenu is-dropdown-submenu-parent opens-right"
-					role="menuitem" aria-haspopup="true" aria-label="One"><a
-					href="#">One</a>
-					<ul class="submenu menu vertical is-dropdown-submenu first-sub"
-						data-submenu="" role="menu">
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">One</a></li>
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">Two</a></li>
-						<li role="menuitem"
-							class="is-submenu-item is-dropdown-submenu-item"><a href="#">Three</a></li>
-					</ul></li>
-				<li role="menuitem"><a href="#">Two</a></li>
-				<li role="menuitem"><a href="#">Three</a></li>
-			</ul>
-		</div>
-		<div class="top-bar-right">
-			<ul class="menu">
-				<li><input type="search" placeholder="Search"></li>
-				<li><button type="button" class="button">Search</button></li>
-			</ul>
-		</div>
-	</div>
-	<!-- End Top Bar -->
+	
 	<br>
 	<!-- You can now combine a row and column if you just need a 12 column row -->
 	<article class="grid-container">
 		<div class="grid-x cell">
-			<nav aria-label="You are here:" role="navigation">
-				<ul class="breadcrumbs">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Features</a></li>
-					<li class="disabled">Gene Splicing</li>
-					<li><span class="show-for-sr">Current: </span> Cloning</li>
-				</ul>
-			</nav>
+			<strong style="font-size:30pt">${proboard.title}</strong>
 		</div>
 		<div class="grid-x grid-margin-x">
 			<div class="medium-6 cell">
-				<img class="thumbnail" src="${pageContext.request.contextPath}/resources/upload/${path}/메인.jpg"
-					width="650" height="350">
+				<img class="thumbnail" id="thumbnail" src="${pageContext.request.contextPath}/resources/upload/${path}/메인.jpg"
+					width="450" height="250">
 				<div class="grid-x grid-padding-x small-up-4">
 					<div class="cell">
-						<img src="${pageContext.request.contextPath}/resources/upload/${path}/1.JPG" width="200"
+						<img onmouseover="imgchg(1)" id="img1" src="${pageContext.request.contextPath}/resources/upload/${path}/메인.jpg" width="200"
 							height="200" align="middle">
 					</div>
 					<div class="cell">
-						<img src="${pageContext.request.contextPath}/resources/upload/${path}/2.JPG" width="200"
+						<img onmouseover="imgchg(2)" id="img2" src="${pageContext.request.contextPath}/resources/upload/${path}/1.jpg" width="200"
+							height="200" align="middle">
+					</div>
+					<div class="cell">
+						<img onmouseover="imgchg(3)" id="img3" src="${pageContext.request.contextPath}/resources/upload/${path}/2.jpg" width="200"
 							height="200" align="middle">
 					</div>
 				</div>
 			</div>
 			<div class="medium-6 large-5 cell large-offset-1">
 				<h3>설명</h3>
-				<p>옵션선택하면 수량 선택 보여주기</p>
+				<p>현재 판매량 : <strong style="color:red; font-size:15pt">${proboard.totalsales}</strong> 개 !!</p>
 				<label>옵션 <select id="selectOption" onchange="selectOption()">
 						<option value="" selected>옵션 선택</option>
 						<c:forEach var="op" items="${prolist}">
@@ -364,24 +376,58 @@
 			<hr>
 			<div style="text-align: center">
 			<ul class="tabs" data-tabs="" id="example-tabs" role="tablist" data-e="af0r5m-e">
-				<li class="tabs-title is-active" role="presentation" >
-				<a href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" id="panel1-label" tabindex="0">상품상세</a></li>
+				<li class="tabs-title" id="li1" role="presentation" >
+				<a href="#panel1" role="tab" aria-controls="panel1" aria-selected="false" id="panel1-label" tabindex="-1">상품상세</a></li>
 				<li class="tabs-title" role="presentation">
 				<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
-				<li class="tabs-title" role="presentation">
+				<li class="tabs-title" id="li2" role="presentation">
 				<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
-				<li class="tabs-title" role="presentation">
+				<li class="tabs-title" id="li3" role="presentation">
 				<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+			<%-- <c:choose>
+				<c:when test="${tabs eq '' || empty tabs}">
+					<li class="tabs-title is-active" role="presentation" >
+					<a href="#panel1" aria-selected="true" role="tab" aria-controls="panel1" id="panel1-label" tabindex="0">상품상세</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+				</c:when>
+				<c:when test="${tabs eq 'review'}">
+					<li class="tabs-title" role="presentation" >
+					<a href="#panel1" role="tab" aria-controls="panel1"  aria-selected="false" id="panel1-label" tabindex="-1">상품상세</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
+					<li class="tabs-title  is-active" role="presentation">
+					<a href="#panel3" aria-selected="true" role="tab" aria-controls="panel3" id="panel3-label" tabindex="0">상품리뷰</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+				</c:when>
+				<c:when test="${tabs eq 'qna'}">
+					<li class="tabs-title" role="presentation" >
+					<a href="#panel1" role="tab" aria-controls="panel1" aria-selected="false" id="panel1-label" tabindex="-1">상품상세</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel2" role="tab" aria-controls="panel2" aria-selected="false" id="panel2-label" tabindex="-1">판매자정보</a></li>
+					<li class="tabs-title" role="presentation">
+					<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
+					<li class="tabs-title is-active" role="presentation">
+					<a href="#panel4"  aria-selected="true" role="tab" aria-controls="panel4" id="panel4-label" tabindex="0">Q&A</a></li>
+				</c:when>		
+			</c:choose>
+			 --%>
+			
 			</ul>
 			</div>
 			<div class="tabs-content" data-tabs-content="example-tabs">
-				<div class="tabs-panel is-active" id="panel1" role="tabpanel"
-					aria-labelledby="panel1-label">
+				<div class="tabs-panel" id="panel1" role="tabpanel"
+					aria-labelledby="panel1-label" aria-hidden="true">
 					<div class="media-object stack-for-small">
 						<div class="media-object-section" style="text-align: center">
-							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단1.JPG" width="100%" align="middle">
-							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단2.JPG" width="100%" align="middle">
-							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단3.JPG" width="100%" align="middle">
+							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단1.jpg" width="100%" align="middle">
+							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단2.jpg" width="100%" align="middle">
+							<img src="${pageContext.request.contextPath}/resources/upload/${path}/하단3.jpg" width="100%" align="middle">
 						</div>
 					</div>
 				</div>
@@ -454,63 +500,9 @@
 				</div>
 				<div class="tabs-panel" id="panel4" role="tabpanel"
 					aria-labelledby="panel4-label" aria-hidden="true">
-					<div class="grid-x grid-margin-x medium-up-3 large-up-5">
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-					</div>
+					<h4>QnA</h4>
+					
+					<c:import url="/review/qna.do" />
 				</div>
 			</div>
 		</div>

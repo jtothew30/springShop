@@ -298,9 +298,14 @@
 			</div>
 			</c:if>
 			</c:forEach>
+			<c:if test="${empty pbList}">
+				<div class="row">
+				<p style="font-size: large; text-align:center;">등록된 상품이 없습니다.<p>
+				</div>
+			</c:if>
 		</div>
-		<!-- prduct Card end -->
-		<!-- pageing template -->
+		<!-- product Card end -->
+		<!-- paging template -->
 		<ul class="pagination-pointed pagination text-center"
 			role="navigation" aria-label="Pagination">
 			<li class="pagination-previous disabled">Previous <span
@@ -321,7 +326,7 @@
 			<li class="pagination-next disabled">Next <span
 				class="show-for-sr">page</span></li>
 		</ul>
-		<!-- pageing template -->
+		<!-- paging template -->
 	</div>
 	</div>
 	</form>

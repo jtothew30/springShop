@@ -188,15 +188,46 @@ create table review(
 	options varchar2(100) null,	 	--리뷰 남길 상품
 	writer varchar2(100) not null,  --댓글작성자 id
 	content varchar2(500) not null, --댓글내용
-	img varchar2(300),				--첨부이미지
+	path varchar2(300),				--첨부이미지 경로
 	stars number(7),				--별점
-	qna varchar2(50) not null,	  	--QnA 플래그
 	rdate date not null,			--작성날짜
 	pbno number(7) not null,		--상품 게시판 참조
+	good number(7) not null,		--추천 (도움됨)
+	bad number(7) not null,			--비추 (도움 안 됨)
 	primary key(rno)
 );
 commit;
 
+drop table react;
+create table react(
+	rno  number(7) not null,		--리뷰번호
+	id varchar2(100) not null  --사람
+);
+commit;
+
+
+
+drop sequence seqqna;
+create sequence seqqna
+ start with 1
+ increment by 1;
+commit;
+
+
+--상품 문의사항
+drop table qna;
+create table qna(
+	qno number(7) not null,			--qna번호
+	category varchar2(100) null,	--문의유형 (상품,배송,반품/취소,교환/변경,기타)
+	writer varchar2(100) not null,  --작성자 id
+	content varchar2(500) not null, --내용
+	path varchar2(300),				--첨부이미지 경로
+	qdate date not null,			--작성날짜
+	pbno number(7) not null,		--상품 게시판 참조
+	status varchar2(100) not null,  --qna상태 (답변대기, 답변완료)
+	primary key(qno)
+);
+commit;
 drop sequence seqevt;
 create sequence seqevt
  start with 1
@@ -219,6 +250,26 @@ create table event(
 );
 commit;
 
+
+drop sequence seqrpl;
+create sequence seqrpl
+ start with 1
+ increment by 1;
+commit;
+
+
+--댓글
+drop table reply;
+create table reply(
+	rpno number(7) not null,		--qna번호
+	writer varchar2(100) not null,  --작성자 id
+	content varchar2(500) not null, --내용
+	rpdate date not null,			--작성날짜
+	flag varchar2(100) not null,	--참고 플래그 ('review', 'qna')
+	no number(7) not null,			--참조 번호(rno, qno)
+	primary key(rpno)
+);
+commit;
 
 
 
@@ -287,6 +338,15 @@ col qna for a10
 col rdate for a10
 col pbno for 9999
 
+col qno for 9999
+col category for a10
+col qdate for a10
+
+
+col rpno for 9999
+col rpdate for a10
+col flag for a10
+col no for 9999
 
 
 

@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,16 +8,44 @@
 <title>테스팅 interPage</title>
 </head>
 <body>
+	<c:set var="ContextPath" value="${pageContext.request.contextPath}"/>
+
+	<c:if test="${account == null}">
+	<form role="form" method="post" autocomplete="off" action="login.do">
+		<p>
+			<label for="id">ID</label>
+			<input type="text" id="id" name="id"/>
+		</p>
+		<p>
+			<label for="pw">PW</label>
+			<input type="password" id="pw" name="pw"/>
+		</p>
+		<p><button type="submit">로그인</button></p>
+		<p><a href="signUp/signUp.do">회원가입</a>
+	</form>
+	</c:if>
+	
+	<c:if test="${msg == false}">
+		<p style="color:red;">로그인에 실패했습니다. ID 또는 PW를 다시 입력해주세요.</p>
+	</c:if>
+	
+	<c:if test="${account != null}">
+		<p>${account.name}님 환영합니다.</p>
+		<a href="${ContextPath}/logout.do">로그아웃</a>
+	</c:if>	
+
 	<h1>		
-		<a href="proboard/product.do?pbno=1">product.do</a>
+		<a href="${ContextPath}/proboard/product.do?pbno=1">product.do</a>
 	</h1>	
 	<h1>
-		<a href="admin/main.do">admin페이지</a>	<p>
+		<a href="admin/admin.do">admin페이지</a><p>
 		<a href="main.do">main페이지</a><p>
 		<a href="signUp/signUp.do">회원가입 테스트</a>	<br>
 		<a href="cart/cart.do">장바구니</a>	<br>
 		<a href="mypage/myorder.do">마이페이지 - 주문/배송 정보</a>	<br>	
 		<a href="mypage/myclaim.do">마이페이지 - 취소/반품/교환 정보</a>		<br>
+		<a href="mypage/myreview.do">마이페이지 - 내 상품 리뷰</a>		<br>
+		<a href="mypage/myqna.do">마이페이지 - 내 Q&A</a>		<br>
 	</h1>
 </body>
 </html>

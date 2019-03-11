@@ -2,6 +2,7 @@ package com.spring.shop.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -21,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.shop.service.Account.AccountService;
 import com.spring.shop.service.Event.EventService;
 import com.spring.shop.service.ProBoard.ProBoardService;
 import com.spring.shop.service.Production.ProductionService;
+import com.spring.shop.vo.Account;
 import com.spring.shop.vo.Event;
 import com.spring.shop.vo.Paging;
 import com.spring.shop.vo.ProBoard;
@@ -44,10 +47,13 @@ public class AdminController {
 	@Inject
 	EventService eventService;
 	
+	@Inject
+	AccountService accountService;
+	
 	@Autowired
 	private ServletContext application;
 
-	@RequestMapping("main.do")
+	@RequestMapping("admin.do")
 	public String adminMainpage() {
 		return "admin/admin";
 	}
@@ -63,12 +69,12 @@ public class AdminController {
 	public String productInsert(Production production) {
 		// 제품등록
 		productionService.insertProductionService(production);
-		logger.info(production.toString());
+		//logger.info(production.toString());
 		// 등록후 고유번호 가져오기
 		Production pro = productionService.selectProductionOne(production);
 
 		// 재고량초기화
-		logger.info(pro.toString());
+		//logger.info(pro.toString());
 		productionService.resetProductionCount(pro);
 		return "redirect:productList.do";
 	}
@@ -110,7 +116,7 @@ public class AdminController {
 		if(kwd==null) kwd="";
 		paging.setKwd(kwd);
 		paging.setTotalCount(productionService.selectSearchCount(kwd));
-		logger.info(paging.toString());
+		//logger.info(paging.toString());
 		List<Production> list = productionService.selectSearch(paging);
 		mav.addObject("paging", paging);		
 		mav.addObject("list", list);		
@@ -121,8 +127,8 @@ public class AdminController {
 	@RequestMapping("proCountUpdate.do")
 	public ModelAndView proCountUpdate(Production production) {
 		ModelAndView mav = new ModelAndView("redirect:productList.do");
-		logger.info(String.valueOf(production.getPno()));
-		logger.info(String.valueOf(production.getCount()));
+		//logger.info(String.valueOf(production.getPno()));
+		//logger.info(String.valueOf(production.getCount()));
 		productionService.updateProductionCount(production);
 		return mav;
 	}
@@ -148,19 +154,19 @@ public class AdminController {
 	// 게시글관리 - 게시글 등록
 	@RequestMapping(value = "boardInsert.do", method = RequestMethod.POST)
 	public String boardInsert(ProBoard proBoard, MultipartHttpServletRequest request) throws Exception {
-		logger.info(proBoard.toString());
+		//logger.info(proBoard.toString());
 		
 		List<MultipartFile> filelist = request.getFiles("file");		
 		String inputPath = "/resources/upload/";
 		proBoard.setPath(inputPath);
 		
-		logger.info(proBoard.toString());
+		//logger.info(proBoard.toString());
 		
 		proBoardService.insertProBoardService(proBoard);
 		// query input 타이밍에 pbno, pbdate ==> null 상태		
 		ProBoard pb = proBoardService.selectBoardForContain(proBoard);		
 		
-		logger.info(pb.toString());
+		//logger.info(pb.toString());
 		
 		//procontain 연동 등록 필요 ==> [pbno, pno]
 		int pbno = pb.getPbno();
@@ -171,7 +177,7 @@ public class AdminController {
 			map.put("pname", proBoard.getPname());
 			map.put("options", options[i]);
 			
-			logger.info(map.toString());
+			//logger.info(map.toString());
 			
 			productionService.insertProcontainPnamePno(map);
 		}
@@ -184,8 +190,8 @@ public class AdminController {
 			String originFileName = file.getOriginalFilename().toLowerCase(); // 원본 파일 명(소문자강제처리)
 	        long fileSize = file.getSize(); // 파일 사이즈
 	       
-	        logger.info("originFileName : " + originFileName);
-	        logger.info("fileSize : " + fileSize);
+	        //logger.info("originFileName : " + originFileName);
+	        //logger.info("fileSize : " + fileSize);
 	        
 	        try {
 	        	file.transferTo(new File(path, originFileName));
@@ -220,7 +226,7 @@ public class AdminController {
 			map.put("pname", proBoard.getPname());
 			map.put("options", options[i]);
 			
-			logger.info(map.toString());
+			//logger.info(map.toString());
 			
 			productionService.insertProcontainPnamePno(map);
 		}
@@ -233,8 +239,8 @@ public class AdminController {
 			String originFileName = file.getOriginalFilename().toLowerCase(); // 원본 파일 명(소문자강제처리)
 	        long fileSize = file.getSize(); // 파일 사이즈
 	       
-	        logger.info("originFileName : " + originFileName);
-	        logger.info("fileSize : " + fileSize);
+	        //logger.info("originFileName : " + originFileName);
+	        //logger.info("fileSize : " + fileSize);
 	        
 	        try {
 	        	file.transferTo(new File(path, originFileName));
@@ -297,6 +303,17 @@ public class AdminController {
 	public ModelAndView mainEdit() {
 		ModelAndView mav = new ModelAndView("admin/mainEdit");
 		List<ProBoard> list = proBoardService.selectProBoardAll();
+		List<Event> elist = eventService.selectEventAll();
+		List<Event> tlist = eventService.selectEventTagFlag();
+		
+		ArrayList<String> tagList = new ArrayList<String>();
+		for (Event e : tlist) {
+			tagList.add(e.getTag());
+		}
+		
+		mav.addObject("elist",elist);
+		mav.addObject("tlist",tlist);
+		mav.addObject("tagList",tagList);
 		mav.addObject("list",list);
 		return mav;
 	}
@@ -323,8 +340,8 @@ public class AdminController {
 			String originFileName = String.valueOf(i+1)+".jpg";
 	        long fileSize = file[i].getSize(); // 파일 사이즈
 	       
-	        logger.info("originFileName : " + originFileName);
-	        logger.info("fileSize : " + fileSize);
+	        //logger.info("originFileName : " + originFileName);
+	        //logger.info("fileSize : " + fileSize);
 	        
 	        try {
 	        	file[i].transferTo(new File(path, originFileName));
@@ -340,9 +357,25 @@ public class AdminController {
 	// 메인페이지 이벤트 등록
 	@RequestMapping("mainEventEdit.do")
 	public String mainEventEdit(Event event) {
-		logger.info(event.toString());
+		//logger.info(event.toString());
 		eventService.insertEvent(event);
 		return "redirect:mainEdit.do";
 	}
+	
+	//==========================================================================
+	
+	// 회원관리 페이지 이동
+	@RequestMapping("memberList.do")
+	public ModelAndView memberList(Paging paging) {
+		ModelAndView mav = new ModelAndView("admin/memberList");
+		int count = accountService.selectAccountListCountAll(paging);
+		paging.setTotalCount(count);
+		List<Account> list = accountService.selectAccountListAll(paging);
+		
+		mav.addObject("paging",paging);
+		mav.addObject("list", list);
+		return mav;
+	}
+	
 	
 }

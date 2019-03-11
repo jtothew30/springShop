@@ -5,14 +5,30 @@ public class Review {
 	private String options; 
 	private String writer;
 	private String content; 
-	private String img; 
+	private String path; 
 	private int stars;
-	private String qna;
 	private String rdate;
 	private int pbno;
+	private int good;
+	private int bad;
+	
+	private String title;
+	private int rn;
 	
 	
 	
+	public int getRn() {
+		return rn;
+	}
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public int getRno() {
 		return rno;
 	}
@@ -37,23 +53,18 @@ public class Review {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getImg() {
-		return img;
+	
+	public String getPath() {
+		return path;
 	}
-	public void setImg(String img) {
-		this.img = img;
+	public void setPath(String path) {
+		this.path = path;
 	}
 	public int getStars() {
 		return stars;
 	}
 	public void setStars(int stars) {
 		this.stars = stars;
-	}
-	public String getQna() {
-		return qna;
-	}
-	public void setQna(String qna) {
-		this.qna = qna;
 	}
 	public String getRdate() {
 		return rdate;
@@ -67,6 +78,23 @@ public class Review {
 	public void setPbno(int pbno) {
 		this.pbno = pbno;
 	}
-	
+	public int getGood() {
+		return good;
+	}
+	public void setGood(int good) {
+		this.good = good;
+	}
+	public int getBad() {
+		return bad;
+	}
+	public void setBad(int bad) {
+		this.bad = bad;
+	}
+	@Override
+	public String toString() {
+		return "Review [rno=" + rno + ", options=" + options + ", writer=" + writer + ", content=" + content + ", path="
+				+ path + ", stars=" + stars + ", rdate=" + rdate + ", pbno=" + pbno + ", good=" + good + ", bad=" + bad
+				+ "]";
+	}
 	
 }

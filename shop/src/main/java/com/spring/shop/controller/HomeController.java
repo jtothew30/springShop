@@ -1,6 +1,7 @@
 package com.spring.shop.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,9 +54,25 @@ public class HomeController {
 	@RequestMapping("main.do")
 	public ModelAndView main() {
 		ModelAndView mav = new ModelAndView("main");
+		// 전체 이벤트 list
 		List<Event> list = eventService.selectEventAll();
+		
+		// 이벤트 tag list & flag ==1
+		List<Event> list2 = eventService.selectEventTagFlag();
+		ArrayList<String> tagList = new ArrayList<String>();
+		for (Event e : list2) {
+			tagList.add(e.getTag());
+		}
+//		String[] tagList = new String[list2.size()];
+//		for (int i = 0; i < list2.size(); i++) {
+//			tagList[i] = list2.get(i).getTag();
+//		}
+		
+		//logger.info(tagList.toString());
+		//logger.info(list.toString());
+		
+		mav.addObject("tagList",tagList);
 		mav.addObject("list",list);
-		logger.info(list.toString());
 		return mav;
 		
 	}
