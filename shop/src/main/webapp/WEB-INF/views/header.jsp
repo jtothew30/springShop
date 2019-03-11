@@ -410,21 +410,21 @@
 								</li>
 							</ul>
 						</li>
-						<div class="large-7 columns">
+						<div class="large-7 columns" style="display:inline;">
 							<li style="margin-top: 0.6em; padding:0;">
-								<form action="${pageContext.request.contextPath}/search.do" id="searchProduct" name="searchProduct">
-									<input class="search expened" style="border-radius: 0.5em;" type="text" name="kwd" placeholder="Find Stuff"
+								<form action="${pageContext.request.contextPath}/search.do" id="searchProduct" name="searchProduct" >
+									<input class="search expened" style="border-radius: 0.5em;display:inline;" type="text" name="kwd" placeholder="Find Stuff"
 									 value="${paging.kwd}">
 									<input type="hidden" id="opt2" name="optionKwd" value="${paging.optionKwd}">
 
 							</li>
 						</div>
-						<li>
 							<div class="large-3 small-3 columns" style="padding: 8px;">
+						<li>
 								<input type="submit" id="searchPro" class="alert button expand" style="border-radius: 0.5em;" value="검색">
 								</form>
-							</div>
 						</li>
+							</div>
 					</ul>
 				</div>
 			</div>
@@ -513,13 +513,23 @@
 		  content: formTemplate,
 		  button: {
 		    text: 'Submit',
-		    closeModal: false
-		  }
+		    value: 'catch',
+		    closeModal: false,
+		  },
+		  defeat: true,
 		};
 
 		// handle clicks on the "Click me" button
 		$('#loginBtn').click(function () {
-		  swal(swalConfig);
+		  swal(swalConfig).then((value) =>{
+			  switch (value) {
+			  case 'catch':
+				  loginRequest();
+			  	  break;
+			  case 'defeat':
+				  break;
+			  }
+		   });
 		});
 		
 		$(document).keypress(function(e) {
@@ -530,9 +540,9 @@
 		});
 		
 		// handle clicks on the "Submit" button of the modal form
-		$('body').on('click', '.swal-button--confirm', function() {			
+		/* $('body').on('click', '.swal-button--confirm', function() {			
 		  loginRequest();
-		});
+		}); */
 
 		$('#logoutBtn').click(function(){
 			swal("정말 로그아웃 하시겠습니까 ?", {
@@ -545,27 +555,21 @@
 						data : {"result": true},
 						"success" : function(data){
 							console.log(data);
-							if(data.result == "false"){
+							if(data == "false"){
 								swal({
 									title:"로그아웃 실패",
 									icon : "error"
 								}).then((willDelete) => {
 									location.reload();
-									swal.close();
 								});
-							} else if(data.result == "true"){
+							} else if(data == "true"){
 								swal({
 									title:"로그아웃 성공",
 									text : "즐거운 하루 되세요!",
 									icon : "success"
 								}).then((willDelete) => {
 									location.reload();
-									swal.close();
 								});
-								$("#logoutBtn").hide();
-				      			$("#loginBtn").show();
-				      			//$(".admin").hide();
-				      			swal.close();
 							} 
 						},
 						"error": function(data){
