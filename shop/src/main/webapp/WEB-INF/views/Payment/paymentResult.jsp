@@ -13,6 +13,7 @@
 	
 </script>
 </head>
+<c:import url="../header.jsp" />
 <body>
 	<table>
 		<tr>
@@ -63,6 +64,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://cdn.bootpay.co.kr/js/bootpay-2.1.1.min.js" type="application/javascript"></script>
 </body>
+<c:import url="../footer.jsp" />
 </html>
 
 

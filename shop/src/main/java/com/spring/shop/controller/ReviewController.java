@@ -45,6 +45,12 @@ public class ReviewController {
 	public String review(Model model, Paging paging, HttpServletRequest request) throws Exception{
 		System.out.println("review.do check pbno:"+paging.getPbno());
 		
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
+		
 		String page = request.getParameter("pageR");
 		if(page != null) {
 			paging.setPage(Integer.parseInt(page));
@@ -57,12 +63,20 @@ public class ReviewController {
 		model.addAttribute("prolist", prolist);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "review";
 	}
 	
 	@RequestMapping("qna.do")
 	public String qna(Model model, Paging paging, HttpServletRequest request) throws Exception{		
 		System.out.println("qna.do check pbno:"+paging.getPbno());
+		
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
+		
 		
 		String page = request.getParameter("pageQ");
 		if(page != null) {
@@ -74,6 +88,7 @@ public class ReviewController {
 		
 		model.addAttribute("qlist", qlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "qna";
 	}
 	

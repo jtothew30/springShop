@@ -243,6 +243,7 @@ public class MyPageController {
 		
 		model.addAttribute("rvlist", rvlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "MyPage/myreview";
 	}
 	
@@ -270,6 +271,7 @@ public class MyPageController {
 					
 		model.addAttribute("qlist", qlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "MyPage/myqna";
 	}
 	

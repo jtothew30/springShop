@@ -192,8 +192,12 @@
 					str += "<tr><td>"+rplist[i].writer+"</td>";
 					str += "<td id=\"qnaReplyContent"+rplist[i].rpno+"\">"+rplist[i].content+"</td>";
 					str += "<td>"+rplist[i].rpdate+"</td>";
-					str += "<td id=\"qbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"qnaReplyEdit("+rplist[i].rpno+","+qno+")\" value=\"수정\">&nbsp;";
-					str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"qnaReplyDelete("+rplist[i].rpno+","+qno+")\" value=\"삭제\"></td></tr>";
+					if("${session}" == rplist[i].writer){
+						str += "<td id=\"qbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"qnaReplyEdit("+rplist[i].rpno+","+qno+")\" value=\"수정\">&nbsp;";
+						str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"qnaReplyDelete("+rplist[i].rpno+","+qno+")\" value=\"삭제\"></td></tr>";
+					}else{
+						str += "<td>&nbsp;</td></tr>";
+					}
 				}
 				$("#qnaReplyList").html(str);
 			}
@@ -232,13 +236,10 @@
 			}
 		})
 	}
-	
-	
 </script>
 
-
-
 </head>
+<c:import url="../header.jsp" />
 <body>
 	<div class="row column">
 	<div class="MPright_area">
@@ -422,4 +423,5 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
+<c:import url="../footer.jsp" />
 </html>

@@ -116,7 +116,7 @@
 </script>
 
 </head>
-
+<c:import url="../header.jsp" />
 <body>
 	<div class="row column">
 	<div class="MPright_area">
@@ -191,4 +191,5 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
+<c:import url="../footer.jsp" />
 </html>

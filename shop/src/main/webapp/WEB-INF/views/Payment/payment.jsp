@@ -444,113 +444,118 @@
 	
 </script>
 </head>
+<c:import url="../header.jsp" />
 <body>
 	
-	&#60;결제 요청 정보&#62;
-	<table>	
-		<thead>
-			<tr>
-				<th>&nbsp;</th> <th style="text-align:center;">결제 요청 상품</th> <th style="text-align:center;">가격/수량</th> <th style="text-align:center;">합 계</th>
-			</tr>
-		</thead>
-		<tbody>
-		<c:forEach var="preq" items="${preqlist}">
-			<tr align="center">
-				<td width="20%">
-					<img src="${pageContext.request.contextPath}/resources/upload/${preq.pbno}/${preq.pname}/메인.jpg">
-				</td>
-				<td width="40%">
-					<strong style="font-size:15pt;">${preq.pname}</strong> - ${preq.options}<br><br>
-					상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${preq.pbno}">${preq.title}</a>
-				</td>
-				<td width="20%">${preq.price} 원 / ${preq.count} 개</td>
-				<td width="20%">
-					합계 : <span id="price${preq.pno}">${preq.count * preq.price}</span> 원
-				</td>	
-			</tr>
-		</c:forEach>
-		</tbody>
-		<tr align="center">
-			<td colspan="2" width="30%" style="font-size:17pt; font-weight:900;">주문금액 : <span id="reqTotalPrice">${total}</span> 원&nbsp;&nbsp;ㅡ&nbsp;&nbsp;할인금액 : 0 원</td>
-			<td colspan="2" width="70%" style="font-size:17pt; font-weight:900;">총 결제예정금액 : <span id="finalPrice">${total}</span> 원</td>
-		</tr>
-	</table>
-	
-	<br><br><br>
-	
-	<div>	
-	&#60;배송지 정보 입력&#62;
-	<table>
-		<tr align="center">
-			<th>배송지 선택</th>
-			<th style="padding-top:18px">
-		        <input type="radio" name="seladdr" value="base" onclick="changeSelectAddr()" checked>기본 배송지	        
-			</th>
-			<th style="padding-top:18px">
-				<input type="radio" name="seladdr" value="type" onclick="changeSelectAddr()">직접입력
-			</th>
-			<th>
-				<button class="hollow button" data-target="#layerpop" data-toggle="modal">배달지목록확인</button><br/>
-					
-			</th>
-		</tr>
-		<tr>
-			<td colspan="4">
-				<table>
+	<div style="margin: 0% 10%;">		
+			<div style="text-align: center">
+
+			<table>	
+				<thead>
 					<tr>
-						<td width="20%">주문자</td>
-						<td width="80%">${account.id}</td>
+						<th>&nbsp;</th> <th style="text-align:center;">결제 요청 상품</th> <th style="text-align:center;">가격/수량</th> <th style="text-align:center;">합 계</th>
 					</tr>
-					
-					<c:choose>
-				    	<c:when test="${empty addrlist}">
-				    		<tr>
-								<td width="20%">받으시는 분</td>
-								<td width="80%" id="recipient">현재 등록된 배송지 정보가 없습니다.</td>
-							</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="preq" items="${preqlist}">
+					<tr align="center">
+						<td width="20%">
+							<img src="${pageContext.request.contextPath}/resources/upload/${preq.pbno}/${preq.pname}/메인.jpg">
+						</td>
+						<td width="40%">
+							<strong style="font-size:15pt;">${preq.pname}</strong> - ${preq.options}<br><br>
+							상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${preq.pbno}">${preq.title}</a>
+						</td>
+						<td width="20%">${preq.price} 원 / ${preq.count} 개</td>
+						<td width="20%">
+							합계 : <span id="price${preq.pno}">${preq.count * preq.price}</span> 원
+						</td>	
+					</tr>
+				</c:forEach>
+				</tbody>
+				<tr align="center">
+					<td colspan="2" width="30%" style="font-size:17pt; font-weight:900;">주문금액 : <span id="reqTotalPrice">${total}</span> 원&nbsp;&nbsp;ㅡ&nbsp;&nbsp;할인금액 : 0 원</td>
+					<td colspan="2" width="70%" style="font-size:17pt; font-weight:900;">총 결제예정금액 : <span id="finalPrice">${total}</span> 원</td>
+				</tr>
+			</table>
+			
+			<br><br><br>
+			
+			<div>	
+	
+			<table>
+				<tr align="center">
+					<th>배송지 선택</th>
+					<th style="padding-top:18px">
+				        <input type="radio" name="seladdr" value="base" onclick="changeSelectAddr()" checked>기본 배송지	        
+					</th>
+					<th style="padding-top:18px">
+						<input type="radio" name="seladdr" value="type" onclick="changeSelectAddr()">직접입력
+					</th>
+					<th>
+						<button class="hollow button" data-target="#layerpop" data-toggle="modal">배달지목록확인</button><br/>
+							
+					</th>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<table>
 							<tr>
-								<td width="20%">주소</td>
-								<td width="80%" id="addr"></td>
+								<td width="20%">주문자</td>
+								<td width="80%">${account.id}</td>
 							</tr>
-							<tr>
-								<td width="20%">연락처</td>
-								<td width="80%" id="phone"></td>
-							</tr>
-							<tr>
-								<td width="20%">배송시 요구사항</td>
-								<td width="80%" id="memo"><input type="text" id="newmemo"></td>
-							</tr>
-				    	</c:when>
-			    		<c:otherwise>		    			
-				    		<tr>
-								<td width="20%">받으시는 분</td>
-								<td width="80%" id="recipient">${base.recipient}</td>
-							</tr>
-							<tr>
-								<td width="20%">주소</td>
-								<td width="80%" id="addr"><span id="addr1">${base.addr1}</span><br><span id="addr2">${base.addr2}</span></td>
-							</tr>
-							<tr>
-								<td width="20%">연락처</td>
-								<td width="80%" id="phone">${base.phone}</td>
-							</tr>
-							<tr>
-								<td width="20%">배송시 요구사항</td>
-								<td width="80%" id="memo"><input type="text" id="newmemo"></td>
-							</tr>					
-			   		    </c:otherwise>
-		  		    </c:choose>			    		    
-				</table>		
-			</td>
-		</tr>
-	</table>
+							
+							<c:choose>
+						    	<c:when test="${empty addrlist}">
+						    		<tr>
+										<td width="20%">받으시는 분</td>
+										<td width="80%" id="recipient">현재 등록된 배송지 정보가 없습니다.</td>
+									</tr>
+									<tr>
+										<td width="20%">주소</td>
+										<td width="80%" id="addr"></td>
+									</tr>
+									<tr>
+										<td width="20%">연락처</td>
+										<td width="80%" id="phone"></td>
+									</tr>
+									<tr>
+										<td width="20%">배송시 요구사항</td>
+										<td width="80%" id="memo"><input type="text" id="newmemo"></td>
+									</tr>
+						    	</c:when>
+					    		<c:otherwise>		    			
+						    		<tr>
+										<td width="20%">받으시는 분</td>
+										<td width="80%" id="recipient">${base.recipient}</td>
+									</tr>
+									<tr>
+										<td width="20%">주소</td>
+										<td width="80%" id="addr"><span id="addr1">${base.addr1}</span><br><span id="addr2">${base.addr2}</span></td>
+									</tr>
+									<tr>
+										<td width="20%">연락처</td>
+										<td width="80%" id="phone">${base.phone}</td>
+									</tr>
+									<tr>
+										<td width="20%">배송시 요구사항</td>
+										<td width="80%" id="memo"><input type="text" id="newmemo"></td>
+									</tr>					
+					   		    </c:otherwise>
+				  		    </c:choose>			    		    
+						</table>		
+					</td>
+				</tr>
+			</table>
+			</div>
+			
+			<br><br><br>
+			<input type="button" style="font-size:24pt; padding-top:7pt; padding-bottom:7pt" class="hollow button success" onclick="pay()" value="결제 하기"> 
+			<input type="button" style="font-size:14pt;" class="hollow button alert" onclick="cancel()" value="취소"> 
+			<br><br><br>
+	
 	</div>
-	
-	<br><br><br>
-	<input type="button" style="font-size:24pt; padding-top:7pt; padding-bottom:7pt" class="hollow button success" onclick="pay()" value="결제 하기"> 
-	<input type="button" style="font-size:14pt;" class="hollow button alert" onclick="cancel()" value="취소"> 
-	<br><br><br>
-	
+	</div>
 	
 	<div class="modal fade" id="layerpop" tabindex="-1" role="dialog">
 	  <div class="modal-dialog modal-lg">
@@ -644,6 +649,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://cdn.bootpay.co.kr/js/bootpay-2.1.1.min.js" type="application/javascript"></script>
 </body>
+<c:import url="../footer.jsp" />
 </html>
 
 

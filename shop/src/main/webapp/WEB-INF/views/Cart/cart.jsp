@@ -413,7 +413,7 @@
 	           </table><hr>	           
 	                                       
 	           <p>
-	           	총합계금액(수량) : <span id="opchg_total"></span>원
+	           	<strong style="font-size:25pt">총합계금액(수량) : <span id="opchg_total"></span>원</strong>
 	           </p>
 	      </div>
 	      <!-- Footer -->

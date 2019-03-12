@@ -111,7 +111,7 @@
 		          		<td>${pr.price}</td>
 		          		<td>${pr.count * pr.price}</td>
 		          		<td>${pr.status}</td>
-		          		<td><input type="button" onclick="reviewRequest(${pr.reqno})" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성"></td>
+		          		<td><input type="button" class="hollow button" onclick="reviewRequest(${pr.reqno})" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성"></td>
 		          	</tr>
 		          </c:forEach> 
 		    	</c:otherwise>
@@ -180,8 +180,8 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>
