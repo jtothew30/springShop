@@ -13,7 +13,10 @@
 	
 </script>
 </head>
+<c:import url="../header.jsp" />
 <body>
+<div style="margin: 0% 10%;">      
+      <div style="text-align: center">
 	<table>
 		<tr>
 			<td>결제 번호</td>
@@ -48,7 +51,8 @@
 			<td>${payment.memo}</td>
 		</tr>	
 	</table>
-	
+	</div>
+	</div>
 	
 	<a href="../mypage/myorder.do">마이페이지 - 주문/배송 정보</a>
 <!-- Bootstrap core JavaScript -->
@@ -63,6 +67,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://cdn.bootpay.co.kr/js/bootpay-2.1.1.min.js" type="application/javascript"></script>
 </body>
+<c:import url="../footer.jsp" />
 </html>
 
 

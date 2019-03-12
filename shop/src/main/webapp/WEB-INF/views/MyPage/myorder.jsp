@@ -24,7 +24,6 @@
 	.prlist:hover{
 		background-color: #FFBBBB;
 	}
-
 </style>
 
 
@@ -116,13 +115,21 @@
 </script>
 
 </head>
-
+<c:import url="../header.jsp" />
 <body>
 	<div class="row column">
+	<nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs mypageSectorArea">
+          <li class="disabled" style="font-weight:900; font-size:x-large; color:#da6464;">주문/배송현황</li>
+          <li><a href="myclaim.do" style="font-weight:900; font-size:x-large;">취소/반품/교환 현황</a></li>
+          <li><a href="myreview.do" style="font-weight:900; font-size:x-large;">내 상품 리뷰</a></li>
+          <li><a href="myqna.do" style="font-weight:900; font-size:x-large;">내 Q&A</a></li>
+        </ul>
+      </nav>
 	<div class="MPright_area">
-		<div class="mypageSectorArea">
-		    <h1 style="font-weight:900">마이페이지-주문/배송현황</h1>
-		</div>
+		<!-- <div class="mypageSectorArea">
+		    <h5 style="font-weight:900">마이페이지-주문/배송현황</h5>
+		</div> -->
 	
 		<div class="h3WithAd">
 			<h3 class="mgb10">
@@ -191,4 +198,5 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
+<c:import url="../footer.jsp" />
 </html>

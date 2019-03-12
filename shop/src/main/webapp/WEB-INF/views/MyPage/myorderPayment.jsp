@@ -100,7 +100,7 @@
 <body>
 	
 	<table cellspacing="0" cellpadding="0" width="785" class="tb_myPg02">
-		<col width="30"><col width="40"><col width="100"><col width="50"><col width="30"><col width="60"><col width="40">
+		<col width="30"><col width="40"><col width="100"><col width="50"><col width="30"><col width="50"><col width="40">
 			<thead>
 				<tr class="tb_myPgThB mgt15">
 					<th style="text-align:center;">주문번호</th>
@@ -120,14 +120,14 @@
 		    	</c:when>
 	    		<c:otherwise>   
 	    		  <c:forEach var="pay" items="${plist}">
-		          	<tr class="paylist">
+		          	<tr class="paylist" align="center">
 		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.payno}</td>
 		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.recipient}</td>
 		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.payname}</td>
 		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.total}</td>
 		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.status}</td>
-		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.payment}</td>
-		          		<td><input type="button" onclick="cancelReq(${pay.payno})" value="취소신청"></td>
+		          		<td onclick="checkDetail(${pay.payno})" data-target="#layerpop" data-toggle="modal">${pay.paydate}</td>
+		          		<td><input type="button" class="hollow button alert" style="margin-bottom:0pt" onclick="cancelReq(${pay.payno})" value="취소신청"></td>
 		          	</tr>
 		          </c:forEach> 
 		    	</c:otherwise>
@@ -175,7 +175,7 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
 	  </div>

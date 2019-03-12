@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,11 @@ public class MyPageController {
 	
 	@RequestMapping(value="myorderPayment.do")
 	public String myorderPayment(Model model, Paging paging, HttpServletRequest request) throws Exception{
-		String customer = "testID";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+			
 		paging.setCustomer(customer);
 		
 		String page = request.getParameter("pagePy");
@@ -97,7 +102,11 @@ public class MyPageController {
 	
 	@RequestMapping(value="myorderPayrequest.do")
 	public String myorderPayrequest(Model model, Paging paging, HttpServletRequest request) throws Exception{
-		String customer = "testID";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+			
 		paging.setCustomer(customer);
 		
 		String page = request.getParameter("pagePr");
@@ -118,7 +127,7 @@ public class MyPageController {
 			prlist = service.searchOrderDatePr(paging);			
 		}
 		
-		model.addAttribute("plist", prlist);
+		model.addAttribute("prlist", prlist);
 		model.addAttribute("paging", paging);	
 		return "MyPage/myorderPayrequest";
 	}
@@ -149,7 +158,11 @@ public class MyPageController {
 	
 	@RequestMapping(value="myclaimPayment.do")
 	public String myclaimPayment(Model model, Paging paging, HttpServletRequest request) throws Exception{
-		String customer = "testID";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+			
 		paging.setCustomer(customer);
 		
 		String page = request.getParameter("pagePy");
@@ -178,7 +191,11 @@ public class MyPageController {
 	
 	@RequestMapping(value="myclaimPayrequest.do")
 	public String myclaimPayrequest(Model model, Paging paging, HttpServletRequest request) throws Exception{
-		String customer = "testID";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+			
 		paging.setCustomer(customer);
 		
 		String page = request.getParameter("pagePr");
@@ -205,8 +222,12 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="myreview.do")
-	public String myreview(Paging paging, Model model) throws Exception{
-		String writer = "testID"; // need to edit for getting login user's id from session later~		
+	public String myreview(Paging paging, Model model, HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
 		paging.setCustomer(writer);
 		
 		List<Review> rvlist = new ArrayList<Review>();	
@@ -222,12 +243,17 @@ public class MyPageController {
 		
 		model.addAttribute("rvlist", rvlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "MyPage/myreview";
 	}
 	
 	@RequestMapping(value="myqna.do")
-	public String myqna(Paging paging, Model model) throws Exception{
-		String writer = "testID"; // need to edit for getting login user's id from session later~
+	public String myqna(Paging paging, Model model, HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
 		paging.setCustomer(writer);
 		
 		logger.info("td:"+paging.getTodate()+"/fd:"+paging.getFromdate());
@@ -245,6 +271,7 @@ public class MyPageController {
 					
 		model.addAttribute("qlist", qlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "MyPage/myqna";
 	}
 	
@@ -280,7 +307,12 @@ public class MyPageController {
 		List<MultipartFile> filelist = request.getFiles("file");
 		
 		String inputPath = "/resources/upload/review/"+review.getPath();
-		String writer = "testID";	
+		
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
 		review.setWriter(writer);
 		review.setPath(inputPath);
 		
@@ -315,7 +347,11 @@ public class MyPageController {
 		List<MultipartFile> filelist = request.getFiles("file");
 		
 		String inputPath = "/resources/upload/review/"+review.getPath();
-		String writer = "testID";	
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
 		review.setWriter(writer);
 		review.setPath(inputPath);
 		

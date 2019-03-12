@@ -38,13 +38,13 @@
 								</a>
 							</div>
 							<div id="shipping" class="menuBox shipping">
-								<a href="${pageContext.request.contextPath}/account/orderList.do">						
+								<a href="${pageContext.request.contextPath}/mypage/myorder.do">						
 									<p class="title">주문/배송현황</p>
 									<span class="noti">주문내역, 배송현환 등<br/>확인해보세요.</span>
 								</a>
 							</div>
 							<div class="menuBox withdrawal">
-								<a href="${pageContext.request.contextPath}/account/AccountDelete?name=${sessionScope.account}">
+								<a href="${pageContext.request.contextPath}/account/exitPage.do">
 									<p class="title">회원탈퇴</p>
 									<span class="noti"></span>
 								</a>
@@ -54,7 +54,65 @@
 				</div>
 			</div>
 		</form>
-
+	<script src="${pageContext.request.contextPath}/resources/js/vendor/jquery.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		var ctx = "${pageContext.request.contextPath}";
+		function exitAccount(id){
+			swal({
+				title: '회원 탈퇴',
+				text: id+' 회원님 정말 회원탈퇴를 진행하시겠습니까?\n비밀번호 확인:',
+				icon: 'warning',
+				content: {
+				    element: "input",
+				    attributes: {
+				      placeholder: "비밀 번호 입력",
+				      type: "password",
+				    },
+				  },
+				buttons: true, 
+			}).then((value, willDelete)=>{
+				if(!value) throw null;
+				$.ajax({
+					url : ctx +"/account/accountDeleteAjax.do",
+					type : "POST",
+					data : {"id" : id , "pw": value},
+					"success":function(data){
+						if(data == "false"){
+							swal({
+								title:"회원탈퇴 실패",
+								text:"비밀번호를 다시 확인해주세요.",
+								icon : "error",
+							}).then((willDelete) => {
+								location.reload();
+							});
+						} else if(data == "true"){
+							swal({
+								title:"회원탈퇴 성공",
+								text : "그동안의 성원에 감사드립니다.",
+								icon : "success"
+							}).then((willDelete) => {
+								location.replace( ctx + "/main.do");
+							});
+						}	
+					},
+					"error": function(data){
+						console.log(data);
+						swal({
+							title:"서버문제",
+							text : "관리자에게 문의하세요. (회원탈퇴오류)",
+							icon : "error"
+						}).then((willDelete) => {
+							location.reload();
+						});
+					}
+				});	
+			});
+		}
+	</script>
 <c:import url="../footer.jsp"/>
 </body>
 </html>

@@ -132,7 +132,7 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
 	  </div>

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>cart page</title>
 <!-- Bootstrap core CSS -->
-<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
+<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
 
@@ -333,11 +333,11 @@
 						</td>
 						<td width="20%">
 							${cart.price} 원 / ${cart.count} 개<br>
-							<input type="button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})" value="변경"> 
+							<button type="button" class="hollow button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})">변경</button> 
 						</td>
 						<td width="20%">
 							합계 : <span id="price${cart.pno}">${cart.count * cart.price}</span> 원&nbsp;&nbsp;
-							<input type="button" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
+							<input type="button" class="hollow button alert" onclick="deleteCart('${cart.pname}','${cart.options}',${cart.pno})" value="삭제">
 						</td>				
 					</tr>
 					</c:forEach>
@@ -367,8 +367,8 @@
 	      </ul>
 	    <!-- pageing template -->
 	</div>
-	<input type="button" onclick="selPayRequest()" value="선택상품주문">
-	<input type="button" onclick="allPayRequest()" value="전체주문">
+	<input type="button" class="button primary" onclick="selPayRequest()" value="선택상품주문">
+	<input type="button" class="button secondary" onclick="allPayRequest()" value="전체주문">
 	
 	
 	
@@ -413,13 +413,13 @@
 	           </table><hr>	           
 	                                       
 	           <p>
-	           	총합계금액(수량) : <span id="opchg_total"></span>원
+	           	<strong style="font-size:25pt">총합계금액(수량) : <span id="opchg_total"></span>원</strong>
 	           </p>
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="changeOption()">변경 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="changeOption()">변경 완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>

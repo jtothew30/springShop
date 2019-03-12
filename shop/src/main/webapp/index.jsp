@@ -30,7 +30,7 @@
 	</c:if>
 	
 	<c:if test="${account != null}">
-		<p>${account.name}님 환영합니다.</p>
+		<p>${account}님 환영합니다.</p>
 		<a href="${ContextPath}/logout.do">로그아웃</a>
 	</c:if>	
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.spring.shop.service.Account.AccountService;
 import com.spring.shop.service.Address.AddressService;
 import com.spring.shop.service.Payment.PaymentService;
+import com.spring.shop.vo.Account;
 import com.spring.shop.vo.Address;
 import com.spring.shop.vo.Cart;
 import com.spring.shop.vo.Payment;
@@ -33,17 +36,21 @@ public class PaymentController {
 	@Inject
 	private AddressService addrservice;
 	
+	@Inject
+	private AccountService acctservice;
+	
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
 	@RequestMapping(value="paymentPage.do")
-	public String paymentPage(Model model) throws Exception{
+	public String paymentPage(Model model, HttpServletRequest request) throws Exception{
 		
-		//get datas from session
-		String customer = "testID";
-		String email = "asd@asd.asd";
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
 		
-		
-		
+		Account account = acctservice.viewmem(customer);		
+				
 		List<Payrequest> preqlist = service.getPayrequestList(customer);
 		
 		int total = 0;
@@ -77,8 +84,7 @@ public class PaymentController {
 		model.addAttribute("preqlist", preqlist);
 		model.addAttribute("addrlist", addrlist);
 		model.addAttribute("total", total);
-		model.addAttribute("customer", customer);
-		model.addAttribute("email", email);
+		model.addAttribute("account", account);
 		return "Payment/payment";
 	}
 	
@@ -86,10 +92,6 @@ public class PaymentController {
 	
 	@RequestMapping(value="paymentResult.do")
 	public String paymentResultPage(Model model, HttpServletRequest request) throws Exception{
-		
-		//get datas from session
-		String customer = "testID";
-		
 		int payno = Integer.parseInt(request.getParameter("payno"));		
 		Payment payment = service.getPaymentResult(payno);
 		
@@ -103,14 +105,16 @@ public class PaymentController {
 	@RequestMapping(value="/payrequest.do", method=RequestMethod.POST)
 	public void cart(HttpServletRequest request) throws Exception{
 		System.out.println("payRequest.do 진입 체크");		
-		String customer = "testID"; 
+		HttpSession session = request.getSession();	
+		
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
 		
 		String delflag = request.getParameter("del");
 		if(delflag.equals("true"))
 			service.deletePayment(customer);
-		
-		
-		
+			
 		service.createPayment(customer); // create new payment
 		int payno = service.getPayno(customer); // get payno from payment table for create new payrequest datas
 		
@@ -141,8 +145,12 @@ public class PaymentController {
 	
 	@ResponseBody
 	@RequestMapping(value="/checkStock.do", method=RequestMethod.POST)
-	public String checkStock() throws Exception{
-		String customer = "testID"; 		
+	public String checkStock(HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+		
 		String flag = "true";
 		
 		System.out.println("checkStock 진입 체크");
@@ -162,8 +170,12 @@ public class PaymentController {
 	
 	@ResponseBody
 	@RequestMapping(value="/checkPayment.do", method=RequestMethod.POST)
-	public boolean checkPayment() throws Exception{
-		String customer = "testID"; 		
+	public boolean checkPayment(HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+		 		
 		System.out.println("checkPayment 진입 체크");
 		
 		int chk = service.checkPayment(customer);
@@ -180,8 +192,12 @@ public class PaymentController {
 	
 	@ResponseBody
 	@RequestMapping(value="/deletePayment.do", method=RequestMethod.POST)
-	public void deletePayment() throws Exception{
-		String customer = "testID"; 				
+	public void deletePayment(HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+						
 		System.out.println("deletePayment check");
 		
 		service.deletePayment(customer);	
@@ -192,7 +208,11 @@ public class PaymentController {
 	@ResponseBody
 	@RequestMapping(value="/payment.do", method=RequestMethod.POST)
 	public int payment(HttpServletRequest request) throws Exception{
-		String customer = "testID"; 
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+			
 		String getpayment = request.getParameter("payment");
 
 		Gson gson = new Gson();
@@ -213,5 +233,48 @@ public class PaymentController {
 		service.payment(payment);
 		
 		return payment.getPayno();
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/registAddr.do", method=RequestMethod.POST)
+	public void registAddr(HttpServletRequest request, Address address) throws Exception{
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+		
+		address.setCustomer(customer);
+			
+		boolean chkbase = addrservice.checkBase(customer);		
+		if(chkbase)
+			address.setBase("true");
+		else
+			address.setBase("false");
+				
+		System.out.println(address.toString());
+		addrservice.registAddr(address);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteAddr.do", method=RequestMethod.POST)
+	public void deleteAddr(HttpServletRequest request) throws Exception{
+		int addrno = Integer.parseInt(request.getParameter("addrno"));		
+		addrservice.deleteAddr(addrno);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/setBase.do", method=RequestMethod.POST)
+	public void setBase(HttpServletRequest request, Address address) throws Exception{	
+		HttpSession session = request.getSession();	
+		String customer = "";
+		if(session.getAttribute("account") != null)
+			customer = (String)session.getAttribute("account");
+		
+		address.setCustomer(customer);
+		
+		addrservice.setBase(address);
 	}
 }

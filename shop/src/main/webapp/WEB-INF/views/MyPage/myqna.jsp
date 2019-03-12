@@ -192,8 +192,12 @@
 					str += "<tr><td>"+rplist[i].writer+"</td>";
 					str += "<td id=\"qnaReplyContent"+rplist[i].rpno+"\">"+rplist[i].content+"</td>";
 					str += "<td>"+rplist[i].rpdate+"</td>";
-					str += "<td id=\"qbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"qnaReplyEdit("+rplist[i].rpno+","+qno+")\" value=\"수정\">&nbsp;";
-					str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"qnaReplyDelete("+rplist[i].rpno+","+qno+")\" value=\"삭제\"></td></tr>";
+					if("${session}" == rplist[i].writer){
+						str += "<td id=\"qbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"qnaReplyEdit("+rplist[i].rpno+","+qno+")\" value=\"수정\">&nbsp;";
+						str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"qnaReplyDelete("+rplist[i].rpno+","+qno+")\" value=\"삭제\"></td></tr>";
+					}else{
+						str += "<td>&nbsp;</td></tr>";
+					}
 				}
 				$("#qnaReplyList").html(str);
 			}
@@ -239,12 +243,22 @@
 
 
 </head>
+<c:import url="../header.jsp" />
 <body>
 	<div class="row column">
+	<nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs mypageSectorArea">
+          <li><a href="myorder.do" style="font-weight:900; font-size:x-large;">주문/배송현황</a></li>
+          <li><a href="myclaim.do" style="font-weight:900; font-size:x-large;">취소/반품/교환 현황</a></li>
+          <li><a href="myreview.do" style="font-weight:900; font-size:x-large;">내 상품 리뷰</a></li>
+          <li style="font-weight:900; font-size:x-large; color: #da6464" class="disabled">내 Q&A</li>
+        </ul>
+      </nav> 
+	
 	<div class="MPright_area">
-		<div class="mypageSectorArea">
+		<!-- <div class="mypageSectorArea">
 		    <h1 style="font-weight:900">마이페이지-내 Q&A</h1>
-		</div>
+		</div> -->
 	
 		<div class="h3WithAd">
 			<h3 class="mgb10">
@@ -422,4 +436,5 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
+<c:import url="../footer.jsp" />
 </html>

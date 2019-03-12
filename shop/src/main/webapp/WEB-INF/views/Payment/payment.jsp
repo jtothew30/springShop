@@ -40,10 +40,10 @@
 		}else{
 			$("#recipient").html("<input type='text' id='newrecipient' required>");
 			$("#phone").html("<input type='text' id='newphone' placeholder='xxx-xxxx-xxxx' required>");
-			$("#memo").html("<input type='text' id='newmemo'>");
+			$("#memo").html("<input type='text' id='newmemo'><input type='button' class=\"hollow button\" data-target=\"#registAddr\" data-toggle=\"modal\" value='새 배송지 등록'>");
 			
 			var str = "";
-			str += "<input type='button' onclick=\"execPostCode();\" value='우편번호 찾기'>"
+			str += "<input type='button' class=\"hollow button\" onclick=\"execPostCode();\" value='우편번호 찾기'>"
 			str += "<br><br><div class='form-group'><input class='form-control' style='top: 5px;' placeholder='도로명 주소' name='addr1' id='addr1' type='text' readonly='readonly' /></div>";   
 			str += "<div class='form-group'><input class='form-control' placeholder='상세주소' name='addr2' id='addr2' type='text' required /></div>";
 				
@@ -84,8 +84,119 @@
 		document.getElementById("newphone").value = phone;
 	}
 	
+	function registAddr() {
+		var recipient = $("#newrecipient").val();
+		var addr1 = $("#addr1").val();
+		var addr2 = $("#addr2").val();
+		var phone = $("#newphone").val();
+		var addrname = $("#newAddrName").val();
+				
+		if(addrname == '' || addrname == null){
+			swal('배송지 이름을 입력해주세요!','','warning');	
+			return;
+		}
+		
+		if(recipient == '' || recipient == null){
+			swal('받으시는 분을 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("newrecipient").focus();
+			});		
+			return;
+		}
+		
+		if(addr1 == '' || addr1 == null){
+			swal('주소를 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("addr1").focus();
+			});		
+			return;
+		}
+		
+		if(addr2 == '' || addr2 == null){
+			swal('상세 주소를 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("addr2").focus();
+			});		
+			return;
+		}
+		
+		if(phone == '' || phone == null){
+			swal('연락처를 입력해주세요!','','warning').
+			then((value) => {
+				document.getElementById("phone").focus();
+			});		
+			return;
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "registAddr.do",
+			data: {'addrname' : addrname, 'recipient' : recipient, 'addr1' : addr1, 'addr2' : addr2, 'phone' : phone},
+			success : function(){
+				swal("새 배송지가 등록되었습니다.","", "success")
+				.then((value) => {
+				  location.reload();
+				});
+			}
+		}) 	
+	}
 	
 	
+	function deleteAddr(addrno) {
+		swal("해당 배송지를 삭제하시겠습니까?", "", "warning", {
+			  buttons: {				    
+			    catch: {
+			      text: "예",
+			      value: "catch",
+			    },
+			    cancel: "아니오",
+			  },
+			})
+			.then((value) => {
+			  switch (value) {					 
+			    case "catch":
+			    	$.ajax({
+						type: "POST",
+						data: {'addrno' : addrno},
+						url: "deleteAddr.do",
+						success : function(){
+							location.reload();
+						}
+					})    	
+			      break;					 
+			    default:
+			    	break;
+			  }
+			});
+	}
+	
+	function setBase(addrno) {
+		swal("기본 배송지로 지정하시겠습니까?", {
+			  buttons: {				    
+			    catch: {
+			      text: "예",
+			      value: "catch",
+			    },
+			    cancel: "아니오",
+			  },
+			})
+			.then((value) => {
+			  switch (value) {					 
+			    case "catch":
+			    	$.ajax({
+						type: "POST",
+						data: {'addrno' : addrno},
+						url: "setBase.do",
+						success : function(){
+							location.reload();
+						}
+					})    	
+			      break;					 
+			    default:
+			    	break;
+			  }
+			});
+	}
 	
 	function execPostCode() {
         new daum.Postcode({
@@ -210,8 +321,8 @@
 				}
 			], */
 			user_info: {
-				username: "${customer}",
-				email: "${email}",
+				username: "${account.id}",
+				email: "${account.email}",
 				addr: addr1+" "+addr2,
 				phone: phone
 			},
@@ -333,113 +444,118 @@
 	
 </script>
 </head>
+<c:import url="../header.jsp" />
 <body>
 	
-	&#60;결제 요청 정보&#62;
-	<table>	
-		<thead>
-			<tr>
-				<th>&nbsp;</th> <th style="text-align:center;">결제 요청 상품</th> <th style="text-align:center;">가격/수량</th> <th style="text-align:center;">합 계</th>
-			</tr>
-		</thead>
-		<tbody>
-		<c:forEach var="preq" items="${preqlist}">
-			<tr align="center">
-				<td width="20%">
-					<img src="${pageContext.request.contextPath}/resources/upload/${preq.pbno}/${preq.pname}/메인.jpg">
-				</td>
-				<td width="40%">
-					<strong style="font-size:15pt;">${preq.pname}</strong> - ${preq.options}<br><br>
-					상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${preq.pbno}">${preq.title}</a>
-				</td>
-				<td width="20%">${preq.price} 원 / ${preq.count} 개</td>
-				<td width="20%">
-					합계 : <span id="price${preq.pno}">${preq.count * preq.price}</span> 원
-				</td>	
-			</tr>
-		</c:forEach>
-		</tbody>
-		<tr align="center">
-			<td colspan="2" width="30%" style="font-size:17pt; font-weight:900;">주문금액 : <span id="reqTotalPrice">${total}</span> 원&nbsp;&nbsp;ㅡ&nbsp;&nbsp;할인금액 : 0 원</td>
-			<td colspan="2" width="70%" style="font-size:17pt; font-weight:900;">총 결제예정금액 : <span id="finalPrice">${total}</span> 원</td>
-		</tr>
-	</table>
-	
-	<br><br><br>
-	
-	<div>	
-	&#60;배송지 정보 입력&#62;
-	<table>
-		<tr align="center">
-			<th>배송지 선택</th>
-			<th style="padding-top:18px">
-		        <input type="radio" name="seladdr" value="base" onclick="changeSelectAddr()" checked>기본 배송지	        
-			</th>
-			<th style="padding-top:18px">
-				<input type="radio" name="seladdr" value="type" onclick="changeSelectAddr()">직접입력
-			</th>
-			<th>
-				<button class="btn btn-default" data-target="#layerpop" data-toggle="modal">배달지목록확인</button><br/>
-					
-			</th>
-		</tr>
-		<tr>
-			<td colspan="4">
-				<table>
+	<div style="margin: 0% 10%;">		
+			<div style="text-align: center">
+
+			<table>	
+				<thead>
 					<tr>
-						<td width="20%">주문자</td>
-						<td width="80%">${customer}</td>
+						<th>&nbsp;</th> <th style="text-align:center;">결제 요청 상품</th> <th style="text-align:center;">가격/수량</th> <th style="text-align:center;">합 계</th>
 					</tr>
-					
-					<c:choose>
-				    	<c:when test="${empty addrlist}">
-				    		<tr>
-								<td width="20%">받으시는 분</td>
-								<td width="80%" id="recipient">현재 등록된 배송지 정보가 없습니다.</td>
-							</tr>
+				</thead>
+				<tbody>
+				<c:forEach var="preq" items="${preqlist}">
+					<tr align="center">
+						<td width="20%">
+							<img src="${pageContext.request.contextPath}/resources/upload/${preq.pbno}/${preq.pname}/메인.jpg">
+						</td>
+						<td width="40%">
+							<strong style="font-size:15pt;">${preq.pname}</strong> - ${preq.options}<br><br>
+							상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${preq.pbno}">${preq.title}</a>
+						</td>
+						<td width="20%">${preq.price} 원 / ${preq.count} 개</td>
+						<td width="20%">
+							합계 : <span id="price${preq.pno}">${preq.count * preq.price}</span> 원
+						</td>	
+					</tr>
+				</c:forEach>
+				</tbody>
+				<tr align="center">
+					<td colspan="2" width="30%" style="font-size:17pt; font-weight:900;">주문금액 : <span id="reqTotalPrice">${total}</span> 원&nbsp;&nbsp;ㅡ&nbsp;&nbsp;할인금액 : 0 원</td>
+					<td colspan="2" width="70%" style="font-size:17pt; font-weight:900;">총 결제예정금액 : <span id="finalPrice">${total}</span> 원</td>
+				</tr>
+			</table>
+			
+			<br><br><br>
+			
+			<div>	
+	
+			<table>
+				<tr align="center">
+					<th>배송지 선택</th>
+					<th style="padding-top:18px">
+				        <input type="radio" name="seladdr" value="base" onclick="changeSelectAddr()" checked>기본 배송지	        
+					</th>
+					<th style="padding-top:18px">
+						<input type="radio" name="seladdr" value="type" onclick="changeSelectAddr()">직접입력
+					</th>
+					<th>
+						<button class="hollow button" data-target="#layerpop" data-toggle="modal">배달지목록확인</button><br/>
+							
+					</th>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<table>
 							<tr>
-								<td width="20%">주소</td>
-								<td width="80%" id="addr"></td>
+								<td width="20%">주문자</td>
+								<td width="80%">${account.id}</td>
 							</tr>
-							<tr>
-								<td width="20%">연락처</td>
-								<td width="80%" id="phone"></td>
-							</tr>
-							<tr>
-								<td width="20%">배송시 요구사항</td>
-								<td width="80%" id="memo"><input type="text" id="newmemo"></td>
-							</tr>
-				    	</c:when>
-			    		<c:otherwise>		    			
-				    		<tr>
-								<td width="20%">받으시는 분</td>
-								<td width="80%" id="recipient">${base.recipient}</td>
-							</tr>
-							<tr>
-								<td width="20%">주소</td>
-								<td width="80%" id="addr"><span id="addr1">${base.addr1}</span><br><span id="addr2">${base.addr2}</span></td>
-							</tr>
-							<tr>
-								<td width="20%">연락처</td>
-								<td width="80%" id="phone">${base.phone}</td>
-							</tr>
-							<tr>
-								<td width="20%">배송시 요구사항</td>
-								<td width="80%" id="memo"><input type="text" id="newmemo"></td>
-							</tr>					
-			   		    </c:otherwise>
-		  		    </c:choose>			    		    
-				</table>		
-			</td>
-		</tr>
-	</table>
+							
+							<c:choose>
+						    	<c:when test="${empty addrlist}">
+						    		<tr>
+										<td width="20%">받으시는 분</td>
+										<td width="80%" id="recipient">현재 등록된 배송지 정보가 없습니다.</td>
+									</tr>
+									<tr>
+										<td width="20%">주소</td>
+										<td width="80%" id="addr"></td>
+									</tr>
+									<tr>
+										<td width="20%">연락처</td>
+										<td width="80%" id="phone"></td>
+									</tr>
+									<tr>
+										<td width="20%">배송시 요구사항</td>
+										<td width="80%" id="memo"><input type="text" id="newmemo"></td>
+									</tr>
+						    	</c:when>
+					    		<c:otherwise>		    			
+						    		<tr>
+										<td width="20%">받으시는 분</td>
+										<td width="80%" id="recipient">${base.recipient}</td>
+									</tr>
+									<tr>
+										<td width="20%">주소</td>
+										<td width="80%" id="addr"><span id="addr1">${base.addr1}</span><br><span id="addr2">${base.addr2}</span></td>
+									</tr>
+									<tr>
+										<td width="20%">연락처</td>
+										<td width="80%" id="phone">${base.phone}</td>
+									</tr>
+									<tr>
+										<td width="20%">배송시 요구사항</td>
+										<td width="80%" id="memo"><input type="text" id="newmemo"></td>
+									</tr>					
+					   		    </c:otherwise>
+				  		    </c:choose>			    		    
+						</table>		
+					</td>
+				</tr>
+			</table>
+			</div>
+			
+			<br><br><br>
+			<input type="button" style="font-size:24pt; padding-top:7pt; padding-bottom:7pt" class="hollow button success" onclick="pay()" value="결제 하기"> 
+			<input type="button" style="font-size:14pt;" class="hollow button alert" onclick="cancel()" value="취소"> 
+			<br><br><br>
+	
 	</div>
-	
-	<br><br><br>
-	<input type="button" onclick="pay()" value="결제하기"> 
-	<input type="button" onclick="cancel()" value="취소"> 
-	<br><br><br>
-	
+	</div>
 	
 	<div class="modal fade" id="layerpop" tabindex="-1" role="dialog">
 	  <div class="modal-dialog modal-lg">
@@ -454,7 +570,11 @@
 	           <table>
 	           		<thead>
 	           			<tr>
-	           				<th>선택</th> <th>배송지 이름</th> <th>주 소</th> <th>받는 사람</th> <th>연락처</th>
+	           				<th style="text-align:center">배송지 이름</th> 
+	           				<th style="text-align:center">주 소</th> 
+	           				<th style="text-align:center">받는 사람</th> 
+	           				<th style="text-align:center">연락처</th>
+	           				<th>&nbsp;</th>
 	           			</tr>
 	           		</thead>
 	           		<tbody>
@@ -466,12 +586,19 @@
 					    	</c:when>
 				    		<c:otherwise>   
 					    		<c:forEach var="addr" items="${addrlist}">
-					    			<tr>
-					    				<td><input type="radio" name="addrRadio" value="${addr.addrno}"></td>
-					    				<td><span id="selName${addr.addrno}">${addr.addrname}</span> <c:if test="${addr.base == 'true'}">(기본)</c:if> </td>
-					    				<td><span id="selAddr1${addr.addrno}">${addr.addr1}</span> <span id="selAddr2${addr.addrno}">${addr.addr2}</span></td>
+					    			<tr align="center">
+					    				<td>
+						    				<input type="radio" name="addrRadio" value="${addr.addrno}">
+						    				<span id="selName${addr.addrno}">${addr.addrname}</span>
+						    				<c:choose>
+						    					<c:when test="${addr.base == 'true'}"><br><strong style="color:red">(기본)</strong></c:when>
+						    					<c:otherwise><br><input type="button" class="hollow button tiny" onclick="setBase(${addr.addrno})" value="기본으로"></c:otherwise>					    				
+						    				</c:choose>
+					    				</td>
+					    				<td><span id="selAddr1${addr.addrno}">${addr.addr1}</span><br><span id="selAddr2${addr.addrno}">${addr.addr2}</span></td>
 					    				<td><span id="selRecipient${addr.addrno}">${addr.recipient}</span></td>
 					    				<td><span id="selPhone${addr.addrno}">${addr.phone}</span></td>
+					    				<td><input type="button" class="button alert" onclick="deleteAddr(${addr.addrno})" value="삭제"></td>
 					    			</tr>
 					    		</c:forEach>
 			    		    </c:otherwise>
@@ -481,8 +608,31 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="selAddr()">선택완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="selAddr()">선택완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	
+	<div class="modal fade" id="registAddr" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header">
+	        <!-- header title -->
+	        <h4 class="modal-title">새 배송지 등록</h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+	           	배송지 이름 <input type="text" id="newAddrName">
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="registAddr()">등록하기</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">닫기</button>
 	      </div>
 	    </div>
 	  </div>
@@ -499,6 +649,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://cdn.bootpay.co.kr/js/bootpay-2.1.1.min.js" type="application/javascript"></script>
 </body>
+<c:import url="../footer.jsp" />
 </html>
 
 

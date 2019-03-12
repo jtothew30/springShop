@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,12 @@ public class ReviewController {
 	public String review(Model model, Paging paging, HttpServletRequest request) throws Exception{
 		System.out.println("review.do check pbno:"+paging.getPbno());
 		
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
+		
 		String page = request.getParameter("pageR");
 		if(page != null) {
 			paging.setPage(Integer.parseInt(page));
@@ -56,12 +63,20 @@ public class ReviewController {
 		model.addAttribute("prolist", prolist);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "review";
 	}
 	
 	@RequestMapping("qna.do")
 	public String qna(Model model, Paging paging, HttpServletRequest request) throws Exception{		
 		System.out.println("qna.do check pbno:"+paging.getPbno());
+		
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+			
+		
 		
 		String page = request.getParameter("pageQ");
 		if(page != null) {
@@ -73,6 +88,7 @@ public class ReviewController {
 		
 		model.addAttribute("qlist", qlist);
 		model.addAttribute("paging", paging);
+		model.addAttribute("session", writer);
 		return "qna";
 	}
 	
@@ -82,7 +98,11 @@ public class ReviewController {
 		List<MultipartFile> filelist = request.getFiles("file");
 		
 		String inputPath = "/resources/upload/review/"+review.getPath();
-		String writer = "testID";	
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+				
 		review.setWriter(writer);
 		review.setPath(inputPath);
 		
@@ -118,7 +138,11 @@ public class ReviewController {
 		List<MultipartFile> filelist = request.getFiles("file");
 		
 		String inputPath = "/resources/upload/qna/"+qna.getPath();
-		String writer = "testID";	
+		HttpSession session = request.getSession();	
+		String writer = "";
+		if(session.getAttribute("account") != null)
+			writer = (String)session.getAttribute("account");
+				
 		qna.setWriter(writer);
 		qna.setPath(inputPath);
 		
@@ -183,7 +207,11 @@ public class ReviewController {
 	public boolean reactCheck(HttpServletRequest request) throws Exception {
 		System.out.println("reactCheck 접근 체크");
 		
-		String id = "testID";
+		HttpSession session = request.getSession();	
+		String id = "";
+		if(session.getAttribute("account") != null)
+			id = (String)session.getAttribute("account");
+			
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -199,7 +227,11 @@ public class ReviewController {
 	public int react(HttpServletRequest request) throws Exception {
 		System.out.println("react 접근 체크");
 		
-		String id = "testID";
+		HttpSession session = request.getSession();	
+		String id = "";
+		if(session.getAttribute("account") != null)
+			id = (String)session.getAttribute("account");
+			
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		String react = request.getParameter("react");
 		

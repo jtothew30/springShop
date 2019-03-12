@@ -51,4 +51,9 @@
 		<constructor-arg ref="factoryBean" />		
 	</bean>	
 	
+	<!-- AspectJ라이브러리를 이용한 Proxy 객체를 생성 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- XML 방식으로 AOP 기능을 설정할 때 사용 -->
+	<!-- <aop:config></aop:config> -->
 </beans>

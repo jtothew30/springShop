@@ -134,13 +134,13 @@ commit;
 --최종결제(종합)
 drop table payment;
 create table payment(
-	payno number(7) not null,	  --결제번호
+	payno number(7) not null,	  	  --결제번호
 	customer varchar2(100) not null,  --구매자 id
-	recipient varchar2(100) not null,  --받는 사람 이름
+	recipient varchar2(100) not null, --받는 사람 이름
 	payname varchar2(100) not null,   --결제된 상품이름
 	address1 varchar2(200) not null,  --배송지 주소1
 	address2 varchar2(200) not null,  --배송지 주소2
-	memo varchar2(300) not null,	  --남길 말 or 요청
+	memo varchar2(300),	  			  --남길 말 or 요청
 	paydate date not null,            --결제 날짜
 	status varchar2(100) not null,    --결제 상태결제 상태(결제진행,결제취소,취소진행중,결제완료,배송준비,배송중,배송완료,반품,교환)
 	total number(7) not null,         --총 가격
@@ -228,6 +228,8 @@ create table qna(
 	primary key(qno)
 );
 commit;
+
+
 drop sequence seqevt;
 create sequence seqevt
  start with 1

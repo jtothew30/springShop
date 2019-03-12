@@ -33,7 +33,7 @@
 	</update>
 	
 	<delete id="delete">
-		delete from account where id=#{id} and pw=#{pw} and name=#{name}
+		delete from account where id=#{id} and pw=#{pw} 
 	</delete>
 	
 	<select id="selectAccountListCountAll" parameterType="com.spring.shop.vo.Paging" resultType="int">

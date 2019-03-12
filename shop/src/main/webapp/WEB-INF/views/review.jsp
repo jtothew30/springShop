@@ -290,7 +290,7 @@
       </ul>
     <!-- pageing template -->
 	
-	<input type="button" data-target="#reviewWritePop" data-toggle="modal" value="리뷰 작성">
+	<button type="button" class="btn btn-success" data-target="#reviewWritePop" data-toggle="modal">리뷰 작성</button>
 	
 	
 	<div class="modal fade" id="reviewWritePop" tabindex="-1" role="dialog">
@@ -343,8 +343,8 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="reviewWirte()">작성 완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>

@@ -244,7 +244,7 @@
       </ul>
     <!-- pageing template -->
 	
-	<input type="button" data-target="#qnaWritePop" data-toggle="modal" value="문의하기">
+	<button type="button" class="btn btn-success" data-target="#qnaWritePop" data-toggle="modal" >문의하기</button>
 	
 	
 	<div class="modal fade" id="qnaWritePop" tabindex="-1" role="dialog">
@@ -286,8 +286,8 @@
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="qnaWirte()">작성 완료</button>
-	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	        <button type="button" class="hollow button success" data-dismiss="modal" onclick="qnaWirte()">작성 완료</button>
+	        <button type="button" class="hollow button alert" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>

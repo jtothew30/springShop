@@ -30,22 +30,22 @@ public class SignUpController {
 	@RequestMapping("idCheck.do")
 	public String idCheck(HttpServletRequest request) throws Exception {
 		String id = request.getParameter("id");
-		System.out.println("id:"+id);
+		logger.info("id:"+id);
 		String result = service.dbCheck(id);
-		System.out.println("idcheck result:"+result);
+		logger.info("idcheck result:"+result);
 		return result;
 	}
 	
 	@RequestMapping("/acct_insert.do")
 	public String acct_insert(Account account) throws Exception {
-		System.out.println("acct_insert 넘어온 id="+account.getId());
-		System.out.println("acct_insert 넘어온 pw="+account.getPw());
-		System.out.println("acct_insert 넘어온 name="+account.getName());
-		System.out.println("acct_insert 넘어온 age="+account.getAge());
-		System.out.println("acct_insert 넘어온 gender="+account.getGender());
-		System.out.println("acct_insert 넘어온 email="+account.getEmail());
-		System.out.println("acct_insert 넘어온 phone="+account.getPhone());		
+		logger.info("acct_insert 넘어온 id="+account.getId());
+		logger.info("acct_insert 넘어온 pw="+account.getPw());
+		logger.info("acct_insert 넘어온 name="+account.getName());
+		logger.info("acct_insert 넘어온 age="+account.getAge());
+		logger.info("acct_insert 넘어온 gender="+account.getGender());
+		logger.info("acct_insert 넘어온 email="+account.getEmail());
+		logger.info("acct_insert 넘어온 phone="+account.getPhone());		
 		service.dbInsert(account);
-		return "redirect:/index.jsp" ;
+		return "redirect:/main.do" ;
   }
 }

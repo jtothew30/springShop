@@ -21,4 +21,30 @@ public class AddressDaoImp implements AddressDao {
 		List<Address> addrlist = sqlSession.selectList(AddressMapper+".getAddressList", customer);
 		return addrlist;
 	}
+	
+	@Override
+	public void registAddr(Address address) {
+		sqlSession.insert(AddressMapper+".registAddr", address);
+	}
+	
+	@Override
+	public boolean checkBase(String customer) {
+		 int cnt = sqlSession.selectOne(AddressMapper+".checkBase", customer);
+		 if(cnt > 0)
+			 return false;
+		 else
+			 return true;
+	}
+	
+	@Override
+	public void deleteAddr(int addrno) {
+		sqlSession.delete(AddressMapper+".deleteAddr", addrno);
+	}
+	
+	@Override
+	public void setBase(Address address) {
+		sqlSession.update(AddressMapper+".setBaseFalse", address.getCustomer());
+		sqlSession.update(AddressMapper+".setBaseTrue", address.getAddrno());
+	}
+	
 }

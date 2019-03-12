@@ -65,6 +65,12 @@ public class Address {
 	public void setUsedate(String usedate) {
 		this.usedate = usedate;
 	}
+	@Override
+	public String toString() {
+		return "Address [addrno=" + addrno + ", customer=" + customer + ", addrname=" + addrname + ", recipient="
+				+ recipient + ", base=" + base + ", addr1=" + addr1 + ", addr2=" + addr2 + ", phone=" + phone
+				+ ", usedate=" + usedate + "]";
+	}
 	
 	
 }
