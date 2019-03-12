@@ -101,10 +101,17 @@
 	    		  <c:forEach var="pr" items="${prlist}">
 		          	<tr class="prlist" style="text-align:center;">
 		          		<td>
-		          		<a href="../proboard/product.do?pbno=${pr.pbno}">
-		          			<img src="${pageContext.request.contextPath}${pr.path}/메인.jpg" width="120"><br><br>
-		          			상품 게시글 보기
-		          		</a>
+			          		<c:choose>
+			          			<c:when test="${pr.path == '' || empty pr.path}">
+				          			<img src="${pageContext.request.contextPath}/resources/image/noimg.jpg" width="120" ><br><br>
+			          			</c:when>
+			          			<c:otherwise>
+			          				<a href="../proboard/product.do?pbno=${pr.pbno}">
+					          			<img src="${pageContext.request.contextPath}${pr.path}/메인.jpg" width="120"><br><br>
+					          			상품 게시글 보기
+					          		</a>
+			          			</c:otherwise>
+			          		</c:choose>          		
 		          		</td>
 		          		<td>${pr.pname}<br><strong>${pr.options}</strong></td>
 		          		<td>${pr.count}</td>

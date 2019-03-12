@@ -363,10 +363,18 @@ function checkDetail(rno) {
 			    		  <c:forEach var="review" items="${rvlist}">
 				          	<tr class="reviewlist">
 				          		<td>
-					          		<a href="../proboard/product.do?pbno=${review.pbno}">
-					          			<img src="${pageContext.request.contextPath}/resources/upload/${review.pbno}/${review.title}/메인.jpg" width="120"><br><br>
-					          			상품 게시글 보기
-					          		</a>
+					          		<c:choose>
+					          			<c:when test="${review.title == '' || empty review.title}">
+						          			<img src="${pageContext.request.contextPath}/resources/image/noimg.jpg" width="120" ><br><br>
+						          			판매글이 존재하지 않습니다.
+					          			</c:when>
+					          			<c:otherwise>
+					          				<a href="../proboard/product.do?pbno=${review.pbno}">
+							          			<img src="${pageContext.request.contextPath}/resources/upload/${review.pbno}/${review.title}/메인.jpg" width="120"><br><br>
+							          			상품 게시글 보기
+							          		</a>
+					          			</c:otherwise>
+					          		</c:choose>			          		
 				          		</td>
 				          		<td onclick="checkDetail(${review.rno})" data-target="#reviewDetailPop" data-toggle="modal">
 				          			<select class="reviewStars">
@@ -472,7 +480,7 @@ function checkDetail(rno) {
 	      		<table>
 	      			<thead>
 		      			<tr>
-		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th>
+		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th> <th>&nbsp;</th>
 		      			</tr>
 	      			</thead>
 	      			<tbody id="reviewReplyList">

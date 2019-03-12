@@ -233,7 +233,7 @@
 								<a id="loginBtn" class="loginBtn">로그인</a>
 							</c:if>
 							<c:if test="${not empty sessionScope.account}">
-								<a id="logoutBtn" style="">로그아웃</a>
+								<a id="logoutBtn">로그아웃</a>
 							</c:if>
 						</li>						
 						<li><a href="${pageContext.request.contextPath}/signUp/signUp.do">회원가입</a></li>

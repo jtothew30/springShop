@@ -19,7 +19,7 @@
 	  	select * from 
 		  	(select rownum rn, p.* from 
 			  	(select p.*, pb.path, pb.title from proboard pb 
-			  	inner join (select pr.*, p.pname, p.options from payrequest pr  		 
+			  	right outer join (select pr.*, p.pname, p.options from payrequest pr  		 
 			  					 left outer join production p 
 			  					 on pr.pno = p.pno 
 								 where customer = #{customer} 
@@ -85,7 +85,7 @@
   	<select id="getMyClaimListPr" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payrequest">
   	select * from 
   	(select rownum rn, p.* from (select p.*, pb.path, pb.title from proboard pb 
-							  	inner join (select pr.*, p.pname, p.options from payrequest pr  		 
+							  	right outer join (select pr.*, p.pname, p.options from payrequest pr  		 
 							  					 left outer join production p 
 							  					 on pr.pno = p.pno 
 												 where customer = #{customer} 
@@ -137,7 +137,7 @@
   	<select id="getMyReviewList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Review">
   		
   		select * from (select rownum rn, r.* from (select r.*, pb.title from review r 
-												   inner join proboard pb 
+												   left outer join proboard pb 
 												   on r.pbno = pb.pbno 
 												   where writer = #{customer} 
 												   order by rdate desc) r 
@@ -161,7 +161,7 @@
   	
   	<select id="getMyQnaList" parameterType="string" resultType="com.spring.shop.vo.Qna">
   		select * from (select rownum rn, q.* from (select q.*, pb.title from qna q 
-												   inner join proboard pb 
+												   left outer join proboard pb 
 												   on q.pbno = pb.pbno 
 												   where writer = #{customer} 
 												   order by qdate desc) q
@@ -214,7 +214,7 @@
   		select * from 
 	  		(select rownum rn, p.* from 
 		  		(select p.* from payment py 
-				inner join (select p.*, pb.path, pb.title from proboard pb 
+				right outer join (select p.*, pb.path, pb.title from proboard pb 
 								 left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
 					  							  left outer join production p 
 					  							  on pr.pno = p.pno 
@@ -254,7 +254,7 @@
   		select * from 
   		(select rownum rn, p.* from
 	  		(select p.* from payment py 
-			inner join (select p.*, pb.path, pb.title from proboard pb 
+			right outer join (select p.*, pb.path, pb.title from proboard pb 
 							 left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
 				  							  left outer join production p 
 				  							  on pr.pno = p.pno 
@@ -276,7 +276,7 @@
   	<select id="searchReviewDate" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Review">
   		<![CDATA[
   		select * from (select rownum rn, r.* from (select r.*, pb.title from review r 
-												   inner join proboard pb 
+												   left outer join proboard pb 
 												   on r.pbno = pb.pbno 
 												   where writer = #{customer} 
 												   and (rdate >= to_date(#{todate}) and rdate <= to_date(#{fromdate})+1) 
@@ -290,7 +290,7 @@
   	<select id="searchQnaDate" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Qna">
   		<![CDATA[
   		select * from (select rownum rn, q.* from (select q.*, pb.title from qna q 
-												   inner join proboard pb 
+												   left outer join proboard pb 
 												   on q.pbno = pb.pbno 
 												   where writer = #{customer} 
 												   and (qdate >= to_date(#{todate}) and qdate <= to_date(#{fromdate})+1) 

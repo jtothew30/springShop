@@ -322,18 +322,34 @@
 		    		<c:forEach var="cart" items="${cartlist}">
 					<tr align="center">
 						<td width="3%">
-							<input type="checkbox" class="chk" onclick="chkChange()" value="${cart.pno}">
+							<c:choose>
+								<c:when test="${cart.title == '' || empty cart.title}">
+									<input type="checkbox" class="chk" disabled>
+								</c:when>
+								<c:otherwise>
+									<input type="checkbox" class="chk" onclick="chkChange()" value="${cart.pno}">
+								</c:otherwise>
+							</c:choose>						
 						</td>
 						<td width="17%">
 							<img src="${pageContext.request.contextPath}/resources/upload/${cart.pbno}/${cart.pname}/메인.jpg">
 						</td>
 						<td width="40%">
 							<strong style="font-size:15pt;">${cart.pname}</strong> - ${cart.options}<br><br>
-							상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${cart.pbno}">${cart.title}</a>
+							<c:choose>
+								<c:when test="${cart.title == '' || empty cart.title}">
+									(해당 판매글이 존재하지 않습니다.)
+								</c:when>
+								<c:otherwise>
+									상품 글 보러 가기 => <a href="../proboard/product.do?pbno=${cart.pbno}">${cart.title}</a>
+								</c:otherwise>
+							</c:choose>				
 						</td>
 						<td width="20%">
 							${cart.price} 원 / ${cart.count} 개<br>
-							<button type="button" class="hollow button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})">변경</button> 
+							<c:if test="${cart.title != '' && not empty cart.title}">
+								<button type="button" class="hollow button" data-target="#layerpop" data-toggle="modal" onclick="optionChange(${cart.pno})">변경</button>
+							</c:if>			 
 						</td>
 						<td width="20%">
 							합계 : <span id="price${cart.pno}">${cart.count * cart.price}</span> 원&nbsp;&nbsp;

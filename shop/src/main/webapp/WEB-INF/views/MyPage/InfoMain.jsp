@@ -39,8 +39,8 @@
 							</div>
 							<div id="shipping" class="menuBox shipping">
 								<a href="${pageContext.request.contextPath}/mypage/myorder.do">						
-									<p class="title">주문/배송현황</p>
-									<span class="noti">주문내역, 배송현환 등<br/>확인해보세요.</span>
+									<p class="title">이용내역확인</p>
+									<span class="noti">주문/배송/취소/반품/교환<br>내 상품리뷰 및 Q&A</span>
 								</a>
 							</div>
 							<div class="menuBox withdrawal">
