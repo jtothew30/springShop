@@ -85,7 +85,7 @@ public class AccountController {
 		}
 		return result;		
 	}
-	// ajax logout
+	// ajax 로그아웃
 	@ResponseBody
 	@RequestMapping(value="logoutAjax.do", method=RequestMethod.POST)
 	public String logoutAjax(HttpServletRequest request) throws Exception{
@@ -98,7 +98,7 @@ public class AccountController {
 		return result;		
 	}
 	
-	
+	// old
 	@RequestMapping(value="login.do", method = RequestMethod.POST)
 	public String login(Account account, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		logger.info("post login");
@@ -116,20 +116,47 @@ public class AccountController {
 		}
 		return "redirect:/index.jsp";
 	}
-	
+	//old
 	@RequestMapping(value="logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
 		logger.info("get logout");
 		session.invalidate();
 		return "redirect:/index.jsp";
 	}
-
+	
+	
+	// 회원탈퇴 확인 페이지 오픈
+	@RequestMapping("exitPage.do")
+	public String exitPage() {
+		return "MyPage/AccountExit";
+	}
+	
+	// Ajax 회원탈퇴
+	@ResponseBody
+	@RequestMapping(value="accountDeleteAjax.do" , method= RequestMethod.POST)
+	public String accountDeleteAjax(HttpServletRequest request, HttpSession session) throws Exception {
+		String result = "";
+		Account account = new Account();
+		account.setId(request.getParameter("id"));
+		account.setPw(request.getParameter("pw"));
+		Account checkAccount = service.login(account);
+		if(checkAccount == null) {
+			result = "false";
+		} else {
+			service.dbDelete(account);
+			session.invalidate();
+			result = "true";
+		}
+		return result;
+	}
+	
+	//old
 	@RequestMapping(value="AccountDelete", method = RequestMethod.GET)
 	public void GetDelete(Account account) throws Exception {
 	 logger.info("GET delete");
 	 System.out.println("시도중인name: " + account.getName());
 	}
-	
+	//old
 	@RequestMapping(value="AccountDelete", method= RequestMethod.POST)
 	public String PostDelete(HttpSession session, Account vo, RedirectAttributes rttr) throws Exception {
 		logger.info("POST delete");
@@ -141,19 +168,19 @@ public class AccountController {
 		String oldPass = acc.getPw();
 		String newPass = vo.getPw();
 		
-		System.out.println("oldpass!!: " + oldPass);
-		System.out.println("newpass!!: " + newPass);
+		logger.info("oldpass!!: " + oldPass);
+		logger.info("newpass!!: " + newPass);
 		
 		if(!oldPass.equals(newPass) || !oldId.equals(newId)) {
 			rttr.addFlashAttribute("msg", false);
-			return "redirect:/Mypage/AccountDelete";
+			return "redirect:/account/AccountDelete";
 		} 
 		
-			System.out.println("탈퇴한 이름: " + vo.getName());
-			System.out.println("탈퇴한 아이디: " + vo.getId());
+			logger.info("탈퇴한 이름: " + vo.getName());
+			logger.info("탈퇴한 아이디: " + vo.getId());
 			service.dbDelete(vo);
 			session.invalidate();
-			System.out.println("delete success");
+			logger.info("delete success");
 			
 		return "redirect:/index.jsp";
 	}

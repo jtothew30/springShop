@@ -191,12 +191,8 @@
 					str += "<tr><td>"+rplist[i].writer+"</td>";
 					str += "<td id=\"reviewReplyContent"+rplist[i].rpno+"\">"+rplist[i].content+"</td>";
 					str += "<td>"+rplist[i].rpdate+"</td>";
-					if("${session}" == rplist[i].writer){
-						str += "<td id=\"rbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"reviewReplyEdit("+rplist[i].rpno+","+rno+")\" value=\"수정\">&nbsp;";
-						str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"reviewReplyDelete("+rplist[i].rpno+","+rno+")\" value=\"삭제\"></td></tr>";						
-					}else{
-						str += "<td>&nbsp;</td></tr>";
-					}
+					str += "<td id=\"rbt"+rplist[i].rpno+"\"><input type=\"button\" class=\"btn btn-info\" onclick=\"reviewReplyEdit("+rplist[i].rpno+","+rno+")\" value=\"수정\">&nbsp;";
+					str += "<input type=\"button\" class=\"btn btn-danger\" onclick=\"reviewReplyDelete("+rplist[i].rpno+","+rno+")\" value=\"삭제\"></td></tr>";
 				}
 				$("#reviewReplyList").html(str);
 			}

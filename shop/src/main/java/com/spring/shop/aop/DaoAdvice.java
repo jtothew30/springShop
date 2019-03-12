@@ -18,19 +18,19 @@ public class DaoAdvice {
 	//Join points 기술에는 Before(메소드 실행 전), After(메소드 실행 후), AfterReturning(반환된 값),
 	//AfterThrowing(예외발생), Around(메소드가 실행되기 전 후)가 있다.
 	//pointcuts 기술로 DAO에 어떤 메서드 Aspect를 적용할 것인지 결정
-	@Before("execution(* com.spring.shop.dao.*.*(..))")//Join points 기술
+	@Before("execution(* com.spring.shop.dao..*.*(..))")//Join points 기술
 	public void startLog(JoinPoint joinPoint){//JoinPoint는 실행되는 메소드에 넘어오는 정보를 가지고 있다.
 		//logger.info("method path : " + joinPoint.getSignature());	
 	}//end
 
-	@After("execution(* com.spring.shop.dao.*.*(..))")
+	@After("execution(* com.spring.shop.dao..*.*(..))")
 	public void endLog(JoinPoint joinPoint){
 		//logger.info("method path : " + joinPoint.getSignature());
 	}//end
 	
 	//@Around는 굉장히 강력한 AOP 기능으로 ProceedingJoinPoint으로 메소드 실행을 제어할 수 있다.
 	//@Around는 꼭 반환 타입으로 pjp.proceed() 즉 Object를 써야하고 throws Throwable을 사용해야 한다.
-	@Around("execution(* com.spring.shop.dao.*.*(..))")
+	@Around("execution(* com.spring.shop.dao..*.*(..))")
 	public Object timeLog(ProceedingJoinPoint pjp) throws Throwable{
 		//해당 메소드가 실행되는 시간
 		//logger.info("timeLog start");

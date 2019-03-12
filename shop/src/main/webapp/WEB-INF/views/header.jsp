@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/app.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/foundation-icons/foundation-icons.css">
+	
 	<style type="text/css">
 	.hidden {
 	  display: none;
@@ -243,8 +244,8 @@
 			</div>
 		</div>
 		<div class="ecommerce-header-top show-for-large">
-			<div class="row column large-8 small-centered large-centered">
-				<div style="margin: 0; padding:0; align:left;">
+			<div class="column large-7 small-centered large-centered">
+				<div style="margin: 0; padding:0; ">
 					<ul class="dropdown menu" data-dropdown-menu>
 						<li>
 							<a href="#Item-1" class="title">
@@ -410,21 +411,21 @@
 								</li>
 							</ul>
 						</li>
-						<div class="large-7 columns" style="display:inline;">
+						<div class="small-5 large-5 columns">
 							<li style="margin-top: 0.6em; padding:0;">
 								<form action="${pageContext.request.contextPath}/search.do" id="searchProduct" name="searchProduct" >
-									<input class="search expened" style="border-radius: 0.5em;display:inline;" type="text" name="kwd" placeholder="Find Stuff"
+									<input class="search" style="border-radius: 0.5em;display:inline;" type="text" name="kwd" placeholder="Find Stuff"
 									 value="${paging.kwd}">
 									<input type="hidden" id="opt2" name="optionKwd" value="${paging.optionKwd}">
 
 							</li>
 						</div>
-							<div class="large-3 small-3 columns" style="padding: 8px;">
-						<li>
-								<input type="submit" id="searchPro" class="alert button expand" style="border-radius: 0.5em;" value="검색">
-								</form>
-						</li>
-							</div>
+						<div class="large-2 small-2 columns" style="padding: 8px;">
+							<li>
+									<input type="submit" id="searchPro" class="alert button expand" style="border-radius: 0.5em;" value="검색">
+									</form>
+							</li>
+						</div>
 					</ul>
 				</div>
 			</div>
@@ -640,63 +641,8 @@
 				}
 			});
 		}
-		
 	</script>
-	<script type="text/javascript">
-		/* function openLogin(){
-			swal({
-				 title: "로그인 페이지",
-				  text: "ID를 입력해주세요.", 
-				  icon: "info",				  
-				  content: {
-					    element: "input",
-					    attributes: {
-					      placeholder: "Type your ID",
-					    },
-					  },
-				  buttons: true,				  
-				})
-				.then((value) => {
-				  if (value) {
-					swal("${value}");
-					//var ID = ${value};
-					// TODO id check					
-				   /*  swal({
-						 title: "로그인 페이지",
-						  text: "${id}님, 비밀번호를 입력해주세요.",
-						  icon: "warning",				  
-						  content: {
-							    element: "input",
-							    attributes: {
-							      placeholder: "Type your Password",
-							      type: "password",
-							    },
-							  },
-						  buttons: true,				  
-						})
-						.then((value)=>{
-							$.ajax({
-								type: "POST",
-								url: "../payment/payrequest.do",
-								data : {'list' : JSON.stringify(sellist), 'del' : 'true'},
-								success : function(){
-									swal("결제페이지로 이동합니다.","", "success")
-									.then((value) => {
-								      location.href="../payment/paymentPage.do";
-									});			
-								}
-							});
-				  		});
-				  } else {
-				    swal("로그인 취소",{
-				      icon: "error",
-				    });
-				  }	 */
-		//	});
-		//} */
 	
-		
-	</script>
 </header>
 
 </html>

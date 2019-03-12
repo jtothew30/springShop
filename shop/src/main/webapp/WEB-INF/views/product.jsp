@@ -384,6 +384,8 @@
 				<a href="#panel3" role="tab" aria-controls="panel3" aria-selected="false" id="panel3-label" tabindex="-1">상품리뷰</a></li>
 				<li class="tabs-title" id="li3" role="presentation">
 				<a href="#panel4" role="tab" aria-controls="panel4" aria-selected="false" id="panel4-label" tabindex="-1">Q&A</a></li>
+			
+			
 			</ul>
 			</div>
 			<div class="tabs-content" data-tabs-content="example-tabs">
@@ -400,61 +402,50 @@
 				<div class="tabs-panel" id="panel2" role="tabpanel"
 					aria-labelledby="panel2-label" aria-hidden="true">
 					<div class="grid-x grid-margin-x medium-up-3 large-up-5">
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
-						<div class="cell">
-							<img class="thumbnail" src="https://placehold.it/350x200"
-								hidden="" style="display: none !important;">
-							<h5>
-								Other Product <small>$22</small>
-							</h5>
-							<p>In condimentum facilisis porta. Sed nec diam eu diam
-								mattis viverra. Nulla fringilla, orci ac euismod semper, magna
-								diam.</p>
-							<a href="#" class="button hollow tiny expanded">Buy Now</a>
-						</div>
+						<h4>판매자 정보</h4>                  
+                  <table class="table">
+                     <tr>
+                        <td class="table-secondary" align="center" width="20%">판매자</td>
+                        <td class="table-light" width="30%">KGIT뱅크</td>
+                        
+                        <td class="table-secondary" align="center" width="20%">상호명/대표자</td>
+                        <td class="table-light" width="30%">KGIT</td>
+                     </tr>
+                     
+                     <tr>
+                        <td class="table-secondary" align="center" width="20%">사업자구분</td>
+                        <td class="table-light" width="30%">개인사업자</td>
+                        
+                        <td class="table-secondary" align="center" width="20%">사업자등록번호</td>
+                        <td class="table-light" width="30%">7701900834</td>
+                     </tr>
+                     
+                     <tr>
+                        <td class="table-secondary" align="center" width="20%">통신판매업신고</td>
+                        <td class="table-light" width="30%">2018-서울서초-2106</td>
+                        
+                        <td class="table-secondary" align="center" width="20%">고객문의 대표번호</td>
+                        <td class="table-light" width="30%">1644-0813</td>
+                     </tr>
+                     
+                     <tr>
+                        <td class="table-secondary" align="center" width="20%">e-mail</td>
+                        <td colspan="3" class="table-light" width="80%">asdqwe@asdqwe.com</td>
+                     </tr>
+                     
+                     <tr>
+                        <td class="table-secondary" align="center" width="20%">영업소재지</td>
+                        <td colspan="3" class="table-light" width="80%">서울특별시 강남구 강남대로84길 16 제이스타워 11층~12층</td>
+                     </tr>
+                     
+                     <tr>
+                        <td class="table-secondary" align="center" width="20%">인증완료 항복</td>
+                        <td class="table-light" width="30%">사업자번호, 사업자상호</td>
+                        
+                        <td class="table-secondary" align="center" width="20%">사업자인증시기</td>
+                        <td class="table-light" width="30%">2012.07.31</td>
+                     </tr>
+                  </table>
 					</div>
 				</div>
 				<div class="tabs-panel" id="panel3" role="tabpanel"
@@ -472,20 +463,6 @@
 				</div>
 			</div>
 		</div>
-		<hr>
-		<div class="grid-x align-justify align-middle">
-			<div class="small-12 medium-shrink cell">
-				<ul class="menu">
-					<li class="align-self-middle">Yeti Store</li>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
-				</ul>
-			</div>
-			<div class="small-12 medium-shrink cell">
-				<span>Copyright 2018</span>
-			</div>
-		</div>
 	</article>
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/jquery.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
@@ -494,4 +471,5 @@
 	
 	<script src="${pageContext.request.contextPath}/resources/js/jquery.barrating.min.js"></script>
 </body>
+<c:import url="footer.jsp" />
 </html>

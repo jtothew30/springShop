@@ -116,10 +116,19 @@
 <c:import url="../header.jsp" />
 <body>
 	<div class="row column">
+	 <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs mypageSectorArea">
+          <li><a href="myorder.do"  style="font-weight:900; font-size:x-large;">주문/배송현황</a></li>
+          <li style="font-weight:900; font-size:x-large; color: #da6464" class="disabled">취소/반품/교환 현황</li>
+          <li><a href="myreview.do" style="font-weight:900; font-size:x-large;">내 상품 리뷰</a></li>
+          <li><a href="myqna.do" style="font-weight:900; font-size:x-large;">내 Q&A</a></li>
+        </ul>
+      </nav> 
+	
 	<div class="MPright_area">
-		<div class="mypageSectorArea">
+		<!-- <div class="mypageSectorArea">
 		    <h1 style="font-weight:900">마이페이지-취소/반품/교환 현황</h1>
-		</div>
+		</div> -->
 	
 		<div class="h3WithAd">
 			<h3 class="mgb10">

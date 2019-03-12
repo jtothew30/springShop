@@ -30,7 +30,7 @@
 <c:import url="header.jsp" />
 
 <body>
-	<div style="margin: 0% 10%;">
+	<div style="margin: 1% 8%;">
 		<div class="row">
 			<div class="large-12 columns">
 				<!-- 카로셀 들어갈 자리 -->

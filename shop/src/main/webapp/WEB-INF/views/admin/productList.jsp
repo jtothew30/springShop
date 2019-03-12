@@ -177,7 +177,6 @@
 											<form action="updateProduction.do" method="post">
 												<input type="hidden" name="pno" value="${list.pno}">
 												<input type="submit" class="button" value="제품 수정">
-												<!-- TODO -->
 											</form>
 										</div>
 									</div>
@@ -188,7 +187,6 @@
 											<form action="deleteProduction.do" method="post">
 												<input type="hidden" name="pno" value="${list.pno}">
 												<input type="submit" class="alert button" value="제품 삭제">
-												<!-- TODO -->
 											</form>
 										</div>
 									</div>

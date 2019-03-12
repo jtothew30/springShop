@@ -205,7 +205,7 @@
 					</ul>
 				</div>
 				<div class="small-12 medium-2 columns ecommerce-footer-logomark">
-					<img src="https://placehold.it/50x50" />
+					
 				</div>
 				<div class="small-12 medium-5 columns">
 					<div class="bottom-copyright">
