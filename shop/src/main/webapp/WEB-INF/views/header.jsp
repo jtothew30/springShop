@@ -222,7 +222,7 @@
 	<!-- NOTE: This is the header menu that appears at the top of your site. -->
 	<div class="off-canvas-content" data-off-canvas-content>
 		<div class="ecommerce-header-top show-for-large">
-			<div class="row align-justify">
+			<div class="row align-justify" style="display: block;">
 				<div class="ecommerce-header-top-message">
 					<h5 onclick="tomain();"><span class="title" style="cursor:pointer">온라인 쇼핑몰 KG쇼핑</span></h5>
 				</div>
@@ -233,7 +233,7 @@
 								<a id="loginBtn" class="loginBtn">로그인</a>
 							</c:if>
 							<c:if test="${not empty sessionScope.account}">
-								<a id="logoutBtn" style="">로그아웃</a>
+								<a id="logoutBtn">로그아웃</a>
 							</c:if>
 						</li>						
 						<li><a href="${pageContext.request.contextPath}/signUp/signUp.do">회원가입</a></li>
@@ -642,7 +642,5 @@
 			});
 		}
 	</script>
-	
 </header>
-
 </html>

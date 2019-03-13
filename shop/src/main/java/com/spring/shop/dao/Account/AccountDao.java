@@ -15,4 +15,5 @@ public interface AccountDao {
 	public void dbDelete(Account account) throws Exception;
 	List<Account> selectAccountListAll(Paging paging);
 	int selectAccountListCountAll(Paging paging);
+	List<Account> selectAccountAll();
 }

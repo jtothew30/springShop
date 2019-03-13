@@ -161,11 +161,11 @@ input{
 			var str = "";
 			<c:forEach var="pl" items="${plist}">
 			if ('${pl.pname}' == selected) {
-				str += ("<input type='checkbox' name='options' value="+"${pl.options}"+">"
+				str += ("<input type='checkbox' name='options' value='"+"${pl.options}"+"'>"
 						+ "${pl.options}" + "&nbsp;");
-				str += ("<input type='hidden' name='category1' value="+"${pl.category1}"+">");
-				str += ("<input type='hidden' name='category2' value="+"${pl.category2}"+">");
-				str += ("<input type='hidden' name='category3' value="+"${pl.category3}"+">");
+				str += ("<input type='hidden' name='category1' value='"+"${pl.category1}"+"'>");
+				str += ("<input type='hidden' name='category2' value='"+"${pl.category2}"+"'>");
+				str += ("<input type='hidden' name='category3' value='"+"${pl.category3}"+"'>");
 			}
 			</c:forEach>
 			$("#optionSelect").html(str);

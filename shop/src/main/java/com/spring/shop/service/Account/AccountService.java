@@ -16,4 +16,5 @@ public interface AccountService {
 	public void dbDelete(Account account) throws Exception;
 	List<Account> selectAccountListAll(Paging paging);
 	int selectAccountListCountAll(Paging paging);
+	public List<Account> selectAccountAll();
 }

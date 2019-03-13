@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.spring.shop.service.Account.AccountService;
 import com.spring.shop.service.Event.EventService;
 import com.spring.shop.service.ProBoard.ProBoardService;
@@ -293,6 +295,7 @@ public class AdminController {
 	@RequestMapping("boardDelete.do")
 	public String boardDelete(@RequestParam("pbno") int pbno) {
 		proBoardService.deleteProBoard(pbno);
+		proBoardService.deleteProContain(pbno);
 		return "redirect:boardList.do";		
 	}
 	
@@ -377,5 +380,52 @@ public class AdminController {
 		return mav;
 	}
 	
+	// 회원 통계 페이지 이동
+	@RequestMapping("staticList")
+	public ModelAndView staticList() {
+		ModelAndView mav = new ModelAndView("admin/staticList");
+		List<Account> acc = accountService.selectAccountAll();
+		
+		Gson gson = new Gson();
+		HashMap<String, Integer> ageMap = new HashMap<String, Integer>();
+		ageMap.put("a", 0);
+		ageMap.put("b", 0);
+		ageMap.put("c", 0);
+		ageMap.put("d", 0);
+		ageMap.put("e", 0);
+		ageMap.put("f", 0);
+		ageMap.put("g", 0);
+		
+		HashMap<String, Integer> genderMap = new HashMap<String, Integer>();
+		genderMap.put("m",0);
+		genderMap.put("f",0);
+		
+		for (Account a : acc) {
+			if(a.getAge()<=10) {
+				ageMap.put("a", ageMap.get("a")+1);
+			}else if(a.getAge()<=20 && a.getAge() >10) {
+				ageMap.put("b", ageMap.get("b")+1);
+			}else if(a.getAge()<=30 && a.getAge() >20) {
+				ageMap.put("c", ageMap.get("c")+1);
+			}else if(a.getAge()<=40 && a.getAge() >30) {
+				ageMap.put("d", ageMap.get("d")+1);
+			}else if(a.getAge()<=50 && a.getAge() >40) {
+				ageMap.put("e", ageMap.get("e")+1);
+			}else if(a.getAge()<=60 && a.getAge() >50) {
+				ageMap.put("f", ageMap.get("f")+1);
+			}else {
+				ageMap.put("g", ageMap.get("g")+1);
+			}
+			if(a.getGender().equals("male")) {
+				genderMap.put("m",genderMap.get("m")+1);
+			}else if(a.getGender().equals("female")){
+				genderMap.put("f",genderMap.get("f")+1);
+			}
+		}
+		
+		mav.addObject("ageList",gson.toJson(ageMap));
+		mav.addObject("genderList",gson.toJson(genderMap));
+		return mav;
+	}
 	
 }

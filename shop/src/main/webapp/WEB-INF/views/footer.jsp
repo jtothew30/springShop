@@ -139,7 +139,7 @@
 		<div class="ecommerce-footer" style="background-color: #575757; color:white; ">
 			<div class="ecommerce-footer-links row">
 				<div class="small-8 medium-8 large-4 columns">
-					<div class="row ecommerce-footer-links-block" >
+					<div class="row ecommerce-footer-links-block" style="display: block;" >
 						<div class="small-4 medium-4 large-4 columns">
 							<h5>Categories</h5>
 							<ul class="menu vertical">
@@ -150,7 +150,7 @@
 								<li><a href="#">Category 5</a></li>
 							</ul>
 						</div>						
-						<div class="small-4 medium-4 large-4 columns">
+						<div class="small-4 medium-4 large-4 columns" >
 							<h5>Help</h5>
 							<ul class="menu vertical">
 								<li><a href="${pageContext.request.contextPath}/index.jsp">index</a></li>
@@ -161,7 +161,7 @@
 					</div>
 				</div>
 				<div class="small-14 medium-14 large-7 columns">
-					<div class="row">
+					<div class="row" style="display: block; flex-wrap: none;">
 						<div class="small-5 medium-5 large-4 columns">
 							<h5>My Account</h5>
 							<ul class="menu vertical">

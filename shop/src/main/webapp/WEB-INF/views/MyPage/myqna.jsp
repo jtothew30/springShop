@@ -314,10 +314,18 @@
 				    		  <c:forEach var="qna" items="${qlist}">
 					          	<tr class="qnalist">
 					          		<td>
-						          		<a href="../proboard/product.do?pbno=${qna.pbno}">
-						          			<img src="${pageContext.request.contextPath}/resources/upload/${qna.pbno}/${qna.title}/메인.jpg" width="120"><br><br>
-						          			상품 게시글 보기
-						          		</a>
+						          		<c:choose>
+						          			<c:when test="${qna.title == '' || empty qna.title}">
+							          			<img src="${pageContext.request.contextPath}/resources/image/noimg.jpg" width="120" ><br><br>
+							          			판매글이 존재하지 않습니다.
+						          			</c:when>
+						          			<c:otherwise>
+						          				<a href="../proboard/product.do?pbno=${qna.pbno}">
+								          			<img src="${pageContext.request.contextPath}/resources/upload/${qna.pbno}/${qna.title}/메인.jpg" width="120"><br><br>
+								          			상품 게시글 보기
+								          		</a>
+						          			</c:otherwise>
+						          		</c:choose>      		
 					          		</td>
 					          		<td onclick="checkDetail(${qna.qno})" data-target="#qnaDetailPop" data-toggle="modal">${qna.category}</td>
 					          		<td onclick="checkDetail(${qna.qno})" data-target="#qnaDetailPop" data-toggle="modal">${qna.status}</td>
@@ -405,7 +413,7 @@
 	      		<table>
 	      			<thead>
 		      			<tr>
-		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th>
+		      				<th>댓글 작성자</th> <th>댓글 내용</th> <th>날 짜</th> <th>&nbsp;</th>
 		      			</tr>
 	      			</thead>
 	      			<tbody id="qnaReplyList">

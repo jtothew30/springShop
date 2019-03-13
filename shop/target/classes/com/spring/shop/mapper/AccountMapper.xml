@@ -37,14 +37,12 @@
 	</delete>
 	
 	<select id="selectAccountListCountAll" parameterType="com.spring.shop.vo.Paging" resultType="int">
-		select a.*
+		select count(*)
 		from (
-			select rownum rn, ac.*
+			select ac.*
 			from account ac
 			where name like '%'||#{kwd}||'%'
-			order by adate desc
-		) a
-		order by rn		
+		) 
 	</select>
 	
 	<select id="selectAccountListAll" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Account">
@@ -58,5 +56,9 @@
 			) a
 			order by rn		
 		) where rn between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="selectAccountAll" resultType="com.spring.shop.vo.Account">
+		select * from account
 	</select>
 </mapper>

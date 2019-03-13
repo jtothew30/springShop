@@ -26,13 +26,6 @@ public class AccountDaoImp implements AccountDao{
 	
 	@Override
 	public void dbInsert(Account account) {
-		System.out.println("dbInsert 넘어온 id="+account.getId());
-		System.out.println("dbInsert 넘어온 pw="+account.getPw());
-		System.out.println("dbInsert 넘어온 name="+account.getName());
-		System.out.println("dbInsert 넘어온 age="+account.getAge());
-		System.out.println("dbInsert 넘어온 gender="+account.getGender());
-		System.out.println("dbInsert 넘어온 email="+account.getEmail());
-		System.out.println("dbInsert 넘어온 phone="+account.getPhone());
 		sqlSession.insert(AccountMapper+".insert", account);
 		System.out.println("dbInsert success");
 	}
@@ -69,5 +62,10 @@ public class AccountDaoImp implements AccountDao{
 	@Override
 	public int selectAccountListCountAll(Paging paging) {
 		return sqlSession.selectOne(AccountMapper+".selectAccountListCountAll",paging);
+	}
+
+	@Override
+	public List<Account> selectAccountAll() {
+		return sqlSession.selectList(AccountMapper+".selectAccountAll");
 	}
 }

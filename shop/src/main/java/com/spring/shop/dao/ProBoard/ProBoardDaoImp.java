@@ -104,6 +104,11 @@ public class ProBoardDaoImp implements ProBoardDao{
 	public List<ProBoard> selectProBoardAll() {
 		return sqlSession.selectList(ProBoardMapper+".selectProBoardAll");
 	}
+
+	@Override
+	public void deleteProContain(int pbno) {
+		sqlSession.delete(ProBoardMapper+".deleteProContain",pbno);
+	}
 	
 	
 }
