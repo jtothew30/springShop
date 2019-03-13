@@ -30,4 +30,39 @@ public class EventServiceImp implements EventService{
 		return eventDao.selectEventTagFlag();
 	}
 
+	@Override
+	public void deleteEvent(int eno) {
+		eventDao.deleteEvent(eno);
+	}
+
+	@Override
+	public List<Event> selectEventAllbyTag() {
+		return eventDao.selectEventAllbyTag();
+	}
+
+	@Override
+	public void updateEvent(Event event) {
+		eventDao.updateEvent(event);
+	}
+
+	@Override
+	public int updateEventTagOn(String tag) {
+		return eventDao.updateEventTagOn(tag);
+	}
+
+	@Override
+	public int updateEventTagOff(String tag) {
+		return eventDao.updateEventTagOff(tag);
+	}
+
+	@Override
+	public List<Event> selectEventTagOn() {
+		return eventDao.selectEventTagOn();
+	}
+
+	@Override
+	public List<Event> selectEventTagFlagOnly() {
+		return eventDao.selectEventTagFlagOnly();
+	}
+
 }

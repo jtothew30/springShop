@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -306,7 +307,7 @@ public class AdminController {
 	public ModelAndView mainEdit() {
 		ModelAndView mav = new ModelAndView("admin/mainEdit");
 		List<ProBoard> list = proBoardService.selectProBoardAll();
-		List<Event> elist = eventService.selectEventAll();
+		List<Event> elist = eventService.selectEventAllbyTag();
 		List<Event> tlist = eventService.selectEventTagFlag();
 		
 		ArrayList<String> tagList = new ArrayList<String>();
@@ -363,6 +364,42 @@ public class AdminController {
 		//logger.info(event.toString());
 		eventService.insertEvent(event);
 		return "redirect:mainEdit.do";
+	}
+			
+	// 메인페이지 이벤트 삭제
+	@RequestMapping("mainEventDelete.do")
+	public String mainEventDelete(@RequestParam("eno") int eno) {
+		eventService.deleteEvent(eno);
+		return "redirect:mainEdit.do";
+	}
+	
+	// 메인페이지 이벤트 수정
+	@RequestMapping("mainEventChange.do")
+	public String mainEventChange(Event event) {
+		eventService.updateEvent(event);
+		return "redirect:mainEdit.do";
+	}
+	
+	// 메인페이지 이벤트 tag ON
+	@ResponseBody
+	@RequestMapping("updateTagOn.do")
+	public boolean updateTagOn(@RequestParam("tag") String tag) {
+		boolean result = false;
+		int a = eventService.updateEventTagOn(tag);
+		logger.info("On 변경 tag 개수 : "+a);
+		if(a>0) result= true;
+		return result;
+	}
+	
+	// 메인페에지 이벤트 tag Off
+	@ResponseBody
+	@RequestMapping("updateTagOff.do")
+	public boolean updateTagOff(@RequestParam("tag") String tag) {
+		boolean result = false;
+		int a = eventService.updateEventTagOff(tag);
+		logger.info("Off 변경 tag 개수 : "+a);
+		if(a>0) result= true;
+		return result;
 	}
 	
 	//==========================================================================

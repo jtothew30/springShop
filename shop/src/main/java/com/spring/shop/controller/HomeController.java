@@ -55,21 +55,14 @@ public class HomeController {
 	public ModelAndView main() {
 		ModelAndView mav = new ModelAndView("main");
 		// 전체 이벤트 list
-		List<Event> list = eventService.selectEventAll();
+		List<Event> list = eventService.selectEventTagOn();
 		
 		// 이벤트 tag list & flag ==1
-		List<Event> list2 = eventService.selectEventTagFlag();
+		List<Event> list2 = eventService.selectEventTagFlagOnly();
 		ArrayList<String> tagList = new ArrayList<String>();
 		for (Event e : list2) {
 			tagList.add(e.getTag());
 		}
-//		String[] tagList = new String[list2.size()];
-//		for (int i = 0; i < list2.size(); i++) {
-//			tagList[i] = list2.get(i).getTag();
-//		}
-		
-		//logger.info(tagList.toString());
-		//logger.info(list.toString());
 		
 		mav.addObject("tagList",tagList);
 		mav.addObject("list",list);

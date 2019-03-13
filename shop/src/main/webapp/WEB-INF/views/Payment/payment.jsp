@@ -303,7 +303,7 @@
 			name += (" 및 "+(list.length-1)+"개");
 		
 		BootPay.request({
-			price: 1000, //실제 결제되는 가격 totalprice
+			price: totalprice, //실제 결제되는 가격 totalprice
 			application_id: "5c6661f2396fa61dea25a794",
 			name: name, //결제창에서 보여질 이름
 			pg: 'danal',

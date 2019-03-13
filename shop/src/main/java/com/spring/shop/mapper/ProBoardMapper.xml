@@ -31,20 +31,20 @@
 			        select DISTINCT p.pname, p.category1, p.category2, p.category3, c.pbno
 			        from production p, procontain c
 			        where p.pno = c.pno
-			        <choose>
-			            <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
-						     and category2 in
-						    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
-						       #{item}
-						    </foreach>
-					    </when>
-					    <when test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
-						  	 and category3 in
-						    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
-							    #{item}
-							</foreach>
-					    </when>
-					</choose>
+			       <if test="@com.spring.shop.util.CommonUtil@notEmpty(listCate2)">
+					     and (category2 in
+					    <foreach collection="listCate2" item="item" index="index" separator="," open="(" close=")">
+					       #{item}
+					    </foreach>
+					    )
+				    </if>
+				    <if test="@com.spring.shop.util.CommonUtil@notEmpty(listCate3)">
+					  	 and (category3 in
+					    <foreach collection="listCate3" item="item" index="index" separator="," open="(" close=")">
+						    #{item}
+						</foreach>
+						)							
+				    </if>
 			    ) c
 			    where pb.pbno = c.pbno and pb.title like '%'||#{kwd}||'%'
 			    order by pb.pbno desc

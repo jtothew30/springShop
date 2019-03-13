@@ -31,7 +31,10 @@ public class ProBoardController {
 		if(tabs == null || tabs.equals(""))
 			tabs = "";
 		
+		logger.info("product check");
+		
 		List<Production> prolist = service.getprolist(pbno);
+		logger.info("check:"+prolist.size());
 		
 		String path = pbno+"/"+prolist.get(0).getPname();
 		logger.info("img path:"+path);

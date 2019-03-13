@@ -275,7 +275,14 @@
 					<c:if test="${i.index%4 == 3 }">
 						<div class="row">
 					</c:if>
+					<c:choose>
+					<c:when test="${i.last}">
+					<div class="large-3 columns end">
+					</c:when>
+					<c:otherwise>
 					<div class="large-3 columns">
+					</c:otherwise>
+					</c:choose>
 						<div class="product-card">
 							<div class="product-card-thumbnail">
 								<a href="proboard/product.do?pbno=${b.pbno}"> 
@@ -305,7 +312,7 @@
 			</c:if>
 		</div>
 		<!-- product Card end -->
-		<!-- paging template -->
+		<!-- paging template (chkbox option)-->
 		<ul class="pagination-pointed pagination text-center"
 			role="navigation" aria-label="Pagination">
 			<li class="pagination-previous disabled">Previous <span
@@ -319,14 +326,15 @@
 					</c:when>
 					<c:otherwise>
 						<li><a class="pagination-pointed-button"
-							href="search.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+							onclick="pagingSubmit(${index});" aria-label="Page ${index}">${index}</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<li class="pagination-next disabled">Next <span
 				class="show-for-sr">page</span></li>
 		</ul>
-		<!-- paging template -->
+		<!-- paging template (chkbox option) -->
+		
 	</div>
 	</div>
 	</form>
@@ -335,6 +343,9 @@
 	<script	src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 	<script type="text/javascript">
+		var ctx = '${pageContext.request.contextPath}';
+		var para = document.location.href.split("?")[1];
+	
 		//More (Expand) or Less (Collapse)
 		$('.categories-menu.menu.nested').each(function() {
 			var filterAmount = $(this).find('li').length;
@@ -359,12 +370,12 @@
 			var next = '<c:out value="${paging.next}"/>';
 			if (prev == 'true') {
 				$(".pagination-previous").removeClass("disabled");
-				$(".pagination-previous").html(" <a class='pagination-pointed-top' href='${paging.beginPage-10}'" +
+				$(".pagination-previous").html(" <a class='pagination-pointed-top'  onclick='sendSubmit(${paging.beginPage-10});'" +
 								     	 "aria-label='Next page'>Previous <span class='show-for-sr'>page</span></a>");
 				}
 			if (next == 'true') {
 				$(".pagination-next").removeClass("disabled");
-				$(".pagination-next").html("<a class='pagination-pointed-button' href='${paging.endPage+1}'" +
+				$(".pagination-next").html("<a class='pagination-pointed-button' onclick='sendSubmit(${paging.endPage+1});'" +
 	      									"aria-label='Next page'>Next<span class='show-for-sr'>page</span></a>");
 				}
 		});
@@ -402,6 +413,7 @@
 		     	$(this).prop('checked',false);
 		     }
 			 chk();
+			 sendSubmit();
 		}
 		
 		
@@ -419,8 +431,8 @@
 					listCate3.push($(this).val());
 				}
 			});
-			console.log(listCate2);
-			console.log(listCate3);
+			/* console.log(listCate2);
+			console.log(listCate3); */
 			
 			var items = new Object();
 			items.listCate2 = listCate2;
@@ -428,8 +440,15 @@
 
 			var opt2 = document.getElementById("opt2");
 			opt2.value = JSON.stringify(items);
+		}
+		function sendSubmit(){
 			$("#searchProduct").submit();
 		}
+		function pagingSubmit(page){
+			var para = document.location.href.split("&page")[0];
+			location.href = para+'&page='+page;
+		}
+		
 	</script>
 </body>
 <c:import url="footer.jsp" />
