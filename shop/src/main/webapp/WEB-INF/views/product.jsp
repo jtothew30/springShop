@@ -446,6 +446,7 @@
                         <td class="table-light" width="30%">2012.07.31</td>
                      </tr>
                   </table>
+                  	<img src="${pageContext.request.contextPath}/resources/image/add.jpg" width="100%" align="middle">
 					</div>
 				</div>
 				<div class="tabs-panel" id="panel3" role="tabpanel"

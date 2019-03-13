@@ -160,7 +160,7 @@ public class AdminController {
 		String inputPath = "/resources/upload/";
 		proBoard.setPath(inputPath);
 		
-		//logger.info(proBoard.toString());
+		logger.info("proBoard : " + proBoard.toString());
 		
 		proBoardService.insertProBoardService(proBoard);
 		// query input 타이밍에 pbno, pbdate ==> null 상태		
@@ -177,7 +177,7 @@ public class AdminController {
 			map.put("pname", proBoard.getPname());
 			map.put("options", options[i]);
 			
-			//logger.info(map.toString());
+			logger.info(map.toString());
 			
 			productionService.insertProcontainPnamePno(map);
 		}
