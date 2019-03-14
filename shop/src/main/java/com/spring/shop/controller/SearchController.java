@@ -29,7 +29,7 @@ public class SearchController {
 	@RequestMapping("/search.do")
 	public ModelAndView search(Paging paging ,HttpServletRequest request ) {
 		ModelAndView mav = new ModelAndView("search");
-		
+		logger.info(paging.toString());
 		//   items = {"listCate2":["",""], "listCate3":["","","",""]};
 		if(paging.getOptionKwd()!= null) {			
 			Gson gson = new Gson();
@@ -81,6 +81,7 @@ public class SearchController {
 		Gson gson = new Gson();
 		String arr = gson.toJson(paging.getOptionKwd());
 		paging.setOptionKwd(arr);
+		logger.info(paging.toString());
 		mav.addObject("paging", paging);
 		mav.addObject("cate2List", cate2List);
 		mav.addObject("cate3List", cate3List);

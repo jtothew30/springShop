@@ -60,4 +60,9 @@ public class AccountServiceImp implements AccountService{
 	public int selectAccountListCountAll(Paging paging) {
 		return accountDao.selectAccountListCountAll(paging);
 	}
+
+	@Override
+	public List<Account> selectAccountAll() {
+		return accountDao.selectAccountAll();
+	}
 }

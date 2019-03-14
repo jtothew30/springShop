@@ -43,7 +43,7 @@
 					<a href="memberList.do"> <img src="../resources/foundation-icons/svgs/fi-results-demographics.svg" height="60" width="60"><b>회원 관리</b>
 					</a>
 				<div class="row column expended">
-					<a href="#"> <img src="../resources/foundation-icons/svgs/fi-graph-bar.svg" height="60" width="60"><b>이용자 통계</b>
+					<a href="staticList.do"> <img src="../resources/foundation-icons/svgs/fi-graph-bar.svg" height="60" width="60"><b>이용자 통계</b>
 					</a>
 				</div>
 				<hr>

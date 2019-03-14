@@ -10,30 +10,6 @@
 <body>
 	<c:set var="ContextPath" value="${pageContext.request.contextPath}"/>
 
-	<c:if test="${account == null}">
-	<form role="form" method="post" autocomplete="off" action="login.do">
-		<p>
-			<label for="id">ID</label>
-			<input type="text" id="id" name="id"/>
-		</p>
-		<p>
-			<label for="pw">PW</label>
-			<input type="password" id="pw" name="pw"/>
-		</p>
-		<p><button type="submit">로그인</button></p>
-		<p><a href="signUp/signUp.do">회원가입</a>
-	</form>
-	</c:if>
-	
-	<c:if test="${msg == false}">
-		<p style="color:red;">로그인에 실패했습니다. ID 또는 PW를 다시 입력해주세요.</p>
-	</c:if>
-	
-	<c:if test="${account != null}">
-		<p>${account}님 환영합니다.</p>
-		<a href="${ContextPath}/logout.do">로그아웃</a>
-	</c:if>	
-
 	<h1>		
 		<a href="${ContextPath}/proboard/product.do?pbno=1">product.do</a>
 	</h1>	

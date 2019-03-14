@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -58,7 +59,7 @@
 									<td>${list.pbno}</td>
 									<td><img src="${pageContext.request.contextPath}${list.path}/1.jpg" width="100" height="100"></td>
 									<td><a href="../proboard/product.do?pbno=${list.pbno}">${list.title}</a></td>
-									<td>${list.pbdate}</td>
+									<td><fmt:formatDate value="${list.pbdate}" pattern="yyyy.MM.dd HH:mm:ss" /></td>
 									<td>${list.price}</td>
 									<td>${list.event}</td>
 									<td>${list.totalsales}</td>
@@ -73,7 +74,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- pageing template -->
+	<!-- pageing template -->
       <ul class="pagination-pointed pagination text-center" role="navigation" aria-label="Pagination">        
         <li class="pagination-previous disabled">Previous
 			<span class="show-for-sr">page</span></li>

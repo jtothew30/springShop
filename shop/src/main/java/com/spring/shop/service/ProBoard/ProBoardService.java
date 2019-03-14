@@ -27,4 +27,5 @@ public interface ProBoardService {
 	void deleteProcontain(int pbno);
 	List<ProBoard> selectProboardForCategory(Paging paging);
 	List<ProBoard> selectProBoardAll();
+	void deleteProContain(int pbno);
 }

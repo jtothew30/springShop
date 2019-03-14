@@ -188,6 +188,16 @@
 	<script src="../resources/js/vendor/foundation.js"></script>
 	<script src="../resources/js/app.js"></script>
 	<script type="text/javascript">
+		$('input[type="text"]').keydown(function() {
+		    if (event.keyCode === 13) {
+		        event.preventDefault();
+		    }
+		});
+		$('input[type="textarea"]').keydown(function() {
+		    if (event.keyCode === 13) {
+		        event.preventDefault();
+		    }
+		});
 		$(function () {
 			var category1 = ["의류", "잡화", "뷰티"];
 			$(".category1").autocomplete({

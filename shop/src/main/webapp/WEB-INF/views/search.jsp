@@ -229,39 +229,19 @@
 								<ul class="categories-menu menu vertical nested">
 									<a href="#" class="clear-all" id="color-clear-all">Clear
 										All</a>
-									<li><input id="color-checkbox1" type="checkbox"><label
-										for="color-checkbox1">All Color</label></li>
-									<li><input id="color-checkbox2" type="checkbox"><label
-										for="color-checkbox2">Black</label></li>
-									<li><input id="color-checkbox3" type="checkbox"><label
-										for="color-checkbox3">White</label></li>
-									<li><input id="color-checkbox4" type="checkbox"><label
-										for="color-checkbox4">Grey</label></li>
-									<li><input id="color-checkbox5" type="checkbox"><label
-										for="color-checkbox5">Red</label></li>
-									<li><input id="color-checkbox6" type="checkbox"><label
-										for="color-checkbox6">Blue</label></li>
-									<li><input id="color-checkbox7" type="checkbox"><label
-										for="color-checkbox7">Green</label></li>
-									<li><input id="color-checkbox8" type="checkbox"><label
-										for="color-checkbox8">Purple</label></li>
-									<li><input id="color-checkbox8" type="checkbox"><label
-										for="color-checkbox8">Multi-color</label></li>
+									<li><input id="color-checkbox1 disabled" type="checkbox" ><label
+										for="color-checkbox1">----</label></li>
+									<li><input id="color-checkbox2 disabled" type="checkbox"><label
+										for="color-checkbox2">----</label></li>
 								</ul></li>
 							<li class="product-filters-tab"><a href="#">Price</a>
 								<ul class="categories-menu menu vertical nested">
 									<a href="#" class="clear-all" id="price-clear-all">Clear
 										All</a>
-									<li><input id="price-checkbox1" type="checkbox"><label
-										for="price-checkbox1">Under $25</label></li>
-									<li><input id="price-checkbox2" type="checkbox"><label
-										for="price-checkbox2">$25–$50</label></li>
-									<li><input id="price-checkbox3" type="checkbox"><label
-										for="price-checkbox3">$50–$250</label></li>
-									<li><input id="price-checkbox4" type="checkbox"><label
-										for="price-checkbox4">$250–$600</label></li>
-									<li><input id="price-checkbox4" type="checkbox"><label
-										for="price-checkbox4">$600–$1,000</label></li>
+									<li><input id="price-checkbox1 disabled" type="checkbox"><label
+										for="price-checkbox1">----</label></li>
+									<li><input id="price-checkbox2 disabled" type="checkbox"><label
+										for="price-checkbox2">----</label></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -275,7 +255,14 @@
 					<c:if test="${i.index%4 == 3 }">
 						<div class="row">
 					</c:if>
+					<c:choose>
+					<c:when test="${i.last}">
+					<div class="large-3 columns end">
+					</c:when>
+					<c:otherwise>
 					<div class="large-3 columns">
+					</c:otherwise>
+					</c:choose>
 						<div class="product-card">
 							<div class="product-card-thumbnail">
 								<a href="proboard/product.do?pbno=${b.pbno}"> 
@@ -305,7 +292,7 @@
 			</c:if>
 		</div>
 		<!-- product Card end -->
-		<!-- paging template -->
+		<!-- paging template (chkbox option)-->
 		<ul class="pagination-pointed pagination text-center"
 			role="navigation" aria-label="Pagination">
 			<li class="pagination-previous disabled">Previous <span
@@ -319,14 +306,15 @@
 					</c:when>
 					<c:otherwise>
 						<li><a class="pagination-pointed-button"
-							href="search.do?page=${index}" aria-label="Page ${index}">${index}</a></li>
+							onclick="pagingSubmit(${index});" aria-label="Page ${index}">${index}</a></li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<li class="pagination-next disabled">Next <span
 				class="show-for-sr">page</span></li>
 		</ul>
-		<!-- paging template -->
+		<!-- paging template (chkbox option) -->
+		
 	</div>
 	</div>
 	</form>
@@ -335,6 +323,9 @@
 	<script	src="${pageContext.request.contextPath}/resources/js/vendor/foundation.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 	<script type="text/javascript">
+		var ctx = '${pageContext.request.contextPath}';
+		var para = document.location.href.split("?")[1];
+	
 		//More (Expand) or Less (Collapse)
 		$('.categories-menu.menu.nested').each(function() {
 			var filterAmount = $(this).find('li').length;
@@ -359,12 +350,12 @@
 			var next = '<c:out value="${paging.next}"/>';
 			if (prev == 'true') {
 				$(".pagination-previous").removeClass("disabled");
-				$(".pagination-previous").html(" <a class='pagination-pointed-top' href='${paging.beginPage-10}'" +
+				$(".pagination-previous").html(" <a class='pagination-pointed-top'  onclick='sendSubmit(${paging.beginPage-10});'" +
 								     	 "aria-label='Next page'>Previous <span class='show-for-sr'>page</span></a>");
 				}
 			if (next == 'true') {
 				$(".pagination-next").removeClass("disabled");
-				$(".pagination-next").html("<a class='pagination-pointed-button' href='${paging.endPage+1}'" +
+				$(".pagination-next").html("<a class='pagination-pointed-button' onclick='sendSubmit(${paging.endPage+1});'" +
 	      									"aria-label='Next page'>Next<span class='show-for-sr'>page</span></a>");
 				}
 		});
@@ -402,6 +393,7 @@
 		     	$(this).prop('checked',false);
 		     }
 			 chk();
+			 sendSubmit();
 		}
 		
 		
@@ -419,8 +411,8 @@
 					listCate3.push($(this).val());
 				}
 			});
-			console.log(listCate2);
-			console.log(listCate3);
+			/* console.log(listCate2);
+			console.log(listCate3); */
 			
 			var items = new Object();
 			items.listCate2 = listCate2;
@@ -428,8 +420,15 @@
 
 			var opt2 = document.getElementById("opt2");
 			opt2.value = JSON.stringify(items);
+		}
+		function sendSubmit(){
 			$("#searchProduct").submit();
 		}
+		function pagingSubmit(page){
+			var para = document.location.href.split("&page")[0];
+			location.href = para+'&page='+page;
+		}
+		
 	</script>
 </body>
 <c:import url="footer.jsp" />

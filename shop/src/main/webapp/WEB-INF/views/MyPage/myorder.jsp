@@ -5,12 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>주문/배송조회</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/myorder.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/foundation.css">
-
-
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/fontawesome-stars.css">
 

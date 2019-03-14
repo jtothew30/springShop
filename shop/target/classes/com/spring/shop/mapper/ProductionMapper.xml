@@ -66,9 +66,9 @@
 					select p.*, count
 					from production p, prostock s
 					where p.pno = s.pno
+					order by p.pno desc			
 				) pr
 				where pname like '%'||#{kwd}||'%'
-				order by pno desc			
 			) p
 			order by rn
 		) where rn between #{startNum} and #{endNum}

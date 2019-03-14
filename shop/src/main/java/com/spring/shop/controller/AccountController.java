@@ -1,22 +1,17 @@
 package com.spring.shop.controller;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.spring.shop.dao.Account.AccountDao;
 import com.spring.shop.service.Account.AccountService;
 import com.spring.shop.vo.Account;
 
@@ -29,8 +24,6 @@ public class AccountController {
 	
 	@Inject
 	private AccountService service;
-	@Autowired
-	AccountDao dao;
 	
 	// 마이페이지 - 개인정보 수정페이지 오픈
 	@RequestMapping("infoChange.do")
@@ -98,31 +91,31 @@ public class AccountController {
 		return result;		
 	}
 	
-	// old
-	@RequestMapping(value="login.do", method = RequestMethod.POST)
-	public String login(Account account, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
-		logger.info("post login");
-		System.out.println("로그인한ID: " +account.getId());
-		HttpSession session = req.getSession();
-		Account login = service.login(account);
-		
-		if(login == null) {
-			session.setAttribute("account", null);
-			rttr.addFlashAttribute("msg", false);
-			System.out.println("로그인실패");
-		} else {
-			session.setAttribute("account", login);
-			System.out.println("로그인성공");
-		}
-		return "redirect:/index.jsp";
-	}
-	//old
-	@RequestMapping(value="logout.do", method = RequestMethod.GET)
-	public String logout(HttpSession session) throws Exception {
-		logger.info("get logout");
-		session.invalidate();
-		return "redirect:/index.jsp";
-	}
+//	// old
+//	@RequestMapping(value="login.do", method = RequestMethod.POST)
+//	public String login(Account account, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
+//		logger.info("post login");
+//		System.out.println("로그인한ID: " +account.getId());
+//		HttpSession session = req.getSession();
+//		Account login = service.login(account);
+//		
+//		if(login == null) {
+//			session.setAttribute("account", null);
+//			rttr.addFlashAttribute("msg", false);
+//			System.out.println("로그인실패");
+//		} else {
+//			session.setAttribute("account", login);
+//			System.out.println("로그인성공");
+//		}
+//		return "redirect:/index.jsp";
+//	}
+//	//old
+//	@RequestMapping(value="logout.do", method = RequestMethod.GET)
+//	public String logout(HttpSession session) throws Exception {
+//		logger.info("get logout");
+//		session.invalidate();
+//		return "redirect:/index.jsp";
+//	}
 	
 	
 	// 회원탈퇴 확인 페이지 오픈
@@ -150,57 +143,57 @@ public class AccountController {
 		return result;
 	}
 	
-	//old
-	@RequestMapping(value="AccountDelete", method = RequestMethod.GET)
-	public void GetDelete(Account account) throws Exception {
-	 logger.info("GET delete");
-	 System.out.println("시도중인name: " + account.getName());
-	}
-	//old
-	@RequestMapping(value="AccountDelete", method= RequestMethod.POST)
-	public String PostDelete(HttpSession session, Account vo, RedirectAttributes rttr) throws Exception {
-		logger.info("POST delete");
-		
-		Account acc = (Account)session.getAttribute("account");
-		
-		String oldId = acc.getId();
-		String newId = vo.getId();
-		String oldPass = acc.getPw();
-		String newPass = vo.getPw();
-		
-		logger.info("oldpass!!: " + oldPass);
-		logger.info("newpass!!: " + newPass);
-		
-		if(!oldPass.equals(newPass) || !oldId.equals(newId)) {
-			rttr.addFlashAttribute("msg", false);
-			return "redirect:/account/AccountDelete";
-		} 
-		
-			logger.info("탈퇴한 이름: " + vo.getName());
-			logger.info("탈퇴한 아이디: " + vo.getId());
-			service.dbDelete(vo);
-			session.invalidate();
-			logger.info("delete success");
-			
-		return "redirect:/index.jsp";
-	}
+//	//old
+//	@RequestMapping(value="AccountDelete", method = RequestMethod.GET)
+//	public void GetDelete(Account account) throws Exception {
+//	 logger.info("GET delete");
+//	 System.out.println("시도중인name: " + account.getName());
+//	}
+//	//old
+//	@RequestMapping(value="AccountDelete", method= RequestMethod.POST)
+//	public String PostDelete(HttpSession session, Account vo, RedirectAttributes rttr) throws Exception {
+//		logger.info("POST delete");
+//		
+//		Account acc = (Account)session.getAttribute("account");
+//		
+//		String oldId = acc.getId();
+//		String newId = vo.getId();
+//		String oldPass = acc.getPw();
+//		String newPass = vo.getPw();
+//		
+//		logger.info("oldpass!!: " + oldPass);
+//		logger.info("newpass!!: " + newPass);
+//		
+//		if(!oldPass.equals(newPass) || !oldId.equals(newId)) {
+//			rttr.addFlashAttribute("msg", false);
+//			return "redirect:/account/AccountDelete";
+//		} 
+//		
+//			logger.info("탈퇴한 이름: " + vo.getName());
+//			logger.info("탈퇴한 아이디: " + vo.getId());
+//			service.dbDelete(vo);
+//			session.invalidate();
+//			logger.info("delete success");
+//			
+//		return "redirect:/index.jsp";
+//	}
 	
-	@RequestMapping("refer.do")
-	public String Reference() {
-		return "MyPage/reference";
-	}
+//	@RequestMapping("refer.do")
+//	public String Reference() {
+//		return "MyPage/reference";
+//	}
 	
-	@RequestMapping("orderList.do")
-	public String orderList() {
-		return "MyPage/orderList";
-	}
+//	@RequestMapping("orderList.do")
+//	public String orderList() {
+//		return "MyPage/orderList";
+//	}
 	
-	@RequestMapping("list.do")
-	public String memlist(Account account, Model model) throws Exception {
-		
-		List<Account> list = service.memlist(account);
-		model.addAttribute("list", list);
-		
-		return "memList";
-	}
+//	@RequestMapping("list.do")
+//	public String memlist(Account account, Model model) throws Exception {
+//		
+//		List<Account> list = service.memlist(account);
+//		model.addAttribute("list", list);
+//		
+//		return "memList";
+//	}
 }

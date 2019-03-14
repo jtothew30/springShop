@@ -137,10 +137,10 @@
 	<hr>
 	<div style="margin: 0% 0%;">
 		<div class="ecommerce-footer" style="background-color: #575757; color:white; ">
-			<div class="ecommerce-footer-links row">
+			<div class="ecommerce-footer-links row" style="display: block;">
 				<div class="small-8 medium-8 large-4 columns">
-					<div class="row ecommerce-footer-links-block" >
-						<div class="small-4 medium-4 large-4 columns">
+					<div class="row ecommerce-footer-links-block" style="display: block;" >
+						<div class="small-4 medium-4 large-4 columns" style="font-family: '맑은고딕', malgun gothic, '돋움', Dotum, AppleGothic, sans- serif;">
 							<h5>Categories</h5>
 							<ul class="menu vertical">
 								<li><a href="#">Category 1</a></li>
@@ -150,7 +150,7 @@
 								<li><a href="#">Category 5</a></li>
 							</ul>
 						</div>						
-						<div class="small-4 medium-4 large-4 columns">
+						<div class="small-4 medium-4 large-4 columns" >
 							<h5>Help</h5>
 							<ul class="menu vertical">
 								<li><a href="${pageContext.request.contextPath}/index.jsp">index</a></li>
@@ -160,9 +160,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="small-14 medium-14 large-7 columns">
-					<div class="row">
-						<div class="small-5 medium-5 large-4 columns">
+				<div class="small-14 medium-14 large-7 columns" style="display: block; flex-wrap: none;">
+					<div class="row" style="display: block; flex-wrap: none;">
+						<div class="small-5 medium-5 large-4 columns" >
 							<h5>My Account</h5>
 							<ul class="menu vertical">
 								<li><a href="${pageContext.request.contextPath}/signUp/signUp.do">회원가입</a></li>
@@ -174,7 +174,7 @@
 								<li><a href="${pageContext.request.contextPath}/mypage/myqna.do">-내Q&A</a></li>
 							</ul>
 						</div>
-						<div class="small-3 medium-3 large-4 columns">
+						<div class="small-4 medium-4 large-4 columns">
 							<h5>About</h5>
 							<ul class="menu vertical">
 								<li><a href="#">Company</a></li>
@@ -209,7 +209,7 @@
 				</div>
 				<div class="small-12 medium-5 columns">
 					<div class="bottom-copyright">
-						<span>©2019 Company Name. All rights reserved.</span>
+						<span>©2019 KGShop. All rights reserved.</span>
 					</div>
 				</div>
 			</div>

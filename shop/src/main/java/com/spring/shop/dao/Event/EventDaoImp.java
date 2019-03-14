@@ -35,4 +35,39 @@ public class EventDaoImp implements EventDao{
 	public List<Event> selectEventTagFlag() {
 		return sqlSession.selectList(EventMapper+".selectEventTagFlag");
 	}
+
+	@Override
+	public void deleteEvent(int eno) {
+		sqlSession.delete(EventMapper+".deleteEvent", eno);
+	}
+
+	@Override
+	public List<Event> selectEventAllbyTag() {
+		return sqlSession.selectList(EventMapper+".selectEventAllbyTag");
+	}
+
+	@Override
+	public void updateEvent(Event event) {
+		sqlSession.update(EventMapper+".updateEvent",event);
+	}
+
+	@Override
+	public int updateEventTagOn(String tag) {
+		return sqlSession.update(EventMapper+".updateEventTagOn",tag);
+	}
+
+	@Override
+	public int updateEventTagOff(String tag) {
+		return sqlSession.update(EventMapper+".updateEventTagOff",tag);
+	}
+
+	@Override
+	public List<Event> selectEventTagOn() {
+		return sqlSession.selectList(EventMapper+".selectEventTagOn");
+	}
+	
+	@Override
+	public List<Event> selectEventTagFlagOnly() {
+		return sqlSession.selectList(EventMapper+".selectEventTagFlagOnly");
+	}
 }

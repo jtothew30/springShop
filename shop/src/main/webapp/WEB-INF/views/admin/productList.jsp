@@ -150,14 +150,14 @@
 									<div class="colunms">
 										<form action="proCountUpdate.do" method="post">
 											<div class="colunms">
-												<input type="hidden" name="pno" value="${list.pno}">
-												현 재고량 : <input type="text" name="count" value="${list.count}">
+												<input id="pno" type="hidden" name="pno" value="${list.pno}">
+												현 재고량 : <input id="count" type="text" name="count" value="${list.count}">
 											</div>
 									</div>
 								</td>
 								<td colspan="1" class="table-expand-row">
 									<div class="colunms" style="padding-top: 1em;">
-										<input type="submit" class="button" value="재고수정">
+										<input onclick="countUpdate();" class="button" value="재고수정">
 									</div>
 									</form>
 								</td>
@@ -239,6 +239,18 @@
 						+"aria-label='Next page'>Next<span class='show-for-sr'>page</span></a>");
 			}
 		});
+		function countUpdate(){
+			var count = $("#count").val();
+			var pno = $("#pno").val();
+			$.ajax({
+				type: "POST",
+				url: "proCountUpdateAjax.do",
+				data : {'pno':pno, "count": count},
+				success : function(){
+					location.reload();
+				}
+			});
+		}
 	</script>
 </body>
 

@@ -1,7 +1,7 @@
 body { text-align:center; }
 body, ul, ol, li, dl, dt, dd, p, h1, h2, h3, h3 { margin:0; padding:0; font-size:12px;}
 ul,ol,li { list-style:none; }
-body, td, th, div, dt, dd, li, input, select, textarea { color:#666; font-size:12px; font-family:����,Dotum,Arial; }
+body, td, th, div, dt, dd, li, input, select, textarea { color:#666; font-size:12px; font-family: '맑은고딕', malgun gothic, '돋움', Dotum, AppleGothic, sans- serif; }
 img { border:0; vertical-align:top; }
 input { outline-style:none; } /* 20120710 chrome input ���� ���� */
 ul, li { list-style:none; }
