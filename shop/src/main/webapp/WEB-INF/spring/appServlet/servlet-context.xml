@@ -27,6 +27,7 @@
 	<!-- 인터셉터 관련 -->
 	<beans:bean id="loginIntercepter" class="com.spring.shop.controller.LoginIntercepter"/>		
 	<beans:bean id="adminIntercepter" class="com.spring.shop.controller.AdminIntercepter"/>
+	<beans:bean id="reviewIntercepter" class="com.spring.shop.controller.ReviewIntercepter"/>
 	<interceptors>
 		<interceptor>
 			<!-- account -->
@@ -46,12 +47,9 @@
 			<!-- payment -->
 			<mapping path="/payment/*"/>
 			<!-- reply -->
-			<mapping path="/reply/replyWirte.do"/>
 			<mapping path="/reply/replyEdit.do"/>
 			<mapping path="/reply/replyDelete.do"/>
 			<!-- review -->
-			<mapping path="/review/reviewWirte.do"/>
-			<mapping path="/review/qnaWirte.do"/>
 			<mapping path="/review/reactCheck.do"/>
 			<mapping path="/review/react.do"/>
 			
@@ -62,6 +60,13 @@
 			<mapping path="/admin/*"/>
 			
 			<beans:ref bean="adminIntercepter"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/reply/replyWirte.do"/>
+			<mapping path="/review/reviewWirte.do"/>
+			<mapping path="/review/qnaWirte.do"/>
+			
+			<beans:ref bean="reviewIntercepter"/>
 		</interceptor>
 	</interceptors>	
 	

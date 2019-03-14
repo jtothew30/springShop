@@ -229,39 +229,19 @@
 								<ul class="categories-menu menu vertical nested">
 									<a href="#" class="clear-all" id="color-clear-all">Clear
 										All</a>
-									<li><input id="color-checkbox1" type="checkbox"><label
-										for="color-checkbox1">All Color</label></li>
-									<li><input id="color-checkbox2" type="checkbox"><label
-										for="color-checkbox2">Black</label></li>
-									<li><input id="color-checkbox3" type="checkbox"><label
-										for="color-checkbox3">White</label></li>
-									<li><input id="color-checkbox4" type="checkbox"><label
-										for="color-checkbox4">Grey</label></li>
-									<li><input id="color-checkbox5" type="checkbox"><label
-										for="color-checkbox5">Red</label></li>
-									<li><input id="color-checkbox6" type="checkbox"><label
-										for="color-checkbox6">Blue</label></li>
-									<li><input id="color-checkbox7" type="checkbox"><label
-										for="color-checkbox7">Green</label></li>
-									<li><input id="color-checkbox8" type="checkbox"><label
-										for="color-checkbox8">Purple</label></li>
-									<li><input id="color-checkbox8" type="checkbox"><label
-										for="color-checkbox8">Multi-color</label></li>
+									<li><input id="color-checkbox1 disabled" type="checkbox" ><label
+										for="color-checkbox1">----</label></li>
+									<li><input id="color-checkbox2 disabled" type="checkbox"><label
+										for="color-checkbox2">----</label></li>
 								</ul></li>
 							<li class="product-filters-tab"><a href="#">Price</a>
 								<ul class="categories-menu menu vertical nested">
 									<a href="#" class="clear-all" id="price-clear-all">Clear
 										All</a>
-									<li><input id="price-checkbox1" type="checkbox"><label
-										for="price-checkbox1">Under $25</label></li>
-									<li><input id="price-checkbox2" type="checkbox"><label
-										for="price-checkbox2">$25–$50</label></li>
-									<li><input id="price-checkbox3" type="checkbox"><label
-										for="price-checkbox3">$50–$250</label></li>
-									<li><input id="price-checkbox4" type="checkbox"><label
-										for="price-checkbox4">$250–$600</label></li>
-									<li><input id="price-checkbox4" type="checkbox"><label
-										for="price-checkbox4">$600–$1,000</label></li>
+									<li><input id="price-checkbox1 disabled" type="checkbox"><label
+										for="price-checkbox1">----</label></li>
+									<li><input id="price-checkbox2 disabled" type="checkbox"><label
+										for="price-checkbox2">----</label></li>
 								</ul></li>
 						</ul>
 					</div>

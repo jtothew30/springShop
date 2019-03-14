@@ -137,7 +137,6 @@
 							</tr>
 						</thead>
 						<tbody>
-							<!-- TODO -->
 							<c:forEach items="${elist}" var="elist">
 								<tr class="table-expand-row" data-open-details>
 									<td>${elist.tag}</td>

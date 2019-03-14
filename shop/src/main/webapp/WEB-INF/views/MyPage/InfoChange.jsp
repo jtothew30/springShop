@@ -20,6 +20,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/clean-blog.min.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/resources/js/infochange_check.js"></script> 
 </head>
+<c:import url="../header.jsp"/>
 <body>
     <div class="container">
 	  <div class="row">
@@ -103,6 +104,8 @@
 
    
 </body>
+<c:import url="../footer.jsp"/>
+
 </html>
 
 
