@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.MyPageMapper">
+  	<select id="getMyOrderList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payment">
+  		select * from 
+	  		(select rownum rn, p.* from 
+		  		(select * from payment where customer = #{customer} 
+		  		and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료') 
+		  		order by paydate desc
+		  		) p
+		  	)
+	  	where rn between #{startNum} and #{endNum} 
+		order by rn		
+  	</select>
+  	
+  	<select id="getMyOrderListPr" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payrequest">
+	  	select * from 
+		  	(select rownum rn, p.* from 
+			  	(select p.*, pb.path, pb.title from proboard pb 
+			  	right outer join (select pr.*, p.pname, p.options from payrequest pr  		 
+			  					 left outer join production p 
+			  					 on pr.pno = p.pno 
+								 where customer = #{customer} 
+								 and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료') 
+								) p 
+				on pb.pbno = p.pbno 
+				order by payno desc 
+				) p
+			)
+		where rn between #{startNum} and #{endNum} 
+		order by rn		
+  	</select>
+  	
+  	<select id="countMyOrder" parameterType="string" resultType="int">
+  		select count(*) from payment 
+  		where customer = #{customer} 
+  		and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료')
+  	</select>
+  	
+  	<select id="countMyOrderPr" parameterType="string" resultType="int">
+  		select count(*) from payrequest 
+  		where customer = #{customer} 
+  		and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료')
+  	</select>
+  	
+  	<select id="countSearchMyOrder" parameterType="com.spring.shop.vo.Paging" resultType="int">
+  		<![CDATA[	
+  		select count(*) from payment 
+  		where customer = #{customer} 
+  		and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료')
+  		and (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 	
+  		]]> 
+  	</select>
+  	
+  	<select id="countSearchMyOrderPr" parameterType="com.spring.shop.vo.Paging" resultType="int">
+  		<![CDATA[	
+  		select count(*) from (select pr.*,py.paydate from payrequest pr 
+							  inner join payment py 
+							  on pr.payno = py.payno  
+							  where pr.customer = #{customer} 
+							  and (py.status = '결제완료' or py.status = '배송준비' or py.status = '배송중' or py.status = '배송완료')
+							  and (py.paydate >= to_date(#{todate}) and py.paydate <= to_date(#{fromdate})+1) 
+							 )
+  		]]> 	
+  	</select>
+  	
+  	
+  	
+  	
+  	
+  	<select id="getMyClaimList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payment">
+  		select * from 
+  		(select rownum rn, py.* from (select * from payment 
+									  where customer = #{customer} 
+									  and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환') 
+									  order by paydate desc
+									  ) py
+	    )
+  		where rn between #{startNum} and #{endNum} 
+		order by rn			  
+  	</select>
+  	
+  	<select id="getMyClaimListPr" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payrequest">
+  	select * from 
+  	(select rownum rn, p.* from (select p.*, pb.path, pb.title from proboard pb 
+							  	right outer join (select pr.*, p.pname, p.options from payrequest pr  		 
+							  					 left outer join production p 
+							  					 on pr.pno = p.pno 
+												 where customer = #{customer} 
+												 and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환') 
+												) p 
+								on pb.pbno = p.pbno 
+								order by payno desc 
+								) p
+	)
+	where rn between #{startNum} and #{endNum} 
+	order by rn			
+  	</select>
+  	
+  	<select id="countMyClaim" parameterType="string" resultType="int">
+  		select count(*) from payment 
+  		where customer = #{customer} and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환') 	
+  	</select>
+  	
+  	<select id="countMyClaimPr" parameterType="string" resultType="int">
+  		select count(*) from payrequest 
+  		where customer = #{customer} and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환') 	
+  	</select>
+  	
+  	<select id="countSearchMyClaim" parameterType="com.spring.shop.vo.Paging" resultType="int">
+  		<![CDATA[	
+  		select count(*) from payment 
+  		where customer = #{customer} and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환')
+  		and (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 	
+  		]]> 
+  	</select>
+  	
+  	<select id="countSearchMyClaimPr" parameterType="com.spring.shop.vo.Paging" resultType="int">
+  		<![CDATA[	
+  		select count(*) from (select pr.*,py.paydate from payrequest pr 
+							  inner join payment py 
+							  on pr.payno = py.payno  
+							  where pr.customer = #{customer} 
+							  and (pr.status = '결제취소' or pr.status = '취소진행중' or pr.status = '반품' or pr.status = '교환') 
+							  and (py.paydate >= to_date(#{todate}) and py.paydate <= to_date(#{fromdate})+1) 
+							 )
+  		]]> 	
+  	</select>
+  	
+  	
+  	
+  	
+  	
+  	
+  	<select id="getMyReviewList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Review">
+  		
+  		select * from (select rownum rn, r.* from (select r.*, pb.title from review r 
+												   left outer join proboard pb 
+												   on r.pbno = pb.pbno 
+												   where writer = #{customer} 
+												   order by rdate desc) r 
+						) 
+		where rn between #{startNum} and #{endNum} 
+		order by rn
+  	</select>
+  	
+  	<select id="countMyReview" parameterType="string" resultType="int">		
+		select count(*) from review 
+		where writer = #{writer} 
+  	</select>
+  	
+  	<select id="countSearchMyReview" parameterType="com.spring.shop.vo.Paging" resultType="int">	
+  		<![CDATA[	
+		select count(*) from review  
+		where writer = #{customer} 
+		and (rdate >= to_date(#{todate}) and rdate <= to_date(#{fromdate})+1)
+		]]> 
+  	</select>
+  	
+  	<select id="getMyQnaList" parameterType="string" resultType="com.spring.shop.vo.Qna">
+  		select * from (select rownum rn, q.* from (select q.*, pb.title from qna q 
+												   left outer join proboard pb 
+												   on q.pbno = pb.pbno 
+												   where writer = #{customer} 
+												   order by qdate desc) q
+        			  ) 
+        where rn between #{startNum} and #{endNum} 
+		order by rn 
+  	</select>
+  	
+  	<select id="countMyQna" parameterType="string" resultType="int">		
+		select count(*) from qna 
+		where writer = #{writer} 
+  	</select>
+  	
+  	<select id="countSearchMyQna" parameterType="com.spring.shop.vo.Paging" resultType="int">	
+  		<![CDATA[	
+		select count(*) from qna 
+		where writer = #{customer} 
+		and (qdate >= to_date(#{todate}) and qdate <= to_date(#{fromdate})+1)
+		]]> 
+  	</select>
+  	
+  	<select id="getPayrequestList" parameterType="int" resultType="com.spring.shop.vo.Payrequest">
+  		select pr.*, p.pname, p.options, p.category1, p.category2, p.category3 from (select pr.*, pb.title from payrequest pr 
+									left outer join proboard pb 
+									on pr.pbno = pb.pbno 
+									where payno = #{payno}   
+									) pr 
+		left outer join production p 
+		on pr.pno = p.pno 
+		order by pbno
+  	</select>
+  	
+  	<select id="searchOrderDate" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payment">
+  		<![CDATA[
+  		select * from 
+	  		(select rownum rn, p.* from 
+		  		(select * from payment where customer = #{customer} 
+		  		and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료')   		 
+		  		and (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 		
+		  		order by paydate desc 
+		  		) p
+	  		)
+	  	where rn between #{startNum} and #{endNum} 
+		order by rn 
+  		]]> 
+  	</select>
+  	
+  	<select id="searchOrderDatePr" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payrequest">
+  		<![CDATA[
+  		select * from 
+	  		(select rownum rn, p.* from 
+		  		(select p.* from payment py 
+				right outer join (select p.*, pb.path, pb.title from proboard pb 
+								 left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
+					  							  left outer join production p 
+					  							  on pr.pno = p.pno 
+												  where customer = #{customer} 
+												  and (status = '결제완료' or status = '배송준비' or status = '배송중' or status = '배송완료') 
+												 ) p 
+								 on pb.pbno = p.pbno 
+								) p 
+				on py.payno = p.payno 
+				where (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 
+				order by p.payno desc 
+				) p 
+			)
+		where rn between #{startNum} and #{endNum} 
+		order by rn 
+  		]]> 
+  	</select>
+  	
+  	
+  	<select id="searchClaimDate" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payment">
+  		<![CDATA[
+  		select * from
+  		(select rownum rn, p.* from (select * from payment 
+							  		where customer = #{customer} 
+							  		and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환')   		 
+							  		and (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 		
+							  		order by paydate desc 
+							  		) p
+		)
+		where rn between #{startNum} and #{endNum} 
+		order by rn 
+  		]]> 
+  	</select>
+    
+    <select id="searchClaimDatePr" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Payrequest">
+  		<![CDATA[
+  		select * from 
+  		(select rownum rn, p.* from
+	  		(select p.* from payment py 
+			right outer join (select p.*, pb.path, pb.title from proboard pb 
+							 left outer join (select pr.*, p.pname, p.options from payrequest pr  		 
+				  							  left outer join production p 
+				  							  on pr.pno = p.pno 
+											  where customer = #{customer} 
+											  and (status = '결제취소' or status = '취소진행중' or status = '반품' or status = '교환')   		
+											 ) p 
+							 on pb.pbno = p.pbno 
+							) p 
+			on py.payno = p.payno 
+			where (paydate >= to_date(#{todate}) and paydate <= to_date(#{fromdate})+1) 
+			order by p.payno desc ) p
+		)
+		where rn between #{startNum} and #{endNum} 
+		order by rn
+  		]]> 
+  	</select>
+  	
+  	
+  	<select id="searchReviewDate" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Review">
+  		<![CDATA[
+  		select * from (select rownum rn, r.* from (select r.*, pb.title from review r 
+												   left outer join proboard pb 
+												   on r.pbno = pb.pbno 
+												   where writer = #{customer} 
+												   and (rdate >= to_date(#{todate}) and rdate <= to_date(#{fromdate})+1) 
+												   order by rdate desc) r 
+						) 
+		where rn between #{startNum} and #{endNum} 
+		order by rn
+  		]]> 
+  	</select>
+  	
+  	<select id="searchQnaDate" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Qna">
+  		<![CDATA[
+  		select * from (select rownum rn, q.* from (select q.*, pb.title from qna q 
+												   left outer join proboard pb 
+												   on q.pbno = pb.pbno 
+												   where writer = #{customer} 
+												   and (qdate >= to_date(#{todate}) and qdate <= to_date(#{fromdate})+1) 
+												   order by qdate desc) q
+        			  ) 
+        where rn between #{startNum} and #{endNum} 
+		order by rn 
+		]]> 
+  	</select>
+    
+    
+    <update id="cancePay" parameterType="int">
+    	update payment set status = '취소진행중' where payno = #{payno}
+    </update>
+    
+    <update id="cancelReq" parameterType="int">
+    	update payrequest set status = '취소진행중' where payno = #{payno}
+    </update>
+    
+    
+    <delete id="deleteReview" parameterType="int">
+    	delete from review where rno = #{rno}
+    </delete>
+    
+    <delete id="deleteReviewReply" parameterType="int">
+    	delete from reply where flag = 'review' and no = #{rno}
+    </delete>
+    
+  
+  </mapper>

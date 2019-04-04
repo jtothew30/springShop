@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.ReviewMapper">
+  
+  	<select id="getOptions" parameterType="int" resultType="com.spring.shop.vo.Production">
+  		select * from production 
+		where pno in (select pno from procontain 
+		 				where pbno=#{pbno} 
+		 				)
+  	</select>
+  	
+  	<select id="getReviewList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Review">
+  		select * from 
+  		(select rownum rn, r.* from (select * from review where pbno = #{pbno}
+  									order by rdate desc
+  									) r 
+  		) 
+  		where rn between #{startNum} and #{endNum} 
+		order by rn 
+  	</select>
+  	
+  	<select id="countReviewList" parameterType="int" resultType="int">
+  		select count(*) from review where pbno = #{pbno}
+  	</select>
+  	
+  	<select id="getQnaList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Qna">
+  		select * from 
+  		(select rownum rn, q.* from (select * from qna where pbno = #{pbno}
+							  		order by qdate desc 
+							  		) q
+		) 
+		where rn between #{startNum} and #{endNum} 
+		order by rn 
+  	</select>
+  	
+  	<select id="countQnaList" parameterType="int" resultType="int">
+  		select count(*) from qna where pbno = #{pbno}
+  	</select>
+  
+  
+  	<insert id="reviewWirte" parameterType="com.spring.shop.vo.Review" useGeneratedKeys="true">
+  		<selectKey keyProperty="rno" resultType="int" order="AFTER" > 
+  			SELECT seqrev.currval as rno FROM dual 
+  		</selectKey>
+  		insert into review values(seqrev.nextval, #{options}, #{writer}, #{content}, #{path}||seqrev.currval||'-'||#{writer}, #{stars}, sysdate, #{pbno}, 0, 0)
+  	</insert>
+  	
+  	<insert id="qnaWirte" parameterType="com.spring.shop.vo.Qna" useGeneratedKeys="true">
+  		<selectKey keyProperty="qno" resultType="int" order="AFTER" > 
+  			SELECT seqqna.currval as qno FROM dual 
+  		</selectKey>
+  		insert into qna values(seqqna.nextval, #{category}, #{writer}, #{content}, #{path}||seqqna.currval||'-'||#{writer}, sysdate, #{pbno}, '답변대기')
+  	</insert>
+    
+    
+    <select id="getPath" parameterType="int" resultType="string">
+    	select path from review where rno = #{rno}
+    </select> 
+    
+    <select id="getQnaPath" parameterType="int" resultType="string">
+    	select path from qna where qno = #{qno}
+    </select>
+  
+  
+  	<select id="reactCheck" parameterType="map" resultType="int">
+  		<![CDATA[
+  			select count(*) from react where rno = #{rno} and id = #{id}
+  		]]> 
+  	</select>
+  
+	<update id="reactgood" parameterType="map">
+	 	<![CDATA[
+	  		update review set good = good + 1 where rno = #{rno}
+	  	]]> 
+	</update>
+	
+	<select id="getgood" parameterType="map" resultType="int">
+		<![CDATA[
+	  		select good from review where rno = #{rno}
+	  	]]> 
+	</select>
+	
+	<update id="reactbad" parameterType="map">
+	 	<![CDATA[		
+	  		update review set bad = bad + 1 where rno = #{rno}
+	  	]]> 
+	</update>
+	
+	<select id="getbad" parameterType="map"  resultType="int">
+		<![CDATA[
+	  		select bad from review where rno = #{rno}
+	  	]]> 
+	</select>
+	
+	<insert id="reactlog" parameterType="map">
+		<![CDATA[
+	  		insert into react values(#{rno}, #{id})
+	  	]]> 
+	</insert>
+  
+  
+  </mapper>

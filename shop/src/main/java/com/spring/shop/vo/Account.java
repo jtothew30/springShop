@@ -1,6 +1,7 @@
 package com.spring.shop.vo;
 
 public class Account {
+	private int rn;
 	private String id;
 	private String pw;
 	private String name;
@@ -10,7 +11,12 @@ public class Account {
 	private String phone;
 	private String adate;
 	
-	
+	public int getRn() {
+		return rn;
+	}
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
 	public String getId() {
 		return id;
 	}
@@ -58,6 +64,11 @@ public class Account {
 	}
 	public void setAdate(String adate) {
 		this.adate = adate;
+	}
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", pw=" + pw + ", name=" + name + ", age=" + age + ", gender=" + gender
+				+ ", email=" + email + ", phone=" + phone + ", adate=" + adate + "]";
 	}
 	
 	

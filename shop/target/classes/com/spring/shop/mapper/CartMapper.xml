@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.shop.mapper.CartMapper">
+	<insert id="insert" parameterType="com.spring.shop.vo.Cart">
+		insert into cart values(#{pno}, #{pbno}, #{customer}, #{count}, #{price}, sysdate)
+	</insert>
+	
+	<select id="getCartList" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Cart">
+		select * from 
+			(select rownum rn, q.* from
+				(select c.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select c.*, pb.title from cart c 
+											left outer join proboard pb 
+											on c.pbno = pb.pbno 
+											where customer = #{customer} 
+											) c 
+				left outer join production p 
+				on c.pno = p.pno 
+				order by cartdate desc
+			) q 
+		)
+		where rn between #{startNum} and #{endNum} 
+		order by rn
+	</select>
+	
+	<select id="getTotalCartList" parameterType="string" resultType="com.spring.shop.vo.Cart">				
+		select c.*, p.pname, p.options, p.category1, p.category2, p.category3  from (select c.*, pb.title from cart c 
+									left outer join proboard pb 
+									on c.pbno = pb.pbno 
+									where customer = #{customer} 
+									) c 
+		left outer join production p 
+		on c.pno = p.pno 
+		order by cartdate desc	
+	</select>
+	
+	<select id="countCartList" parameterType="string" resultType="int">
+		select count(*) from cart where customer = #{customer} 
+	</select>
+	
+	
+	<delete id="deleteCart" parameterType="com.spring.shop.vo.Cart">
+		delete from cart where pno = #{pno} and customer = #{customer}
+	</delete>
+	
+	<select id="getOptions" parameterType="int" resultType="com.spring.shop.vo.Production">	
+		select p.*, ps.count from production p 
+		left outer join prostock ps 
+		on p.pno=ps.pno 
+		where p.pno in (select pno from procontain 
+		 				where pbno=#{pbno}
+		 				)
+	</select>
+	
+	<update id="changeOption" parameterType="map">
+		<![CDATA[
+  		update cart set pno = #{pno}, price = #{price}, count = #{count}, cartdate = sysdate where customer=#{customer} and pno = #{lastpno}
+  		]]> 
+	</update>
+	
+</mapper>

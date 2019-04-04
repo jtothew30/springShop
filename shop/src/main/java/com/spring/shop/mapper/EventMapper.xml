@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.shop.mapper.EventMapper">
+  
+    <select id="selectEventAll" resultType="com.spring.shop.vo.Event">
+    	select * from event order by xpath, ypath
+    </select>
+    <select id="selectEventAllbyTag" resultType="com.spring.shop.vo.Event">
+    	select * from event order by tag, xpath, ypath
+    </select>    
+    <select id="selectEventTagOn" resultType="com.spring.shop.vo.Event">
+    	select * from event where flag = 1 order by xpath, ypath 
+    </select>
+    <insert id="insertEvent" parameterType="com.spring.shop.vo.Event">
+    	insert into event(eno, tag, etitle, escript, xpath, ypath, pbno, imgpath, link, flag)
+    	values(
+    		seqevt.nextval,
+    		#{tag},
+    		#{etitle, jdbcType=VARCHAR},
+    		#{escript, jdbcType=VARCHAR},
+    		#{xpath ,jdbcType=NUMERIC},
+    		#{ypath, jdbcType=NUMERIC},
+    		#{pbno, jdbcType=NUMERIC},
+    		#{imgpath, jdbcType=VARCHAR},
+    		#{link, jdbcType=VARCHAR},
+    		#{flag, jdbcType=NUMERIC}
+    	)
+    </insert>
+  	<delete id="deleteEvent" parameterType="int">
+  		delete from event where eno=#{eno}
+  	</delete>
+  	<update id="updateEvent" parameterType="com.spring.shop.vo.Event">
+  		update event
+  		set etitle =#{etitle},
+  			escript =#{escript},
+  			xpath =#{xpath},
+  			ypath =#{ypath},
+  			flag =#{flag} 
+  		where eno=#{eno}
+  	</update>  	
+  	
+  	<update id="updateEventTagOn" parameterType="string">
+  		update event set flag = 1 where tag=#{tag}
+  	</update>
+  	
+  	<update id="updateEventTagOff" parameterType="string">
+  		update event set flag = 0 where tag=#{tag}
+  	</update>
+  				
+  	<select id="selectEventTagFlag" resultType="com.spring.shop.vo.Event">
+  		select DISTINCT tag from event
+  	</select>
+  	<select id="selectEventTagFlagOnly" resultType="com.spring.shop.vo.Event">
+  		select DISTINCT tag from event where flag = 1 
+  	</select>
+  </mapper>

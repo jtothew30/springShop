@@ -14,16 +14,38 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<!-- 실행용 -->
+	 <bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
         <property name="username" value="system"/>
         <property name="password" value="oracle"/>
-        <property name="minIdle" value="50"/>
+        <!-- <property name="minIdle" value="50"/>
         <property name="maxIdle" value="50"/>
-        <property name="maxActive" value="100"/> 
-    </bean>
+        <property name="maxActive" value="100"/>  -->
+    </bean> 
+    
+    
+    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg ref="dataSourceSpied" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="SQL         :  "/>
+            </bean>
+        </property>
+	 </bean>	
+    
+    <!-- 디버그용  -->
+	<!-- <bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		드라이버 클래스 이름이 변경됨
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		연결문자열에 log4jdbc가 추가됨
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="system" />
+		<property name="password" value="oracle" />		
+	</bean> -->
     
     <bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
@@ -31,15 +53,19 @@
   
  	<bean id="factoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
  		<property name="dataSource" ref="dataSource"/>
-        <!-- property name="configLocation" value="classpath:config/context-sqlMap.xml"/ -->
-        <property name="mapperLocations" value="classpath:com/spring/shop/mapper/*Mapper.xml"/>
-    </bean>
-    
-    
-    
+		<!-- mybatis 설정파일의 경로 -->
+		<!-- <property name="configLocation" value="classpath:/mybatis-config.xml"></property> -->
+		<!-- mybatis mapper 파일의 경로 -->        
+		<property name="mapperLocations" value="classpath:com/spring/shop/mapper/*Mapper.xml"/>
+    </bean>    
     
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="factoryBean" />		
 	</bean>	
 	
+	<!-- AspectJ라이브러리를 이용한 Proxy 객체를 생성 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- XML 방식으로 AOP 기능을 설정할 때 사용 -->
+	<!-- <aop:config></aop:config> -->
 </beans>

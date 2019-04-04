@@ -22,8 +22,54 @@
 	</beans:bean>
 	
 	<!-- upload관련 -->
-	<beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	
+	<!-- 인터셉터 관련 -->
+	<beans:bean id="loginIntercepter" class="com.spring.shop.controller.LoginIntercepter"/>		
+	<beans:bean id="adminIntercepter" class="com.spring.shop.controller.AdminIntercepter"/>
+	<beans:bean id="reviewIntercepter" class="com.spring.shop.controller.ReviewIntercepter"/>
+	<interceptors>
+		<interceptor>
+			<!-- account -->
+			<mapping path="/account/infoChange.do"/>
+			<mapping path="/account/acct_InfoChange.do"/>
+			<mapping path="/account/mymain.do"/>
+			<mapping path="/account/change.do"/>
+			<mapping path="/account/logout.do"/>
+			<mapping path="/account/AccountDelete"/>
+			<mapping path="/account/refer.do"/>
+			<mapping path="/account/orderList.do"/>
+			<mapping path="/account/list.do"/>
+			<!-- cart -->
+			<mapping path="/cart/*"/>
+			<!-- mypage -->
+			<mapping path="/mypage/*"/>
+			<!-- payment -->
+			<mapping path="/payment/*"/>
+			<!-- reply -->
+			<mapping path="/reply/replyEdit.do"/>
+			<mapping path="/reply/replyDelete.do"/>
+			<!-- review -->
+			<mapping path="/review/reactCheck.do"/>
+			<mapping path="/review/react.do"/>
+			
+			<beans:ref bean="loginIntercepter"/>
+		</interceptor>
+		<interceptor>
+			<!-- admin -->
+			<mapping path="/admin/*"/>
+			
+			<beans:ref bean="adminIntercepter"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/reply/replyWirte.do"/>
+			<mapping path="/review/reviewWirte.do"/>
+			<mapping path="/review/qnaWirte.do"/>
+			
+			<beans:ref bean="reviewIntercepter"/>
+		</interceptor>
+	</interceptors>	
+	
 	
 	<context:component-scan base-package="com.spring.*" />
 	

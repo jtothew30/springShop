@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.spring.shop.mapper.PaymentMapper">
+	<select id="getPayrequestList" resultType="com.spring.shop.vo.Payrequest" parameterType="string">
+		select pr.*, p.pname, p.options, p.category1, p.category2, p.category3, p.stock  from (select pr.*, pb.title from payrequest pr 
+									left outer join proboard pb 
+									on pr.pbno = pb.pbno 
+									where pr.customer = #{customer} and pr.status = '결제진행' 
+									) pr 
+		left outer join (select p.*, ps.count as stock from production p 
+						 left outer join prostock ps 
+						 on p.pno = ps.pno) p 
+		on pr.pno = p.pno 
+		order by p.pno
+	</select>
+	
+	
+	<select id="getPaymentResult" resultType="com.spring.shop.vo.Payment" parameterType="int">
+		select * from payment where payno = #{payno}
+	</select>
+	
+	
+	<select id="checkPayment" resultType="int" parameterType="string">
+		select count(*) from payment where customer = #{customer} and status = '결제진행'
+	</select>
+
+
+	<insert id="createPayment" parameterType="string">
+		insert into payment values(seqpay.nextval, #{customer}, 'recipient', 'payname', 'addr1', 'addr2', 'memo', sysdate, '결제진행', 0)
+	</insert>
+	
+	<select id="getPayno" parameterType="string" resultType="int">
+		select payno from payment where customer = #{customer} and status = '결제진행'
+	</select>
+	
+	<insert id="createPayrequest" parameterType="com.spring.shop.vo.Payrequest">
+		insert into payrequest values(seqreq.nextval, #{customer}, #{pno}, #{pbno}, #{count}, #{price}, '결제진행', #{payno})
+	</insert>
+	
+	
+	<update id="payment" parameterType="com.spring.shop.vo.Payment">
+		update payment set recipient = #{recipient}, payname = #{payname}, address1 = #{address1}, address2 = #{address2}, memo = #{memo}, paydate = sysdate, status = '결제완료', total = #{total} where payno = #{payno} 
+	</update>
+	
+	<update id="updatePayrequest" parameterType="com.spring.shop.vo.Payment">
+		update payrequest set status = '결제완료' where payno = #{payno} 
+	</update>
+	
+	<select id="getPreq" parameterType="int" resultType="com.spring.shop.vo.Payrequest">
+		select * from payrequest where payno = #{payno}
+	</select>
+	
+	
+	<update id="updateProstock" parameterType="com.spring.shop.vo.Payrequest">
+		update prostock set count = count - #{count} where pno = #{pno}
+	</update>
+	
+	<update id="updateProduction" parameterType="com.spring.shop.vo.Payrequest">
+		update production set sales = sales + #{count} where pno = #{pno}
+	</update>
+	
+	<update id="updateProboard" parameterType="com.spring.shop.vo.Payrequest">
+		update proboard set totalsales = totalsales + #{count} where pbno = #{pbno}
+	</update>
+	
+	
+	
+	<delete id="deletePayment">
+		delete from payment where customer = #{customer} and status = '결제진행'
+	</delete>
+	
+	<delete id="deletePayrequest">
+		delete from payrequest where customer = #{customer} and status = '결제진행'
+	</delete>
+	
+	
+</mapper>

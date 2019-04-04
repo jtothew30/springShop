@@ -4,11 +4,61 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.spring.shop.mapper.AccountMapper">
+	<insert id="insert" parameterType="com.spring.shop.vo.Account">
+		insert into account values(#{id},#{pw},#{name},#{age},#{gender},#{email},#{phone}, sysdate)
+	</insert>
+	
+	<select id="select" resultType="com.spring.shop.vo.Account">
+		select
+			id,name,email,phone
+		from
+			account
+	</select>
+
 	<select id="idCheck" resultType="int" parameterType="string">
 	     select count(*) from account where id=#{id}
 	</select>
 	
-	<insert id="insert" parameterType="com.spring.shop.vo.Account">
-		insert into account values(#{id},#{pw},#{name},#{age},#{gender},#{email},#{phone}, sysdate)
-	</insert>
+	<select id="view" resultType="com.spring.shop.vo.Account">
+		select * from account where id=#{id}
+	</select>
+	
+	<select id="login" parameterType="com.spring.shop.vo.Account" resultType="com.spring.shop.vo.Account">
+		select * from account where id=#{id} and pw=#{pw}
+	</select>
+	
+	<update id="update" parameterType="com.spring.shop.vo.Account">
+		update account set pw=#{pw}, email=#{email}, phone=#{phone}
+		where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from account where id=#{id} and pw=#{pw} 
+	</delete>
+	
+	<select id="selectAccountListCountAll" parameterType="com.spring.shop.vo.Paging" resultType="int">
+		select count(*)
+		from (
+			select ac.*
+			from account ac
+			where name like '%'||#{kwd}||'%'
+		) 
+	</select>
+	
+	<select id="selectAccountListAll" parameterType="com.spring.shop.vo.Paging" resultType="com.spring.shop.vo.Account">
+		select * from(
+			select a.*
+			from (
+				select rownum rn, ac.*
+				from account ac
+				where name like '%'||#{kwd}||'%'
+				order by adate desc
+			) a
+			order by rn		
+		) where rn between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="selectAccountAll" resultType="com.spring.shop.vo.Account">
+		select * from account
+	</select>
 </mapper>

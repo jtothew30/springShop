@@ -1,0 +1,72 @@
+.leftMenuWrap {
+  float: left;
+  display: inline-block;
+  width: 169px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.leftMenuWrap .myArea {
+  padding: 25px 0 25px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.leftMenuWrap .myArea p {
+  line-height: 20px;
+  font-size: 14px;
+  color: #707070;
+}
+
+.leftMenuWrap .myArea p span {
+  text-decoration: underline;
+  font-weight: 500;
+  color: #ef3e42;
+}
+
+.leftMenuWrap .myArea p a {
+  text-decoration: none;
+}
+
+.leftMenuWrap .myMenuArea {
+  padding: 25px 0 25px 20px;
+}
+
+.leftMenuWrap .myMenuArea li {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 40px;
+  margin-bottom: 10px;
+  background: url("/img/main/pc/snb/menu_icon.png") no-repeat 0 0;
+}
+
+.leftMenuWrap .myMenuArea li.modify {
+  background-position: 0 0;
+}
+
+.leftMenuWrap .myMenuArea li.password {
+  background-position: 0 -50px;
+}
+
+.leftMenuWrap .myMenuArea li.ship {
+  background-position: 0 -100px;
+}
+
+.leftMenuWrap .myMenuArea li.sns {
+  background-position: 0 -150px;
+}
+
+.leftMenuWrap .myMenuArea li.withdrawal {
+  background-position: 0 -200px;
+}
+
+.leftMenuWrap .myMenuArea li.current {
+  background: url("/img/main/pc/snb/menu_icon_on.png") no-repeat 0 0;
+}
+
+.leftMenuWrap .myMenuArea li.current a {
+  color: #ef3e42;
+}
+
+.leftMenuWrap .myMenuArea li a {
+  color: #202020;
+}
